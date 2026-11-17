@@ -20,7 +20,7 @@ public class RealisticPlants {
                 ModConfig.Type.COMMON,
                 Config.SPEC
         );
-
+        ModBlocks.register(modEventBus);
         LOGGER.info("Realistic Plants is loading!");
         LOGGER.info("Plant configuration registered!");
     }
