@@ -88,16 +88,63 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
             InteractionHand hand,
             BlockHitResult hitResult) {
 
-        if (!itemStack.is(Items.POTION)) {
-            return InteractionResult.TRY_WITH_EMPTY_HAND;
+        if (itemStack.is(Items.POTION)) {
+            var potionContents =
+                    itemStack.get(DataComponents.POTION_CONTENTS);
+
+            if (potionContents == null
+                    || !potionContents.is(Potions.WATER)) {
+                return InteractionResult.TRY_WITH_EMPTY_HAND;
+            }
+
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+
+            if (!(blockEntity instanceof TomatoPlantBlockEntity plant)) {
+                return InteractionResult.PASS;
+            }
+
+            if (!level.isClientSide()) {
+                PlantGrowthManager.water(
+                        plant.getPlantData(),
+                        40
+                );
+
+                plant.setChanged();
+
+                if (!player.getAbilities().instabuild) {
+                    itemStack.shrink(1);
+
+                    ItemStack bottle =
+                            new ItemStack(Items.GLASS_BOTTLE);
+
+                    if (itemStack.isEmpty()) {
+                        player.setItemInHand(hand, bottle);
+                    } else {
+                        player.getInventory()
+                                .placeItemBackInInventory(
+                                        bottle,
+                                        Prediction.SERVER_ONLY
+                                );
+                    }
+                }
+            }
+
+            return InteractionResult.SUCCESS;
         }
 
-        var potionContents =
-                itemStack.get(DataComponents.POTION_CONTENTS);
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
+    }
 
-        if (potionContents == null
-                || !potionContents.is(Potions.WATER)) {
-            return InteractionResult.TRY_WITH_EMPTY_HAND;
+    @Override
+    protected InteractionResult useWithoutItem(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            BlockHitResult hitResult) {
+
+        if (state.getValue(AGE) < 6) {
+            return InteractionResult.PASS;
         }
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -107,29 +154,20 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
         }
 
         if (!level.isClientSide()) {
-            PlantGrowthManager.water(
-                    plant.getPlantData(),
-                    40
-            );
+            PlantData data = plant.getPlantData();
 
-            plant.setChanged();
-
-            if (!player.getAbilities().instabuild) {
-                itemStack.shrink(1);
-
-                ItemStack bottle =
-                        new ItemStack(Items.GLASS_BOTTLE);
-
-                if (itemStack.isEmpty()) {
-                    player.setItemInHand(hand, bottle);
-                } else {
-                    player.getInventory()
-                            .placeItemBackInInventory(
-                                    bottle,
-                                    Prediction.SERVER_ONLY
-                            );
-                }
+            if (!PlantHarvest.harvest(data)) {
+                return InteractionResult.PASS;
             }
+
+            ItemStack tomatoes = new ItemStack(ModItems.TOMATO.get());
+
+            if (!player.getInventory().add(tomatoes)) {
+                player.drop(tomatoes, false);
+            }
+
+            plant.resetHarvestCycle();
+            plant.setChanged();
         }
 
         return InteractionResult.SUCCESS;
