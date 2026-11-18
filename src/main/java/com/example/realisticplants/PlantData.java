@@ -1,10 +1,15 @@
+
 package com.realisticplants;
+
+import java.util.Objects;
 
 /**
  * Stores the individual state of a plant.
- * Designed to support different plant species.
+ * Each plant is linked to its species definition.
  */
 public class PlantData {
+
+    private final PlantDefinition definition;
 
     private int moisture;
     private int health;
@@ -13,10 +18,23 @@ public class PlantData {
     private boolean harvestReady;
 
     public PlantData() {
+        this(PlantRegistry.get("tomato"));
+    }
+
+    public PlantData(PlantDefinition definition) {
+        this.definition = Objects.requireNonNull(
+                definition,
+                "Plant definition cannot be null"
+        );
+
         this.moisture = 100;
         this.health = 100;
         this.flowering = false;
         this.harvestReady = false;
+    }
+
+    public PlantDefinition getDefinition() {
+        return definition;
     }
 
     public int getMoisture() {
@@ -59,9 +77,6 @@ public class PlantData {
         return health <= 0;
     }
 
-    /**
-     * Determines the current plant condition.
-     */
     public PlantCondition getCondition() {
         if (health <= 0) {
             return PlantCondition.DEAD;
@@ -82,4 +97,3 @@ public class PlantData {
         return Math.max(0, Math.min(100, value));
     }
 }
-
