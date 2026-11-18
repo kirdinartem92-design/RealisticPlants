@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 /**
@@ -20,7 +19,6 @@ public class PlantData {
         this.harvestReady = false;
     }
 
-    // Soil moisture: 0-100%
     public int getMoisture() {
         return moisture;
     }
@@ -29,7 +27,6 @@ public class PlantData {
         this.moisture = clamp(moisture);
     }
 
-    // Plant health: 0-100%
     public int getHealth() {
         return health;
     }
@@ -38,7 +35,6 @@ public class PlantData {
         this.health = clamp(health);
     }
 
-    // Flowering state
     public boolean isFlowering() {
         return flowering;
     }
@@ -47,7 +43,6 @@ public class PlantData {
         this.flowering = flowering;
     }
 
-    // Harvest state
     public boolean isHarvestReady() {
         return harvestReady;
     }
@@ -56,7 +51,6 @@ public class PlantData {
         this.harvestReady = harvestReady;
     }
 
-    // Plant condition
     public boolean isWilted() {
         return health > 0 && health <= 30;
     }
@@ -65,7 +59,27 @@ public class PlantData {
         return health <= 0;
     }
 
+    /**
+     * Determines the current plant condition.
+     */
+    public PlantCondition getCondition() {
+        if (health <= 0) {
+            return PlantCondition.DEAD;
+        }
+
+        if (health <= 15) {
+            return PlantCondition.DRY;
+        }
+
+        if (health <= 30) {
+            return PlantCondition.WILTING;
+        }
+
+        return PlantCondition.HEALTHY;
+    }
+
     private int clamp(int value) {
         return Math.max(0, Math.min(100, value));
     }
 }
+
