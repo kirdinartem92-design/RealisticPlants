@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import java.util.function.Supplier;
@@ -64,7 +63,7 @@ public class TomatoPlantBlockEntity extends BlockEntity {
             plant.tickCounter = 0;
 
             if (level.isRainingAt(pos)) {
-                PlantGrowthManager.water(
+                PlantEnvironment.applyRain(
                         plant.plantData,
                         5
                 );
@@ -97,10 +96,23 @@ public class TomatoPlantBlockEntity extends BlockEntity {
             return;
         }
 
-        if (age < 4) {
-            growthCounter++;
+        float temperature =
+                level.getBiome(pos).value().getBaseTemperature();
 
-            if (growthCounter >= 5) {
+        double growthMultiplier =
+                PlantEnvironment.getGrowthMultiplier(temperature);
+
+        if (growthMultiplier <= 0.0) {
+            return;
+        }
+
+        int growthPoints =
+                (int) (growthMultiplier * 2);
+
+        if (age < 4) {
+            growthCounter += growthPoints;
+
+            if (growthCounter >= 10) {
                 growthCounter = 0;
 
                 level.setBlock(
@@ -118,9 +130,9 @@ public class TomatoPlantBlockEntity extends BlockEntity {
         }
 
         if (age < 6) {
-            growthCounter++;
+            growthCounter += growthPoints;
 
-            if (growthCounter >= 5) {
+            if (growthCounter >= 10) {
                 growthCounter = 0;
 
                 int nextAge = age + 1;
