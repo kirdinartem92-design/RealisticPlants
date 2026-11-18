@@ -6,6 +6,14 @@ package com.realisticplants;
  */
 public final class PlantGrowthController {
 
+    private static final int MIN_HEALTH_FOR_GROWTH = 30;
+
+    private static final int MIN_MOISTURE = 0;
+    private static final int MAX_MOISTURE = 100;
+
+    private static final int MIN_HEALTH = 0;
+    private static final int MAX_HEALTH = 100;
+
     private PlantGrowthController() {
         // Utility class
     }
@@ -25,11 +33,14 @@ public final class PlantGrowthController {
             return false;
         }
 
-        if (plant.getHealth() < 30) {
+        int health = plant.getHealth();
+        int moisture = plant.getMoisture();
+
+        if (health < MIN_HEALTH_FOR_GROWTH) {
             return false;
         }
 
-        if (plant.getMoisture() < definition.getMinimumMoisture()) {
+        if (moisture < definition.getMinimumMoisture()) {
             return false;
         }
 
@@ -42,7 +53,8 @@ public final class PlantGrowthController {
     }
 
     /**
-     * Calculates how many growth points a plant receives.
+     * Calculates growth points according to temperature,
+     * soil moisture and plant health.
      */
     public static int getGrowthPoints(PlantData plant, float temperature) {
 
@@ -50,9 +62,31 @@ public final class PlantGrowthController {
             return 0;
         }
 
-        double multiplier =
+        int moisture = Math.max(
+                MIN_MOISTURE,
+                Math.min(MAX_MOISTURE, plant.getMoisture())
+        );
+
+        int health = Math.max(
+                MIN_HEALTH,
+                Math.min(MAX_HEALTH, plant.getHealth())
+        );
+
+        double temperatureMultiplier =
                 PlantEnvironment.getGrowthMultiplier(temperature);
 
-        return Math.max(1, (int) (multiplier * 2));
+        double moistureMultiplier = moisture / 100.0;
+
+        double healthMultiplier = health / 100.0;
+
+        double totalMultiplier =
+                temperatureMultiplier
+                        * moistureMultiplier
+                        * healthMultiplier;
+
+        return Math.max(
+                1,
+                (int) Math.round(totalMultiplier * 2)
+        );
     }
 }
