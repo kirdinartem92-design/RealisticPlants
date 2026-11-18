@@ -3,6 +3,7 @@ package com.realisticplants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -121,8 +122,12 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
 
                 if (itemStack.isEmpty()) {
                     player.setItemInHand(hand, bottle);
-                } else if (!player.getInventory().add(bottle)) {
-                    player.drop(bottle, false);
+                } else {
+                    player.getInventory()
+                            .placeItemBackInInventory(
+                                    bottle,
+                                    Prediction.SERVER_ONLY
+                            );
                 }
             }
         }
