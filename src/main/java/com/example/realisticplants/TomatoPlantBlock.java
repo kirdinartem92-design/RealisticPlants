@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import net.minecraft.core.BlockPos;
@@ -6,8 +5,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -15,7 +17,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class TomatoPlantBlock extends Block {
+public class TomatoPlantBlock extends Block implements EntityBlock {
 
     public static final IntegerProperty AGE =
             IntegerProperty.create("age", 0, 6);
@@ -68,8 +70,15 @@ public class TomatoPlantBlock extends Block {
     }
 
     @Override
+    public BlockEntity newBlockEntity(
+            BlockPos pos,
+            BlockState state) {
+        return new TomatoPlantBlockEntity(pos, state);
+    }
+
+    @Override
     protected boolean isRandomlyTicking(BlockState state) {
-        return state.getValue(AGE) < 6;
+        return false;
     }
 
     @Override
@@ -78,15 +87,13 @@ public class TomatoPlantBlock extends Block {
             ServerLevel level,
             BlockPos pos,
             RandomSource random) {
+    }
 
-        int age = state.getValue(AGE);
-
-        if (age < 6 && random.nextInt(3) == 0) {
-            level.setBlock(
-                    pos,
-                    state.setValue(AGE, age + 1),
-                    Block.UPDATE_ALL
-            );
-        }
+    @Override
+    protected void tick(
+            BlockState state,
+            ServerLevel level,
+            BlockPos pos,
+            RandomSource random) {
     }
 }
