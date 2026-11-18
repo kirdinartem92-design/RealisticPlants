@@ -15,11 +15,10 @@ public final class PlantGrowthController {
     private static final int MAX_HEALTH = 100;
 
     private PlantGrowthController() {
-        // Utility class
     }
 
     /**
-     * Checks whether a plant can grow under current conditions.
+     * Checks whether a plant can grow.
      */
     public static boolean canGrow(PlantData plant, float temperature) {
 
@@ -33,14 +32,11 @@ public final class PlantGrowthController {
             return false;
         }
 
-        int health = plant.getHealth();
-        int moisture = plant.getMoisture();
-
-        if (health < MIN_HEALTH_FOR_GROWTH) {
+        if (plant.getHealth() < MIN_HEALTH_FOR_GROWTH) {
             return false;
         }
 
-        if (moisture < definition.getMinimumMoisture()) {
+        if (plant.getMoisture() < definition.getMinimumMoisture()) {
             return false;
         }
 
@@ -53,13 +49,15 @@ public final class PlantGrowthController {
     }
 
     /**
-     * Calculates growth points according to temperature,
-     * soil moisture and plant health.
+     * Calculates fractional growth progress.
      */
-    public static int getGrowthPoints(PlantData plant, float temperature) {
+    public static double getGrowthAmount(
+            PlantData plant,
+            float temperature
+    ) {
 
         if (!canGrow(plant, temperature)) {
-            return 0;
+            return 0.0;
         }
 
         int moisture = Math.max(
@@ -76,17 +74,30 @@ public final class PlantGrowthController {
                 PlantEnvironment.getGrowthMultiplier(temperature);
 
         double moistureMultiplier = moisture / 100.0;
-
         double healthMultiplier = health / 100.0;
 
-        double totalMultiplier =
-                temperatureMultiplier
-                        * moistureMultiplier
-                        * healthMultiplier;
+        double result = temperatureMultiplier
+                * moistureMultiplier
+                * healthMultiplier
+                * 2.0;
 
-        return Math.max(
-                1,
-                (int) Math.round(totalMultiplier * 2)
-        );
+        if (!Double.isFinite(result)) {
+            return 0.0;
+        }
+
+        return Math.max(0.0, result);
+    }
+
+    /**
+     * Legacy integer growth method.
+     */
+    public static int getGrowthPoints(
+            PlantData plant,
+            float temperature
+    ) {
+
+        double amount = getGrowthAmount(plant, temperature);
+
+        return (int) Math.round(amount);
     }
 }
