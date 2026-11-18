@@ -54,8 +54,6 @@ public class TomatoSeedsItem extends Item {
             }
         }
 
-        return InteractionResult.sidedSuccess(
-                level.isClientSide()
-        );
+        return InteractionResult.SUCCESS;
     }
 }
