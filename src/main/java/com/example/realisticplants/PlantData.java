@@ -14,6 +14,8 @@ public class PlantData {
     private int moisture;
     private int health;
 
+    private double growthProgress;
+
     private boolean flowering;
     private boolean harvestReady;
 
@@ -29,6 +31,7 @@ public class PlantData {
 
         this.moisture = 100;
         this.health = 100;
+        this.growthProgress = 0.0;
         this.flowering = false;
         this.harvestReady = false;
     }
@@ -51,6 +54,19 @@ public class PlantData {
 
     public void setHealth(int health) {
         this.health = clamp(health);
+    }
+
+    public double getGrowthProgress() {
+        return growthProgress;
+    }
+
+    public void setGrowthProgress(double growthProgress) {
+        if (!Double.isFinite(growthProgress)) {
+            this.growthProgress = 0.0;
+            return;
+        }
+
+        this.growthProgress = Math.max(0.0, growthProgress);
     }
 
     public boolean isFlowering() {
