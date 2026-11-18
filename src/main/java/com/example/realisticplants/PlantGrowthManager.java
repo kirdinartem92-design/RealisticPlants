@@ -1,8 +1,10 @@
-
 package com.realisticplants;
 
 /**
  * Manages moisture and health for individual plants.
+ *
+ * This manager is shared by all plant types.
+ * Individual plant behavior is controlled by PlantDefinition.
  */
 public class PlantGrowthManager {
 
@@ -13,6 +15,9 @@ public class PlantGrowthManager {
     private static final int MAX_HEALTH = 100;
 
     private static final int BASE_DROUGHT_DAMAGE = 2;
+
+    private static final int BASE_CRITICAL_MOISTURE = 20;
+    private static final int RECOVERY_MOISTURE = 30;
 
     private PlantGrowthManager() {
     }
@@ -25,11 +30,10 @@ public class PlantGrowthManager {
             return;
         }
 
+        long newMoisture = (long) plant.getMoisture() + amount;
+
         plant.setMoisture(
-                Math.min(
-                        MAX_MOISTURE,
-                        plant.getMoisture() + amount
-                )
+                (int) Math.min(MAX_MOISTURE, newMoisture)
         );
     }
 
@@ -41,11 +45,10 @@ public class PlantGrowthManager {
             return;
         }
 
+        long newMoisture = (long) plant.getMoisture() - amount;
+
         plant.setMoisture(
-                Math.max(
-                        MIN_MOISTURE,
-                        plant.getMoisture() - amount
-                )
+                (int) Math.max(MIN_MOISTURE, newMoisture)
         );
     }
 
@@ -72,24 +75,31 @@ public class PlantGrowthManager {
                 Math.min(100, definition.getDroughtResistance())
         );
 
+        // Higher resistance reduces drought damage.
         int droughtDamage = Math.max(
                 0,
                 BASE_DROUGHT_DAMAGE - droughtResistance / 25
         );
 
+        // Higher resistance allows plants to survive
+        // at lower soil moisture levels.
         int criticalMoisture = Math.max(
                 0,
-                20 - droughtResistance / 5
+                BASE_CRITICAL_MOISTURE - droughtResistance / 5
         );
 
         if (moisture < criticalMoisture) {
+
             plant.setHealth(
                     Math.max(
                             MIN_HEALTH,
                             health - droughtDamage
                     )
             );
-        } else if (moisture > 30 && health < MAX_HEALTH) {
+
+        } else if (moisture > RECOVERY_MOISTURE
+                && health < MAX_HEALTH) {
+
             plant.setHealth(
                     Math.min(
                             MAX_HEALTH,
