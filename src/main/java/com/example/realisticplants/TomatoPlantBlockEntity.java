@@ -104,29 +104,17 @@ public class TomatoPlantBlockEntity extends BlockEntity {
             float temperature,
             PlantDefinition definition
     ) {
-        int moisture = plantData.getMoisture();
-        int health = plantData.getHealth();
         int age = state.getValue(TomatoPlantBlock.AGE);
 
-        if (moisture < definition.getMinimumMoisture()
-                || health < 30) {
-            return;
-        }
-
-        if (temperature < definition.getMinTemperature()
-                || temperature > definition.getMaxTemperature()) {
-            return;
-        }
-
-        double growthMultiplier =
-                PlantEnvironment.getGrowthMultiplier(temperature);
-
-        if (growthMultiplier <= 0.0) {
-            return;
-        }
-
         int growthPoints =
-                Math.max(1, (int) (growthMultiplier * 2));
+                PlantGrowthController.getGrowthPoints(
+                        plantData,
+                        temperature
+                );
+
+        if (growthPoints <= 0) {
+            return;
+        }
 
         if (age < definition.getMaxGrowthStage()) {
             growthCounter += growthPoints;
