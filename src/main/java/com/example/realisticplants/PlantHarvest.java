@@ -2,29 +2,25 @@
 package com.realisticplants;
 
 /**
- * Manages flowering and harvesting.
+ * Manages flowering, harvesting and repeated harvest cycles.
  */
 public class PlantHarvest {
 
     private PlantHarvest() {
     }
 
-    /**
-     * Starts flowering when the plant is healthy.
-     */
     public static void startFlowering(PlantData plant) {
         if (plant == null || plant.isDead()) {
             return;
         }
 
-        if (plant.getHealth() >= 50) {
+        if (plant.getHealth() >= 50
+                && !plant.isFlowering()
+                && !plant.isHarvestReady()) {
             plant.setFlowering(true);
         }
     }
 
-    /**
-     * Produces harvest after flowering.
-     */
     public static void produceHarvest(PlantData plant) {
         if (plant == null || plant.isDead()) {
             return;
@@ -39,9 +35,6 @@ public class PlantHarvest {
         }
     }
 
-    /**
-     * Collects the harvest.
-     */
     public static boolean harvest(PlantData plant) {
         if (plant == null || plant.isDead()) {
             return false;
@@ -52,6 +45,8 @@ public class PlantHarvest {
         }
 
         plant.setHarvestReady(false);
+
+        // The plant remains alive and can flower again.
         return true;
     }
 }
