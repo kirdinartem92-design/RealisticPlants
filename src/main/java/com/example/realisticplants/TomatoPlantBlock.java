@@ -1,15 +1,16 @@
+
 package com.realisticplants;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -77,23 +78,30 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
     }
 
     @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level,
+            BlockState state,
+            BlockEntityType<T> type) {
+
+        if (level.isClientSide()) {
+            return null;
+        }
+
+        if (type != TomatoPlantBlockEntity.TYPE.get()) {
+            return null;
+        }
+
+        return (world, pos, blockState, blockEntity) ->
+                TomatoPlantBlockEntity.tick(
+                        world,
+                        pos,
+                        blockState,
+                        (TomatoPlantBlockEntity) blockEntity
+                );
+    }
+
+    @Override
     protected boolean isRandomlyTicking(BlockState state) {
         return false;
-    }
-
-    @Override
-    protected void randomTick(
-            BlockState state,
-            ServerLevel level,
-            BlockPos pos,
-            RandomSource random) {
-    }
-
-    @Override
-    protected void tick(
-            BlockState state,
-            ServerLevel level,
-            BlockPos pos,
-            RandomSource random) {
     }
 }
