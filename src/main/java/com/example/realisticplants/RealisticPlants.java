@@ -21,6 +21,7 @@ public class RealisticPlants {
                 Config.SPEC
         );
         ModBlocks.register(modEventBus);
+        TomatoPlantBlockEntity.register(modEventBus);
         LOGGER.info("Realistic Plants is loading!");
         LOGGER.info("Plant configuration registered!");
     }
