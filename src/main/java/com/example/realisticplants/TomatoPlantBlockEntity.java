@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import java.util.function.Supplier;
@@ -31,10 +30,11 @@ public class TomatoPlantBlockEntity extends BlockEntity {
                     )
             );
 
+    private static final double GROWTH_REQUIRED = 10.0;
+
     private final PlantData plantData = new PlantData();
 
     private int tickCounter = 0;
-    private int growthCounter = 0;
 
     public TomatoPlantBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE.get(), pos, state);
@@ -54,6 +54,7 @@ public class TomatoPlantBlockEntity extends BlockEntity {
             BlockState state,
             TomatoPlantBlockEntity plant
     ) {
+
         if (level.isClientSide() || plant.plantData.isDead()) {
             return;
         }
@@ -61,20 +62,28 @@ public class TomatoPlantBlockEntity extends BlockEntity {
         PlantDefinition definition =
                 plant.plantData.getDefinition();
 
+        if (definition == null) {
+            return;
+        }
+
         plant.tickCounter++;
 
         if (plant.tickCounter >= definition.getGrowthInterval()) {
+
             plant.tickCounter = 0;
 
             float temperature =
                     level.getBiome(pos).value().getBaseTemperature();
 
             if (level.isRainingAt(pos)) {
+
                 PlantEnvironment.applyRain(
                         plant.plantData,
                         5
                 );
+
             } else {
+
                 PlantEnvironment.applyHeat(
                         plant.plantData,
                         temperature,
@@ -98,6 +107,9 @@ public class TomatoPlantBlockEntity extends BlockEntity {
         }
     }
 
+    /**
+     * Updates fractional growth progress.
+     */
     private void updateGrowth(
             Level level,
             BlockPos pos,
@@ -105,53 +117,70 @@ public class TomatoPlantBlockEntity extends BlockEntity {
             float temperature,
             PlantDefinition definition
     ) {
+
         int age = state.getValue(TomatoPlantBlock.AGE);
 
-        int growthPoints =
-                PlantGrowthController.getGrowthPoints(
+        if (age >= definition.getMaxGrowthStage()) {
+            return;
+        }
+
+        double growthAmount =
+                PlantGrowthController.getGrowthAmount(
                         plantData,
                         temperature
                 );
 
-        if (growthPoints <= 0) {
+        if (growthAmount <= 0.0) {
             return;
         }
 
-        if (age < definition.getMaxGrowthStage()) {
-            growthCounter += growthPoints;
+        double progress =
+                plantData.getGrowthProgress() + growthAmount;
 
-            if (growthCounter >= 10) {
-                growthCounter -= 10;
+        plantData.setGrowthProgress(progress);
 
-                int nextAge = age + 1;
+        if (plantData.getGrowthProgress() >= GROWTH_REQUIRED) {
 
-                level.setBlock(
-                        pos,
-                        state.setValue(TomatoPlantBlock.AGE, nextAge),
-                        3
-                );
+            plantData.setGrowthProgress(
+                    plantData.getGrowthProgress() - GROWTH_REQUIRED
+            );
 
-                if (nextAge == 4 && !plantData.isFlowering()) {
-                    PlantHarvest.startFlowering(plantData);
-                }
+            int nextAge = age + 1;
 
-                if (nextAge == definition.getMaxGrowthStage()) {
-                    PlantHarvest.produceHarvest(plantData);
-                }
+            level.setBlock(
+                    pos,
+                    state.setValue(TomatoPlantBlock.AGE, nextAge),
+                    3
+            );
+
+            if (nextAge == 4 && !plantData.isFlowering()) {
+
+                PlantHarvest.startFlowering(plantData);
+            }
+
+            if (nextAge == definition.getMaxGrowthStage()) {
+
+                PlantHarvest.produceHarvest(plantData);
             }
         }
     }
 
+    /**
+     * Starts a new harvest cycle.
+     */
     public void resetHarvestCycle() {
+
         plantData.setHarvestReady(false);
-        growthCounter = 0;
+        plantData.setGrowthProgress(0.0);
 
         PlantHarvest.startFlowering(plantData);
 
         if (level != null) {
+
             BlockState state = getBlockState();
 
             if (state.getValue(TomatoPlantBlock.AGE) == 6) {
+
                 level.setBlock(
                         worldPosition,
                         state.setValue(TomatoPlantBlock.AGE, 4),
@@ -165,26 +194,64 @@ public class TomatoPlantBlockEntity extends BlockEntity {
 
     @Override
     protected void saveAdditional(ValueOutput output) {
+
         super.saveAdditional(output);
 
         output.putInt("moisture", plantData.getMoisture());
         output.putInt("health", plantData.getHealth());
-        output.putBoolean("flowering", plantData.isFlowering());
-        output.putBoolean("harvest_ready", plantData.isHarvestReady());
+
+        output.putBoolean(
+                "flowering",
+                plantData.isFlowering()
+        );
+
+        output.putBoolean(
+                "harvest_ready",
+                plantData.isHarvestReady()
+        );
+
         output.putInt("tick_counter", tickCounter);
-        output.putInt("growth_counter", growthCounter);
+
+        output.putDouble(
+                "growth_progress",
+                plantData.getGrowthProgress()
+        );
+
+        // Compatibility with older saved data.
+        output.putInt(
+                "growth_counter",
+                (int) Math.floor(plantData.getGrowthProgress())
+        );
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
+
         super.loadAdditional(input);
 
-        plantData.setMoisture(input.getIntOr("moisture", 100));
-        plantData.setHealth(input.getIntOr("health", 100));
-        plantData.setFlowering(input.getBooleanOr("flowering", false));
-        plantData.setHarvestReady(input.getBooleanOr("harvest_ready", false));
+        plantData.setMoisture(
+                input.getIntOr("moisture", 100)
+        );
+
+        plantData.setHealth(
+                input.getIntOr("health", 100)
+        );
+
+        plantData.setFlowering(
+                input.getBooleanOr("flowering", false)
+        );
+
+        plantData.setHarvestReady(
+                input.getBooleanOr("harvest_ready", false)
+        );
 
         tickCounter = input.getIntOr("tick_counter", 0);
-        growthCounter = input.getIntOr("growth_counter", 0);
+
+        double savedProgress = input.getDoubleOr(
+                "growth_progress",
+                input.getIntOr("growth_counter", 0)
+        );
+
+        plantData.setGrowthProgress(savedProgress);
     }
 }
