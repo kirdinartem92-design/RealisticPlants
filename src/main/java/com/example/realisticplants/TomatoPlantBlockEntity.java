@@ -1,3 +1,4 @@
+
 package com.realisticplants;
 
 import java.util.function.Supplier;
@@ -57,10 +58,16 @@ public class TomatoPlantBlockEntity extends BlockEntity {
             return;
         }
 
+        PlantDefinition definition =
+                plant.plantData.getDefinition();
+
         plant.tickCounter++;
 
-        if (plant.tickCounter >= 1200) {
+        if (plant.tickCounter >= definition.getGrowthInterval()) {
             plant.tickCounter = 0;
+
+            float temperature =
+                    level.getBiome(pos).value().getBaseTemperature();
 
             if (level.isRainingAt(pos)) {
                 PlantEnvironment.applyRain(
@@ -70,7 +77,7 @@ public class TomatoPlantBlockEntity extends BlockEntity {
             } else {
                 PlantGrowthManager.drySoil(
                         plant.plantData,
-                        1
+                        definition.getMoistureConsumption()
                 );
             }
 
@@ -78,7 +85,14 @@ public class TomatoPlantBlockEntity extends BlockEntity {
                     plant.plantData
             );
 
-            plant.updateGrowth(level, pos, state);
+            plant.updateGrowth(
+                    level,
+                    pos,
+                    state,
+                    temperature,
+                    definition
+            );
+
             plant.setChanged();
         }
     }
@@ -86,18 +100,23 @@ public class TomatoPlantBlockEntity extends BlockEntity {
     private void updateGrowth(
             Level level,
             BlockPos pos,
-            BlockState state
+            BlockState state,
+            float temperature,
+            PlantDefinition definition
     ) {
         int moisture = plantData.getMoisture();
         int health = plantData.getHealth();
         int age = state.getValue(TomatoPlantBlock.AGE);
 
-        if (moisture < 20 || health < 30) {
+        if (moisture < definition.getMinimumMoisture()
+                || health < 30) {
             return;
         }
 
-        float temperature =
-                level.getBiome(pos).value().getBaseTemperature();
+        if (temperature < definition.getMinTemperature()
+                || temperature > definition.getMaxTemperature()) {
+            return;
+        }
 
         double growthMultiplier =
                 PlantEnvironment.getGrowthMultiplier(temperature);
@@ -107,33 +126,13 @@ public class TomatoPlantBlockEntity extends BlockEntity {
         }
 
         int growthPoints =
-                (int) (growthMultiplier * 2);
+                Math.max(1, (int) (growthMultiplier * 2));
 
-        if (age < 4) {
+        if (age < definition.getMaxGrowthStage()) {
             growthCounter += growthPoints;
 
             if (growthCounter >= 10) {
-                growthCounter = 0;
-
-                level.setBlock(
-                        pos,
-                        state.setValue(TomatoPlantBlock.AGE, age + 1),
-                        3
-                );
-            }
-
-            return;
-        }
-
-        if (age == 4 && !plantData.isFlowering()) {
-            PlantHarvest.startFlowering(plantData);
-        }
-
-        if (age < 6) {
-            growthCounter += growthPoints;
-
-            if (growthCounter >= 10) {
-                growthCounter = 0;
+                growthCounter -= 10;
 
                 int nextAge = age + 1;
 
@@ -143,7 +142,11 @@ public class TomatoPlantBlockEntity extends BlockEntity {
                         3
                 );
 
-                if (nextAge == 6) {
+                if (nextAge == 4 && !plantData.isFlowering()) {
+                    PlantHarvest.startFlowering(plantData);
+                }
+
+                if (nextAge == definition.getMaxGrowthStage()) {
                     PlantHarvest.produceHarvest(plantData);
                 }
             }
