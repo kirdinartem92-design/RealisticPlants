@@ -21,22 +21,36 @@ public class PlantEnvironment {
     }
 
     /**
-     * Applies heat and dries the soil.
+     * Applies temperature-dependent soil drying.
      */
-    public static void applyHeat(PlantData plant, int amount) {
+    public static void applyHeat(
+            PlantData plant,
+            float temperature
+    ) {
         if (plant == null || plant.isDead()) {
             return;
         }
 
-        PlantGrowthManager.drySoil(plant, amount);
+        int dryingAmount;
+
+        if (temperature < 0.5f) {
+            dryingAmount = 0;
+        } else if (temperature <= 1.2f) {
+            dryingAmount = 1;
+        } else if (temperature <= 1.6f) {
+            dryingAmount = 2;
+        } else {
+            dryingAmount = 3;
+        }
+
+        PlantGrowthManager.drySoil(
+                plant,
+                dryingAmount
+        );
     }
 
     /**
      * Returns the growth multiplier based on Minecraft biome temperature.
-     *
-     * Cold biomes slow down plant growth.
-     * Moderate temperatures provide optimal growth.
-     * Very hot biomes cause heat stress.
      */
     public static double getGrowthMultiplier(float temperature) {
 
