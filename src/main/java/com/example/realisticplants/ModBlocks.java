@@ -18,6 +18,14 @@ public class ModBlocks {
                     properties -> properties.mapColor(MapColor.PLANT)
             );
 
+    public static final DeferredBlock<TomatoPlantBlock> TOMATO_PLANT =
+            BLOCKS.registerBlock(
+                    "tomato_plant",
+                    properties -> new TomatoPlantBlock(
+                            properties.mapColor(MapColor.PLANT)
+                    )
+            );
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
