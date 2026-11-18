@@ -1,3 +1,4 @@
+
 package com.realisticplants;
 
 import java.util.function.Supplier;
@@ -143,8 +144,9 @@ public class TomatoPlantBlockEntity extends BlockEntity {
 
     public void resetHarvestCycle() {
         plantData.setHarvestReady(false);
-        plantData.setFlowering(false);
         growthCounter = 0;
+
+        PlantHarvest.startFlowering(plantData);
 
         if (level != null) {
             BlockState state = getBlockState();
