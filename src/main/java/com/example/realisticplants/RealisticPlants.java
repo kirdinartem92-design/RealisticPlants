@@ -17,7 +17,7 @@ public class RealisticPlants {
     public RealisticPlants(IEventBus modEventBus, ModContainer modContainer) {
 
         modContainer.registerConfig(
-                ModConfig.Type.COMMON,
+                ModConfig.Type.LOCAL,
                 Config.SPEC
         );
         ModBlocks.register(modEventBus);
