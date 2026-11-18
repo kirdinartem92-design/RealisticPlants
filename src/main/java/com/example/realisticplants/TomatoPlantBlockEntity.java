@@ -1,3 +1,4 @@
+
 package com.realisticplants;
 
 import java.util.function.Supplier;
@@ -27,10 +28,10 @@ public class TomatoPlantBlockEntity extends BlockEntity {
     public static final Supplier<BlockEntityType<TomatoPlantBlockEntity>> TYPE =
             BLOCK_ENTITY_TYPES.register(
                     "tomato_plant",
-                    () -> BlockEntityType.Builder.of(
+                    () -> new BlockEntityType<>(
                             TomatoPlantBlockEntity::new,
                             ModBlocks.TOMATO_PLANT.get()
-                    ).build(null)
+                    )
             );
 
     private final PlantData plantData = new PlantData();
@@ -64,7 +65,6 @@ public class TomatoPlantBlockEntity extends BlockEntity {
 
         plant.tickCounter++;
 
-        // Update once every 1200 game ticks (60 seconds).
         if (plant.tickCounter >= 1200) {
             plant.tickCounter = 0;
 
