@@ -13,8 +13,11 @@ public class ModItems {
     public static final DeferredItem<Item> TOMATO =
             ITEMS.registerSimpleItem("tomato");
 
-    public static final DeferredItem<Item> TOMATO_SEEDS =
-            ITEMS.registerSimpleItem("tomato_seeds");
+    public static final DeferredItem<TomatoSeedsItem> TOMATO_SEEDS =
+            ITEMS.registerItem(
+                    "tomato_seeds",
+                    TomatoSeedsItem::new
+            );
 
     private ModItems() {
     }
