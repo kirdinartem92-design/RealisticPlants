@@ -1,3 +1,4 @@
+
 package com.realisticplants;
 
 import java.util.function.Supplier;
@@ -8,7 +9,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.bus.api.IEventBus;
@@ -63,10 +63,17 @@ public class TomatoPlantBlockEntity extends BlockEntity {
         if (plant.tickCounter >= 1200) {
             plant.tickCounter = 0;
 
-            PlantGrowthManager.drySoil(
-                    plant.plantData,
-                    1
-            );
+            if (level.isRainingAt(pos)) {
+                PlantGrowthManager.water(
+                        plant.plantData,
+                        5
+                );
+            } else {
+                PlantGrowthManager.drySoil(
+                        plant.plantData,
+                        1
+                );
+            }
 
             PlantGrowthManager.updateHealth(
                     plant.plantData
@@ -131,9 +138,6 @@ public class TomatoPlantBlockEntity extends BlockEntity {
         }
     }
 
-    /**
-     * Called after harvesting to allow another crop cycle.
-     */
     public void resetHarvestCycle() {
         plantData.setHarvestReady(false);
         plantData.setFlowering(false);
