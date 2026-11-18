@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import java.util.function.Supplier;
@@ -75,8 +74,9 @@ public class TomatoPlantBlockEntity extends BlockEntity {
                         5
                 );
             } else {
-                PlantGrowthManager.drySoil(
+                PlantEnvironment.applyHeat(
                         plant.plantData,
+                        temperature,
                         definition.getMoistureConsumption()
                 );
             }
