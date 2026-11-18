@@ -160,10 +160,15 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
                 return InteractionResult.PASS;
             }
 
-            ItemStack tomatoes = new ItemStack(ModItems.TOMATO.get());
+            ItemStack tomatoes =
+                    new ItemStack(ModItems.TOMATO.get());
 
             if (!player.getInventory().add(tomatoes)) {
-                player.drop(tomatoes, false);
+                player.drop(
+                        tomatoes,
+                        false,
+                        Prediction.SERVER_ONLY
+                );
             }
 
             plant.resetHarvestCycle();
