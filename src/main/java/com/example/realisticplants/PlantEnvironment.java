@@ -32,23 +32,27 @@ public class PlantEnvironment {
     }
 
     /**
-     * Returns the growth multiplier based on temperature.
+     * Returns the growth multiplier based on Minecraft biome temperature.
+     *
+     * Cold biomes slow down plant growth.
+     * Moderate temperatures provide optimal growth.
+     * Very hot biomes cause heat stress.
      */
     public static double getGrowthMultiplier(float temperature) {
 
-        if (temperature < 5.0f) {
+        if (temperature < 0.15f) {
             return 0.0;
         }
 
-        if (temperature < 15.0f) {
+        if (temperature < 0.5f) {
             return 0.5;
         }
 
-        if (temperature <= 30.0f) {
+        if (temperature <= 1.2f) {
             return 1.0;
         }
 
-        if (temperature <= 35.0f) {
+        if (temperature <= 1.6f) {
             return 0.5;
         }
 
