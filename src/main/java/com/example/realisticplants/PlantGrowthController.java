@@ -50,7 +50,7 @@ public final class PlantGrowthController {
             return 0;
         }
 
-        float multiplier =
+        double multiplier =
                 PlantEnvironment.getGrowthMultiplier(temperature);
 
         return Math.max(1, (int) (multiplier * 2));
