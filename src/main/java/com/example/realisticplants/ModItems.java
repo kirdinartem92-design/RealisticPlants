@@ -13,6 +13,9 @@ public class ModItems {
     public static final DeferredItem<Item> TOMATO =
             ITEMS.registerSimpleItem("tomato");
 
+    public static final DeferredItem<Item> TOMATO_SEEDS =
+            ITEMS.registerSimpleItem("tomato_seeds");
+
     private ModItems() {
     }
 
