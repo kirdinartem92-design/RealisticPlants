@@ -19,9 +19,13 @@ public class RealisticPlants {
                 ModConfig.Type.LOCAL,
                 Config.SPEC
         );
+
         ModBlocks.register(modEventBus);
+        ModItems.register(modEventBus);
         TomatoPlantBlockEntity.register(modEventBus);
+
         LOGGER.info("Realistic Plants is loading!");
         LOGGER.info("Plant configuration registered!");
+        LOGGER.info("Plant items registered!");
     }
 }
