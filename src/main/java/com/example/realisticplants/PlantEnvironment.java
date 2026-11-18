@@ -27,25 +27,38 @@ public class PlantEnvironment {
             PlantData plant,
             float temperature
     ) {
+        applyHeat(plant, temperature, 0);
+    }
+
+    /**
+     * Applies normal moisture consumption
+     * and additional drying caused by heat.
+     */
+    public static void applyHeat(
+            PlantData plant,
+            float temperature,
+            int baseConsumption
+    ) {
         if (plant == null || plant.isDead()) {
             return;
         }
 
-        int dryingAmount;
+        int heatDrying;
 
-        if (temperature < 0.5f) {
-            dryingAmount = 0;
-        } else if (temperature <= 1.2f) {
-            dryingAmount = 1;
+        if (temperature <= 1.2f) {
+            heatDrying = 0;
         } else if (temperature <= 1.6f) {
-            dryingAmount = 2;
+            heatDrying = 1;
         } else {
-            dryingAmount = 3;
+            heatDrying = 2;
         }
+
+        int totalDrying =
+                Math.max(0, baseConsumption) + heatDrying;
 
         PlantGrowthManager.drySoil(
                 plant,
-                dryingAmount
+                totalDrying
         );
     }
 
