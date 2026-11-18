@@ -1,8 +1,14 @@
-
 package com.realisticplants;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
@@ -14,6 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -68,6 +75,59 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
                 pos.below(),
                 Direction.UP
         );
+    }
+
+    @Override
+    protected InteractionResult useItemOn(
+            ItemStack itemStack,
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            InteractionHand hand,
+            BlockHitResult hitResult) {
+
+        if (!itemStack.is(Items.POTION)) {
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
+        }
+
+        var potionContents =
+                itemStack.get(DataComponents.POTION_CONTENTS);
+
+        if (potionContents == null
+                || !potionContents.is(Potions.WATER)) {
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
+        }
+
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+
+        if (!(blockEntity instanceof TomatoPlantBlockEntity plant)) {
+            return InteractionResult.PASS;
+        }
+
+        if (!level.isClientSide()) {
+            PlantGrowthManager.water(
+                    plant.getPlantData(),
+                    40
+            );
+
+            plant.setChanged();
+
+            if (!player.getAbilities().instabuild) {
+                itemStack.shrink(1);
+
+                ItemStack bottle =
+                        new ItemStack(Items.GLASS_BOTTLE);
+
+                if (itemStack.isEmpty()) {
+                    player.setItemInHand(hand, bottle);
+                } else if (!player.getInventory().add(bottle)) {
+                    player.drop(bottle, false);
+                }
+            }
+        }
+
+        return InteractionResult.SUCCESS;
     }
 
     @Override
