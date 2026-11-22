@@ -1,8 +1,119 @@
 
 {
-  "parent": "minecraft:block/cross",
-  "render_type": "cutout",
   "textures": {
-    "cross": "realisticplants:block/tomato_plant_stage_5"
-  }
+    "particle": "realisticplants:block/tomato_leaf",
+    "stem": "realisticplants:block/tomato_stem",
+    "leaf": "realisticplants:block/tomato_leaf",
+    "fruit": "realisticplants:block/tomato_fruit_green"
+  },
+  "elements": [
+    {
+      "from": [7, 0, 7],
+      "to": [9, 10, 9],
+      "faces": {
+        "north": {"texture": "#stem"},
+        "south": {"texture": "#stem"},
+        "east": {"texture": "#stem"},
+        "west": {"texture": "#stem"},
+        "up": {"texture": "#stem"},
+        "down": {"texture": "#stem"}
+      }
+    },
+    {
+      "from": [4, 7, 7],
+      "to": [8, 8, 8],
+      "faces": {
+        "north": {"texture": "#stem"},
+        "south": {"texture": "#stem"},
+        "east": {"texture": "#stem"},
+        "west": {"texture": "#stem"},
+        "up": {"texture": "#stem"},
+        "down": {"texture": "#stem"}
+      }
+    },
+    {
+      "from": [8, 9, 8],
+      "to": [12, 10, 9],
+      "faces": {
+        "north": {"texture": "#stem"},
+        "south": {"texture": "#stem"},
+        "east": {"texture": "#stem"},
+        "west": {"texture": "#stem"},
+        "up": {"texture": "#stem"},
+        "down": {"texture": "#stem"}
+      }
+    },
+    {
+      "from": [1, 6, 6],
+      "to": [7, 7, 10],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    },
+    {
+      "from": [9, 9, 5],
+      "to": [15, 10, 11],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    },
+    {
+      "from": [3, 11, 9],
+      "to": [9, 12, 14],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    },
+    {
+      "from": [10, 12, 7],
+      "to": [15, 13, 12],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    },
+    {
+      "from": [2, 3, 7],
+      "to": [7, 8, 12],
+      "faces": {
+        "north": {"texture": "#fruit"},
+        "south": {"texture": "#fruit"},
+        "east": {"texture": "#fruit"},
+        "west": {"texture": "#fruit"},
+        "up": {"texture": "#fruit"},
+        "down": {"texture": "#fruit"}
+      }
+    },
+    {
+      "from": [10, 7, 4],
+      "to": [15, 12, 9],
+      "faces": {
+        "north": {"texture": "#fruit"},
+        "south": {"texture": "#fruit"},
+        "east": {"texture": "#fruit"},
+        "west": {"texture": "#fruit"},
+        "up": {"texture": "#fruit"},
+        "down": {"texture": "#fruit"}
+      }
+    }
+  ]
 }
