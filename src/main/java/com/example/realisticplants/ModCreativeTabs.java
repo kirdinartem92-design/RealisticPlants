@@ -3,7 +3,6 @@ package com.realisticplants;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -23,21 +22,13 @@ public class ModCreativeTabs {
                             .title(Component.translatable(
                                     "itemGroup.realisticplants"
                             ))
-                            .icon(() -> new ItemStack(
-                                    ModItems.TOMATO.get(), 1
+                            .icon(() -> new net.minecraft.world.item.ItemStack(
+                                    ModItems.TOMATO.get()
                             ))
                             .displayItems((parameters, output) -> {
-                                output.accept(new ItemStack(
-                                        ModItems.TOMATO.get(), 1
-                                ));
-
-                                output.accept(new ItemStack(
-                                        ModItems.TOMATO_SEEDS.get(), 1
-                                ));
-
-                                output.accept(new ItemStack(
-                                        ModBlocks.TOMATO_PLANT.get().asItem(), 1
-                                ));
+                                output.accept(ModItems.TOMATO.get());
+                                output.accept(ModItems.TOMATO_SEEDS.get());
+                                output.accept(ModItems.TOMATO_PLANT_ITEM.get());
                             })
                             .build()
             );
