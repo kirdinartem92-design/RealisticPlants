@@ -1,8 +1,82 @@
 
 {
-  "parent": "minecraft:block/cross",
-  "render_type": "cutout",
   "textures": {
-    "cross": "realisticplants:block/tomato_plant_stage_3"
-  }
+    "particle": "realisticplants:block/tomato_leaf",
+    "stem": "realisticplants:block/tomato_stem",
+    "leaf": "realisticplants:block/tomato_leaf"
+  },
+  "elements": [
+    {
+      "from": [7, 0, 7],
+      "to": [9, 9, 9],
+      "faces": {
+        "north": {"texture": "#stem"},
+        "south": {"texture": "#stem"},
+        "east": {"texture": "#stem"},
+        "west": {"texture": "#stem"},
+        "up": {"texture": "#stem"},
+        "down": {"texture": "#stem"}
+      }
+    },
+    {
+      "from": [4, 4, 7],
+      "to": [7, 6, 9],
+      "faces": {
+        "north": {"texture": "#stem"},
+        "south": {"texture": "#stem"},
+        "east": {"texture": "#stem"},
+        "west": {"texture": "#stem"},
+        "up": {"texture": "#stem"},
+        "down": {"texture": "#stem"}
+      }
+    },
+    {
+      "from": [9, 6, 7],
+      "to": [12, 8, 9],
+      "faces": {
+        "north": {"texture": "#stem"},
+        "south": {"texture": "#stem"},
+        "east": {"texture": "#stem"},
+        "west": {"texture": "#stem"},
+        "up": {"texture": "#stem"},
+        "down": {"texture": "#stem"}
+      }
+    },
+    {
+      "from": [3, 4, 5],
+      "to": [8, 5, 10],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    },
+    {
+      "from": [8, 6, 3],
+      "to": [13, 7, 8],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    },
+    {
+      "from": [5, 7, 9],
+      "to": [10, 8, 14],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    }
+  ]
 }
