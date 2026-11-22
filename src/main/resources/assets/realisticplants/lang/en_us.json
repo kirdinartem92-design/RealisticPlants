@@ -1,5 +1,5 @@
-
 {
-  "item.realisticplants.tomato": "Tomato",
-  "item.realisticplants.tomato_seeds": "Tomato Seeds"
+"item.realisticplants.tomato": "Tomato",
+"item.realisticplants.tomato_seeds": "Tomato Seeds",
+"itemGroup.realisticplants": "Realistic Plants"
 }
