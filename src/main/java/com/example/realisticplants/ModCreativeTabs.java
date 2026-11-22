@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import net.minecraft.core.registries.Registries;
@@ -24,11 +23,21 @@ public class ModCreativeTabs {
                             .title(Component.translatable(
                                     "itemGroup.realisticplants"
                             ))
-                            .icon(() -> new ItemStack(ModItems.TOMATO.get()))
+                            .icon(() -> new ItemStack(
+                                    ModItems.TOMATO.get(), 1
+                            ))
                             .displayItems((parameters, output) -> {
-                                output.accept(ModItems.TOMATO.get());
-                                output.accept(ModItems.TOMATO_SEEDS.get());
-                                output.accept(ModBlocks.TOMATO_PLANT.get());
+                                output.accept(new ItemStack(
+                                        ModItems.TOMATO.get(), 1
+                                ));
+
+                                output.accept(new ItemStack(
+                                        ModItems.TOMATO_SEEDS.get(), 1
+                                ));
+
+                                output.accept(new ItemStack(
+                                        ModBlocks.TOMATO_PLANT.get().asItem(), 1
+                                ));
                             })
                             .build()
             );
