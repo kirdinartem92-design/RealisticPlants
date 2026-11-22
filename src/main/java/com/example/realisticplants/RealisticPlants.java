@@ -1,3 +1,4 @@
+
 package com.realisticplants;
 
 import com.mojang.logging.LogUtils;
@@ -22,10 +23,12 @@ public class RealisticPlants {
 
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
+        ModCreativeTabs.register(modEventBus);
         TomatoPlantBlockEntity.register(modEventBus);
 
         LOGGER.info("Realistic Plants is loading!");
         LOGGER.info("Plant configuration registered!");
         LOGGER.info("Plant items registered!");
+        LOGGER.info("Creative tabs registered!");
     }
 }
