@@ -1,5 +1,6 @@
 
 {
-  "item.realisticplants.tomato": "Томат",
-  "item.realisticplants.tomato_seeds": "Семена томата"
+  "item.realisticplants.tomato": "Помидор",
+  "item.realisticplants.tomato_seeds": "Семена помидора",
+  "itemGroup.realisticplants": "Реалистичные растения"
 }
