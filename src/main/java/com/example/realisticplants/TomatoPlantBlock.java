@@ -1,7 +1,7 @@
+
 package com.realisticplants;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -71,11 +72,9 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
             BlockState state,
             LevelReader level,
             BlockPos pos) {
-        return Block.canSupportCenter(
-                level,
-                pos.below(),
-                Direction.UP
-        );
+
+        return level.getBlockState(pos.below())
+                .is(Blocks.FARMLAND);
     }
 
     @Override
