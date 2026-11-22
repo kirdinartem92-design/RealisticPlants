@@ -8,6 +8,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.function.Supplier;
+
 public class ModCreativeTabs {
 
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
@@ -16,10 +18,7 @@ public class ModCreativeTabs {
                     RealisticPlants.MOD_ID
             );
 
-    public static final DeferredRegister<CreativeModeTab> TABS =
-            CREATIVE_TABS;
-
-    public static final var REALISTIC_PLANTS_TAB =
+    public static final Supplier<CreativeModeTab> REALISTIC_PLANTS_TAB =
             CREATIVE_TABS.register("realistic_plants",
                     () -> CreativeModeTab.builder()
                             .title(Component.translatable(
