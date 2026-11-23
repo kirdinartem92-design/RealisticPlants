@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import net.minecraft.world.food.FoodProperties;
@@ -17,10 +16,7 @@ public class ModItems {
             ITEMS.registerSimpleItem(
                     "tomato",
                     properties -> properties.food(
-                            new FoodProperties.Builder()
-                                    .nutrition(2)
-                                    .saturationModifier(0.3f)
-                                    .build()
+                            createFoodProperties("tomato")
                     )
             );
 
@@ -34,6 +30,21 @@ public class ModItems {
             ITEMS.registerSimpleBlockItem(ModBlocks.TOMATO_PLANT);
 
     private ModItems() {
+    }
+
+    private static FoodProperties createFoodProperties(String plantId) {
+        PlantDefinition definition = PlantRegistry.get(plantId);
+
+        if (definition == null) {
+            throw new IllegalStateException(
+                    "Unknown plant definition: " + plantId
+            );
+        }
+
+        return new FoodProperties.Builder()
+                .nutrition(definition.getNutrition())
+                .saturationModifier(definition.getSaturationModifier())
+                .build();
     }
 
     public static void register(IEventBus eventBus) {
