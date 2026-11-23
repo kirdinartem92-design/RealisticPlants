@@ -1,0 +1,43 @@
+{
+  "textures": {
+    "particle": "minecraft:block/jungle_leaves",
+    "stem": "minecraft:block/melon_stem",
+    "leaf": "minecraft:block/jungle_leaves",
+    "flower": "minecraft:block/dandelion",
+    "fruit": "realisticplants:item/cucumber"
+  },
+  "elements": [
+    {
+      "from": [
+        7,
+        0,
+        7
+      ],
+      "to": [
+        9,
+        3,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stem"
+        },
+        "south": {
+          "texture": "#stem"
+        },
+        "east": {
+          "texture": "#stem"
+        },
+        "west": {
+          "texture": "#stem"
+        },
+        "up": {
+          "texture": "#stem"
+        },
+        "down": {
+          "texture": "#stem"
+        }
+      }
+    }
+  ]
+}
