@@ -21,5 +21,10 @@
   "item.realisticplants.chili_pepper": "Chili Pepper",
   "item.realisticplants.chili_pepper_seeds": "Chili Pepper Seeds",
   "item.realisticplants.broccoli": "Broccoli",
-  "item.realisticplants.broccoli_seeds": "Broccoli Seeds"
+  "item.realisticplants.broccoli_seeds": "Broccoli Seeds",
+  "block.realisticplants.zucchini_plant": "Zucchini Plant",
+  "block.realisticplants.eggplant_plant": "Eggplant Plant",
+  "block.realisticplants.bell_pepper_plant": "Bell Pepper Plant",
+  "block.realisticplants.chili_pepper_plant": "Chili Pepper Plant",
+  "block.realisticplants.broccoli_plant": "Broccoli Plant"
 }
