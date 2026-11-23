@@ -1,0 +1,48 @@
+{
+  "textures": {
+    "particle": "realisticplants:item/bell_pepper",
+    "plant": "realisticplants:item/bell_pepper"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        7.5
+      ],
+      "to": [
+        15,
+        24,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        0,
+        1
+      ],
+      "to": [
+        8.5,
+        24,
+        15
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    }
+  ]
+}

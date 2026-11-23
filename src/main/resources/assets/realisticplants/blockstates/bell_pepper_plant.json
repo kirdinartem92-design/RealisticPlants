@@ -1,0 +1,88 @@
+{
+  "variants": {
+    "age=0,condition=healthy": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_0"
+    },
+    "age=0,condition=wilting": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_0"
+    },
+    "age=0,condition=dry": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_0"
+    },
+    "age=0,condition=dead": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_0"
+    },
+    "age=1,condition=healthy": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_1"
+    },
+    "age=1,condition=wilting": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_1"
+    },
+    "age=1,condition=dry": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_1"
+    },
+    "age=1,condition=dead": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_1"
+    },
+    "age=2,condition=healthy": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_2"
+    },
+    "age=2,condition=wilting": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_2"
+    },
+    "age=2,condition=dry": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_2"
+    },
+    "age=2,condition=dead": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_2"
+    },
+    "age=3,condition=healthy": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_3"
+    },
+    "age=3,condition=wilting": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_3"
+    },
+    "age=3,condition=dry": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_3"
+    },
+    "age=3,condition=dead": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_3"
+    },
+    "age=4,condition=healthy": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_4"
+    },
+    "age=4,condition=wilting": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_4"
+    },
+    "age=4,condition=dry": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_4"
+    },
+    "age=4,condition=dead": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_4"
+    },
+    "age=5,condition=healthy": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_5"
+    },
+    "age=5,condition=wilting": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_5"
+    },
+    "age=5,condition=dry": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_5"
+    },
+    "age=5,condition=dead": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_5"
+    },
+    "age=6,condition=healthy": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_6"
+    },
+    "age=6,condition=wilting": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_6"
+    },
+    "age=6,condition=dry": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_6"
+    },
+    "age=6,condition=dead": {
+      "model": "realisticplants:block/bell_pepper_plant_stage_6"
+    }
+  }
+}
