@@ -1,9 +1,9 @@
 {
   "textures": {
-    "particle": "minecraft:block/jungle_leaves",
-    "stem": "minecraft:block/melon_stem",
-    "leaf": "minecraft:block/jungle_leaves",
-    "flower": "minecraft:block/dandelion",
+    "particle": "realisticplants:block/cucumber_leaf",
+    "stem": "realisticplants:block/cucumber_stem",
+    "leaf": "realisticplants:block/cucumber_leaf",
+    "flower": "realisticplants:block/cucumber_flower",
     "fruit": "realisticplants:item/cucumber"
   },
   "elements": [
