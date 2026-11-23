@@ -33,6 +33,27 @@ public final class PlantRegistry {
         register(new PlantDefinition(
                 "beetroot", 6, 5, 5, 1300, 1,
                 0.10f, 1.45f, 25, 25, false, 1, 3, 3, 0.45f));
+
+        // New non-vanilla vegetable crops.
+        register(new PlantDefinition(
+                "zucchini", 6, 4, 3, 1000, 1,
+                0.16f, 1.55f, 25, 18, true, 1, 3, 3, 0.5f));
+
+        register(new PlantDefinition(
+                "eggplant", 6, 4, 3, 1250, 1,
+                0.18f, 1.65f, 25, 22, true, 1, 3, 3, 0.55f));
+
+        register(new PlantDefinition(
+                "bell_pepper", 6, 4, 3, 1150, 1,
+                0.16f, 1.6f, 25, 20, true, 1, 4, 2, 0.45f));
+
+        register(new PlantDefinition(
+                "chili_pepper", 6, 4, 3, 1050, 1,
+                0.18f, 1.7f, 25, 18, true, 1, 5, 2, 0.4f));
+
+        register(new PlantDefinition(
+                "broccoli", 6, 5, 5, 1450, 1,
+                0.10f, 1.45f, 30, 28, false, 1, 2, 4, 0.6f));
     }
 
     private PlantRegistry() {
