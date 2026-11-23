@@ -35,6 +35,12 @@ public class ModItems {
                     TomatoSeedsItem::new
             );
 
+    public static final DeferredItem<CucumberSeedsItem> CUCUMBER_SEEDS =
+            ITEMS.registerItem(
+                    "cucumber_seeds",
+                    CucumberSeedsItem::new
+            );
+
     public static final DeferredItem<BlockItem> TOMATO_PLANT_ITEM =
             ITEMS.registerSimpleBlockItem(ModBlocks.TOMATO_PLANT);
 
