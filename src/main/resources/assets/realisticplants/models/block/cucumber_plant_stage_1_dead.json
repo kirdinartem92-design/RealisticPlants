@@ -4,7 +4,7 @@
     "stem": "realisticplants:block/cucumber_stem_dead",
     "leaf": "realisticplants:block/cucumber_leaf_dead",
     "flower": "realisticplants:block/cucumber_flower",
-    "fruit": "realisticplants:item/cucumber"
+    "fruit": "realisticplants:block/cucumber_fruit"
   },
   "elements": [
     {
@@ -41,14 +41,14 @@
     },
     {
       "from": [
-        5,
+        4,
         3,
-        5
+        7.975
       ],
       "to": [
-        10,
-        4,
-        10
+        12,
+        6,
+        8.025
       ],
       "faces": {
         "north": {
@@ -56,19 +56,37 @@
         },
         "south": {
           "texture": "#leaf"
-        },
-        "east": {
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        3,
+        7.975
+      ],
+      "to": [
+        12,
+        6,
+        8.025
+      ],
+      "faces": {
+        "north": {
           "texture": "#leaf"
         },
-        "west": {
-          "texture": "#leaf"
-        },
-        "up": {
-          "texture": "#leaf"
-        },
-        "down": {
+        "south": {
           "texture": "#leaf"
         }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          4.5,
+          8
+        ],
+        "axis": "y",
+        "angle": 90,
+        "rescale": false
       }
     }
   ]
