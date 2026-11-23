@@ -1,8 +1,106 @@
 {
-  "parent": "realisticplants:block/tomato_plant_stage_6",
   "textures": {
     "particle": "realisticplants:block/tomato_leaf_dry",
+    "stem": "realisticplants:block/tomato_stem_dry",
     "leaf": "realisticplants:block/tomato_leaf_dry",
-    "stem": "realisticplants:block/tomato_stem_dry"
-  }
+    "fruit": "realisticplants:block/tomato_fruit_red"
+  },
+  "elements": [
+    {
+      "from": [7, 0, 7],
+      "to": [9, 11, 9],
+      "faces": {
+        "north": {"texture": "#stem"},
+        "south": {"texture": "#stem"},
+        "east": {"texture": "#stem"},
+        "west": {"texture": "#stem"},
+        "up": {"texture": "#stem"},
+        "down": {"texture": "#stem"}
+      }
+    },
+    {
+      "from": [4, 5, 7],
+      "to": [8, 6, 8],
+      "faces": {
+        "north": {"texture": "#stem"},
+        "south": {"texture": "#stem"},
+        "east": {"texture": "#stem"},
+        "west": {"texture": "#stem"},
+        "up": {"texture": "#stem"},
+        "down": {"texture": "#stem"}
+      }
+    },
+    {
+      "from": [8, 7, 8],
+      "to": [12, 8, 9],
+      "faces": {
+        "north": {"texture": "#stem"},
+        "south": {"texture": "#stem"},
+        "east": {"texture": "#stem"},
+        "west": {"texture": "#stem"},
+        "up": {"texture": "#stem"},
+        "down": {"texture": "#stem"}
+      }
+    },
+    {
+      "from": [2, 4, 7],
+      "to": [6, 5, 10],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    },
+    {
+      "from": [10, 7, 5],
+      "to": [14, 8, 9],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    },
+    {
+      "from": [1, 4, 7],
+      "to": [6, 9, 12],
+      "faces": {
+        "north": {"texture": "#fruit"},
+        "south": {"texture": "#fruit"},
+        "east": {"texture": "#fruit"},
+        "west": {"texture": "#fruit"},
+        "up": {"texture": "#fruit"},
+        "down": {"texture": "#fruit"}
+      }
+    },
+    {
+      "from": [9, 7, 3],
+      "to": [14, 12, 8],
+      "faces": {
+        "north": {"texture": "#fruit"},
+        "south": {"texture": "#fruit"},
+        "east": {"texture": "#fruit"},
+        "west": {"texture": "#fruit"},
+        "up": {"texture": "#fruit"},
+        "down": {"texture": "#fruit"}
+      }
+    },
+    {
+      "from": [9, 3, 10],
+      "to": [14, 8, 15],
+      "faces": {
+        "north": {"texture": "#fruit"},
+        "south": {"texture": "#fruit"},
+        "east": {"texture": "#fruit"},
+        "west": {"texture": "#fruit"},
+        "up": {"texture": "#fruit"},
+        "down": {"texture": "#fruit"}
+      }
+    }
+  ]
 }
