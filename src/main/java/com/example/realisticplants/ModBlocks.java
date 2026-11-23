@@ -34,6 +34,31 @@ public class ModBlocks {
                     )
             );
 
+    public static final DeferredBlock<NewCropPlantBlock> ZUCCHINI_PLANT =
+            BLOCKS.registerBlock("zucchini_plant",
+                    properties -> new NewCropPlantBlock(properties.mapColor(MapColor.PLANT),
+                            "zucchini", ModItems.ZUCCHINI, ModItems.ZUCCHINI_SEEDS));
+
+    public static final DeferredBlock<NewCropPlantBlock> EGGPLANT_PLANT =
+            BLOCKS.registerBlock("eggplant_plant",
+                    properties -> new NewCropPlantBlock(properties.mapColor(MapColor.PLANT),
+                            "eggplant", ModItems.EGGPLANT, ModItems.EGGPLANT_SEEDS));
+
+    public static final DeferredBlock<NewCropPlantBlock> BELL_PEPPER_PLANT =
+            BLOCKS.registerBlock("bell_pepper_plant",
+                    properties -> new NewCropPlantBlock(properties.mapColor(MapColor.PLANT),
+                            "bell_pepper", ModItems.BELL_PEPPER, ModItems.BELL_PEPPER_SEEDS));
+
+    public static final DeferredBlock<NewCropPlantBlock> CHILI_PEPPER_PLANT =
+            BLOCKS.registerBlock("chili_pepper_plant",
+                    properties -> new NewCropPlantBlock(properties.mapColor(MapColor.PLANT),
+                            "chili_pepper", ModItems.CHILI_PEPPER, ModItems.CHILI_PEPPER_SEEDS));
+
+    public static final DeferredBlock<NewCropPlantBlock> BROCCOLI_PLANT =
+            BLOCKS.registerBlock("broccoli_plant",
+                    properties -> new NewCropPlantBlock(properties.mapColor(MapColor.PLANT),
+                            "broccoli", ModItems.BROCCOLI, ModItems.BROCCOLI_SEEDS));
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
