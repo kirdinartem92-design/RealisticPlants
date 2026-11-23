@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -34,6 +35,9 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
     public static final IntegerProperty AGE =
             IntegerProperty.create("age", 0, 6);
 
+    public static final EnumProperty<PlantCondition> CONDITION =
+            EnumProperty.create("condition", PlantCondition.class);
+
     private static final VoxelShape SHAPE =
             Block.box(4, 0, 4, 12, 12, 12);
 
@@ -41,14 +45,16 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
         super(properties);
 
         registerDefaultState(
-                stateDefinition.any().setValue(AGE, 0)
+                stateDefinition.any()
+                        .setValue(AGE, 0)
+                        .setValue(CONDITION, PlantCondition.HEALTHY)
         );
     }
 
     @Override
     protected void createBlockStateDefinition(
             StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(AGE);
+        builder.add(AGE, CONDITION);
     }
 
     @Override
@@ -248,7 +254,6 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
                 return InteractionResult.PASS;
             }
 
-            // Give harvested tomatoes.
             ItemStack tomatoes =
                     new ItemStack(
                             ModItems.TOMATO.get(),
@@ -257,7 +262,6 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
 
             giveItem(player, tomatoes);
 
-            // Seeds are a rare bonus from harvesting.
             int seedAmount = getSeedAmount(data);
 
             if (seedAmount > 0) {
