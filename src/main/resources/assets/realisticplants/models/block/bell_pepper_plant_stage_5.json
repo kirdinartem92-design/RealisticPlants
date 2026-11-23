@@ -1,18 +1,18 @@
 {
   "textures": {
-    "particle": "realisticplants:item/bell_pepper",
-    "plant": "realisticplants:item/bell_pepper"
+    "particle": "realisticplants:block/bell_pepper_plant",
+    "plant": "realisticplants:block/bell_pepper_plant"
   },
   "elements": [
     {
       "from": [
-        1,
+        3,
         0,
         7.5
       ],
       "to": [
-        15,
-        22,
+        13,
+        13,
         8.5
       ],
       "faces": {
@@ -28,12 +28,132 @@
       "from": [
         7.5,
         0,
-        1
+        3
       ],
       "to": [
         8.5,
-        22,
-        15
+        13,
+        13
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        4.5,
+        3,
+        2
+      ],
+      "to": [
+        11.5,
+        5,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        3,
+        4.5
+      ],
+      "to": [
+        14,
+        5,
+        11.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        6,
+        5
+      ],
+      "to": [
+        12,
+        8,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        6,
+        4
+      ],
+      "to": [
+        11,
+        8,
+        12
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        3.5,
+        8,
+        2
+      ],
+      "to": [
+        12.5,
+        10,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        8,
+        3.5
+      ],
+      "to": [
+        14,
+        10,
+        12.5
       ],
       "faces": {
         "east": {

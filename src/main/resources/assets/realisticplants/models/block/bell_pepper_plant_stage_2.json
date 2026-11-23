@@ -1,18 +1,18 @@
 {
   "textures": {
-    "particle": "realisticplants:item/bell_pepper",
-    "plant": "realisticplants:item/bell_pepper"
+    "particle": "realisticplants:block/bell_pepper_plant",
+    "plant": "realisticplants:block/bell_pepper_plant"
   },
   "elements": [
     {
       "from": [
-        1,
+        5.5,
         0,
         7.5
       ],
       "to": [
-        15,
-        10,
+        10.5,
+        7,
         8.5
       ],
       "faces": {
@@ -28,12 +28,92 @@
       "from": [
         7.5,
         0,
-        1
+        5.5
       ],
       "to": [
         8.5,
+        7,
+        10.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        2,
+        2
+      ],
+      "to": [
         10,
-        15
+        3,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        2,
+        6
+      ],
+      "to": [
+        14,
+        3,
+        10
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        3,
+        5
+      ],
+      "to": [
+        10,
+        4,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        3,
+        6
+      ],
+      "to": [
+        11,
+        4,
+        10
       ],
       "faces": {
         "east": {
