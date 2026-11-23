@@ -1,6 +1,8 @@
 
 package com.realisticplants;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Prediction;
@@ -177,6 +179,42 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
         return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
+    // A mature plant can give at most one seed.
+    private static int getSeedAmount(PlantData data) {
+
+        int condition = Math.min(
+                data.getHealth(),
+                data.getMoisture()
+        );
+
+        int chance;
+
+        if (condition >= 75) {
+            chance = 50;
+        } else if (condition >= 45) {
+            chance = 30;
+        } else {
+            chance = 10;
+        }
+
+        return ThreadLocalRandom.current().nextInt(100) < chance
+                ? 1
+                : 0;
+    }
+
+    private static void giveItem(
+            Player player,
+            ItemStack stack) {
+
+        if (!player.getInventory().add(stack)) {
+            player.drop(
+                    stack,
+                    false,
+                    Prediction.SERVER_ONLY
+            );
+        }
+    }
+
     @Override
     protected InteractionResult useWithoutItem(
             BlockState state,
@@ -210,18 +248,26 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
                 return InteractionResult.PASS;
             }
 
+            // Give harvested tomatoes.
             ItemStack tomatoes =
                     new ItemStack(
                             ModItems.TOMATO.get(),
                             harvestAmount
                     );
 
-            if (!player.getInventory().add(tomatoes)) {
-                player.drop(
-                        tomatoes,
-                        false,
-                        Prediction.SERVER_ONLY
-                );
+            giveItem(player, tomatoes);
+
+            // Seeds are a rare bonus from harvesting.
+            int seedAmount = getSeedAmount(data);
+
+            if (seedAmount > 0) {
+                ItemStack seeds =
+                        new ItemStack(
+                                ModItems.TOMATO_SEEDS.get(),
+                                1
+                        );
+
+                giveItem(player, seeds);
             }
 
             plant.resetHarvestCycle();
