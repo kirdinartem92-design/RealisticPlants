@@ -28,7 +28,9 @@ public final class PlantRegistry {
                 1.6f,   // Maximum temperature
                 20,     // Minimum moisture
                 20,     // Drought resistance
-                true    // Regrows after harvest
+                true,   // Regrows after harvest
+                1,      // Minimum harvest amount
+                4       // Maximum harvest amount
         ));
 
         // Cucumber
@@ -37,13 +39,15 @@ public final class PlantRegistry {
                 6,      // Maximum growth stage
                 3,      // Flowering stage
                 3,      // Regrowth stage
-                800,    // Growth interval - faster than tomato
+                800,    // Growth interval
                 1,      // Moisture consumption
                 0.15f,  // Minimum temperature
                 1.6f,   // Maximum temperature
                 20,     // Minimum moisture
                 20,     // Drought resistance
-                true    // Regrows after harvest
+                true,   // Regrows after harvest
+                1,      // Minimum harvest amount
+                5       // Maximum harvest amount
         ));
     }
 
