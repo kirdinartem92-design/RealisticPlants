@@ -117,6 +117,8 @@ public class CucumberPlantBlock extends CropPlantBlock {
                 );
             }
 
+            RareHarvestEffects.play(level, player, pos, rareHarvest);
+
             plant.resetHarvestCycle();
             plant.setChanged();
         }
