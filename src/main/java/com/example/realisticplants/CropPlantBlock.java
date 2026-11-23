@@ -99,13 +99,16 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
         }
 
         PlantData data = plant.getPlantData();
+        PlantDefinition definition = data.getDefinition();
 
         // Костная мука ускоряет рост.
         if (itemStack.is(Items.BONE_MEAL)) {
 
             int age = state.getValue(AGE);
+            int maxGrowthStage = definition.getMaxGrowthStage();
+            int floweringStage = definition.getFloweringStage();
 
-            if (age >= 6
+            if (age >= maxGrowthStage
                     || data.isDead()
                     || data.getHealth() <= 30
                     || data.getMoisture() <= 0) {
@@ -113,7 +116,10 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
             }
 
             if (!level.isClientSide()) {
-                int nextAge = age + 1;
+                int nextAge = Math.min(
+                        age + 1,
+                        maxGrowthStage
+                );
 
                 level.setBlock(
                         pos,
@@ -121,11 +127,12 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
                         3
                 );
 
-                if (nextAge == 4 && !data.isFlowering()) {
+                if (nextAge == floweringStage
+                        && !data.isFlowering()) {
                     PlantHarvest.startFlowering(data);
                 }
 
-                if (nextAge == 6) {
+                if (nextAge == maxGrowthStage) {
                     PlantHarvest.produceHarvest(data);
                 }
 
