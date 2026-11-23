@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -85,12 +84,13 @@ public class TomatoPlantBlock extends CropPlantBlock {
                 return InteractionResult.PASS;
             }
 
-            ItemStack tomatoes = new ItemStack(
-                    ModItems.TOMATO.get(),
-                    harvestAmount
+            giveItem(
+                    player,
+                    new ItemStack(
+                            ModItems.TOMATO.get(),
+                            harvestAmount
+                    )
             );
-
-            giveItem(player, tomatoes);
 
             int seedAmount = getSeedAmount(data);
 
@@ -98,6 +98,21 @@ public class TomatoPlantBlock extends CropPlantBlock {
                 giveItem(
                         player,
                         new ItemStack(ModItems.TOMATO_SEEDS.get(), 1)
+                );
+            }
+
+            PlantHarvest.RareHarvest rareHarvest =
+                    PlantHarvest.rollRareHarvest();
+
+            if (rareHarvest == PlantHarvest.RareHarvest.GOLDEN) {
+                giveItem(
+                        player,
+                        new ItemStack(ModItems.GOLDEN_VEGETABLE.get(), 1)
+                );
+            } else if (rareHarvest == PlantHarvest.RareHarvest.MEGA) {
+                giveItem(
+                        player,
+                        new ItemStack(ModItems.MEGA_VEGETABLE.get(), 1)
                 );
             }
 
