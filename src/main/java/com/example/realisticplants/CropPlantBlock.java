@@ -34,8 +34,23 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
     public static final EnumProperty<PlantCondition> CONDITION =
             EnumProperty.create("condition", PlantCondition.class);
 
-    private static final VoxelShape SHAPE =
-            Block.box(4, 0, 4, 12, 12, 12);
+    /**
+     * Selection shape follows the visible height of each growth stage.
+     * The plant remains non-solid; this only makes tall foliage easier to target.
+     */
+    private static VoxelShape getPlantShape(int age) {
+        int height = switch (age) {
+            case 0 -> 3;
+            case 1 -> 5;
+            case 2 -> 9;
+            case 3 -> 13;
+            case 4 -> 17;
+            case 5 -> 21;
+            default -> 24;
+        };
+
+        return Block.box(1, 0, 1, 15, height, 15);
+    }
 
     protected CropPlantBlock(Properties properties) {
         super(properties);
@@ -59,7 +74,7 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
             BlockGetter level,
             BlockPos pos,
             CollisionContext context) {
-        return SHAPE;
+        return getPlantShape(state.getValue(AGE));
     }
 
     @Override
