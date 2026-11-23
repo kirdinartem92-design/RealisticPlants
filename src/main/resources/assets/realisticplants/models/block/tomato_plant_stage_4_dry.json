@@ -1,8 +1,234 @@
 {
-  "parent": "realisticplants:block/tomato_plant_stage_4",
   "textures": {
     "particle": "realisticplants:block/tomato_leaf_dry",
+    "stem": "realisticplants:block/tomato_stem_dry",
     "leaf": "realisticplants:block/tomato_leaf_dry",
-    "stem": "realisticplants:block/tomato_stem_dry"
-  }
+    "flower": "realisticplants:block/tomato_flower"
+  },
+  "elements": [
+    {
+      "from": [
+        7,
+        0,
+        7
+      ],
+      "to": [
+        9,
+        12,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stem"
+        },
+        "south": {
+          "texture": "#stem"
+        },
+        "east": {
+          "texture": "#stem"
+        },
+        "west": {
+          "texture": "#stem"
+        },
+        "up": {
+          "texture": "#stem"
+        },
+        "down": {
+          "texture": "#stem"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        3,
+        7
+      ],
+      "to": [
+        7,
+        5,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stem"
+        },
+        "south": {
+          "texture": "#stem"
+        },
+        "east": {
+          "texture": "#stem"
+        },
+        "west": {
+          "texture": "#stem"
+        },
+        "up": {
+          "texture": "#stem"
+        },
+        "down": {
+          "texture": "#stem"
+        }
+      }
+    },
+    {
+      "from": [
+        9,
+        5,
+        7
+      ],
+      "to": [
+        12,
+        7,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stem"
+        },
+        "south": {
+          "texture": "#stem"
+        },
+        "east": {
+          "texture": "#stem"
+        },
+        "west": {
+          "texture": "#stem"
+        },
+        "up": {
+          "texture": "#stem"
+        },
+        "down": {
+          "texture": "#stem"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        2,
+        8
+      ],
+      "to": [
+        6,
+        3,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#leaf"
+        },
+        "south": {
+          "texture": "#leaf"
+        },
+        "east": {
+          "texture": "#leaf"
+        },
+        "west": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
+          "texture": "#leaf"
+        }
+      }
+    },
+    {
+      "from": [
+        10,
+        4,
+        5
+      ],
+      "to": [
+        13,
+        5,
+        8
+      ],
+      "faces": {
+        "north": {
+          "texture": "#leaf"
+        },
+        "south": {
+          "texture": "#leaf"
+        },
+        "east": {
+          "texture": "#leaf"
+        },
+        "west": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
+          "texture": "#leaf"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        8,
+        5
+      ],
+      "to": [
+        5,
+        10,
+        8
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flower"
+        },
+        "south": {
+          "texture": "#flower"
+        },
+        "east": {
+          "texture": "#flower"
+        },
+        "west": {
+          "texture": "#flower"
+        },
+        "up": {
+          "texture": "#flower"
+        },
+        "down": {
+          "texture": "#flower"
+        }
+      }
+    },
+    {
+      "from": [
+        11,
+        9,
+        5
+      ],
+      "to": [
+        14,
+        11,
+        8
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flower"
+        },
+        "south": {
+          "texture": "#flower"
+        },
+        "east": {
+          "texture": "#flower"
+        },
+        "west": {
+          "texture": "#flower"
+        },
+        "up": {
+          "texture": "#flower"
+        },
+        "down": {
+          "texture": "#flower"
+        }
+      }
+    }
+  ]
 }
