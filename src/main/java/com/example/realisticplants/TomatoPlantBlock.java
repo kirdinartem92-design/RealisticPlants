@@ -116,6 +116,8 @@ public class TomatoPlantBlock extends CropPlantBlock {
                 );
             }
 
+            RareHarvestEffects.play(level, player, pos, rareHarvest);
+
             plant.resetHarvestCycle();
             plant.setChanged();
         }
