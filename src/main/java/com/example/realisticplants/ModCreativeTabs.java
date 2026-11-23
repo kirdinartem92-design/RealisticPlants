@@ -32,6 +32,12 @@ public class ModCreativeTabs {
                                 output.accept(ModItems.CARROT.get());
                                 output.accept(ModItems.BEETROOT.get());
 
+                                output.accept(ModItems.ZUCCHINI.get());
+                                output.accept(ModItems.EGGPLANT.get());
+                                output.accept(ModItems.BELL_PEPPER.get());
+                                output.accept(ModItems.CHILI_PEPPER.get());
+                                output.accept(ModItems.BROCCOLI.get());
+
                                 output.accept(ModItems.GOLDEN_VEGETABLE.get());
                                 output.accept(ModItems.MEGA_VEGETABLE.get());
                             })
