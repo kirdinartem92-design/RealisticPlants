@@ -1,14 +1,50 @@
-
 package com.realisticplants;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Handles flowering and repeated harvesting of plants.
+ * Handles flowering, repeated harvesting
+ * and rare vegetable discoveries.
  */
 public class PlantHarvest {
 
+    /**
+     * Possible rare harvest discoveries.
+     */
+    public enum RareHarvest {
+        NONE,
+        GOLDEN,
+        MEGA
+    }
+
     private PlantHarvest() {
+    }
+
+    /**
+     * Rolls for a rare vegetable.
+     *
+     * Mega vegetable: 1 in 2000.
+     * Golden vegetable: 1 in 1000.
+     *
+     * Only one rare vegetable can be found
+     * during a single harvest.
+     */
+    public static RareHarvest rollRareHarvest() {
+
+        ThreadLocalRandom random =
+                ThreadLocalRandom.current();
+
+        // Check the rarer mega vegetable first.
+        if (random.nextInt(2000) == 0) {
+            return RareHarvest.MEGA;
+        }
+
+        // Then check the golden vegetable.
+        if (random.nextInt(1000) == 0) {
+            return RareHarvest.GOLDEN;
+        }
+
+        return RareHarvest.NONE;
     }
 
     /**
@@ -65,18 +101,15 @@ public class PlantHarvest {
 
         if (condition >= 75) {
 
-            // Healthy plants can produce their full harvest.
             effectiveMax = maxAmount;
 
         } else if (condition >= 45) {
 
-            // Weakened plants have a reduced maximum harvest.
             effectiveMax = minAmount
                     + (maxAmount - minAmount + 1) / 2;
 
         } else {
 
-            // Poorly maintained plants produce the minimum.
             effectiveMax = minAmount;
         }
 
