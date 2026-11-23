@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import java.util.function.Supplier;
@@ -49,6 +48,29 @@ public class TomatoPlantBlockEntity extends BlockEntity {
         return plantData;
     }
 
+    /**
+     * Synchronizes the plant condition with its block state.
+     */
+    public void updateCondition() {
+
+        if (level == null || level.isClientSide()) {
+            return;
+        }
+
+        BlockState state = level.getBlockState(worldPosition);
+
+        PlantCondition condition = plantData.getCondition();
+
+        if (state.getValue(TomatoPlantBlock.CONDITION) != condition) {
+
+            level.setBlock(
+                    worldPosition,
+                    state.setValue(TomatoPlantBlock.CONDITION, condition),
+                    3
+            );
+        }
+    }
+
     public static void tick(
             Level level,
             BlockPos pos,
@@ -56,7 +78,13 @@ public class TomatoPlantBlockEntity extends BlockEntity {
             TomatoPlantBlockEntity plant
     ) {
 
-        if (level.isClientSide() || plant.plantData.isDead()) {
+        if (level.isClientSide()) {
+            return;
+        }
+
+        plant.updateCondition();
+
+        if (plant.plantData.isDead()) {
             return;
         }
 
@@ -96,6 +124,8 @@ public class TomatoPlantBlockEntity extends BlockEntity {
                     plant.plantData
             );
 
+            plant.updateCondition();
+
             BlockState currentState = level.getBlockState(pos);
 
             plant.updateGrowth(
@@ -123,7 +153,6 @@ public class TomatoPlantBlockEntity extends BlockEntity {
 
         int age = state.getValue(TomatoPlantBlock.AGE);
 
-        // A mature plant keeps checking whether it can produce fruit.
         if (age >= definition.getMaxGrowthStage()) {
 
             if (plantData.isFlowering()
@@ -228,7 +257,6 @@ public class TomatoPlantBlockEntity extends BlockEntity {
                 plantData.getGrowthProgress()
         );
 
-        // Compatibility with older saved data.
         output.putInt(
                 "growth_counter",
                 (int) Math.floor(plantData.getGrowthProgress())
