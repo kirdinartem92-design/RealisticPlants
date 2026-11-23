@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import java.util.Collection;
@@ -7,69 +6,44 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * Central registry of all plant species.
- */
+/** Central registry of all plant species. */
 public final class PlantRegistry {
 
     private static final Map<String, PlantDefinition> PLANTS =
             new LinkedHashMap<>();
 
     static {
-        // Tomato
         register(new PlantDefinition(
-                "tomato",
-                6,      // Maximum growth stage
-                4,      // Flowering stage
-                4,      // Regrowth stage
-                1200,   // Growth interval
-                1,      // Moisture consumption
-                0.15f,  // Minimum temperature
-                1.6f,   // Maximum temperature
-                20,     // Minimum moisture
-                20,     // Drought resistance
-                true,   // Regrows after harvest
-                1,      // Minimum harvest amount
-                4,      // Maximum harvest amount
-                2,      // Nutrition
-                0.3f    // Saturation modifier
-        ));
+                "tomato", 6, 4, 4, 1200, 1,
+                0.15f, 1.6f, 20, 20, true, 1, 4, 2, 0.3f));
 
-        // Cucumber
         register(new PlantDefinition(
-                "cucumber",
-                6,      // Maximum growth stage
-                3,      // Flowering stage
-                3,      // Regrowth stage
-                800,    // Growth interval
-                1,      // Moisture consumption
-                0.15f,  // Minimum temperature
-                1.6f,   // Maximum temperature
-                20,     // Minimum moisture
-                20,     // Drought resistance
-                true,   // Regrows after harvest
-                1,      // Minimum harvest amount
-                5,      // Maximum harvest amount
-                1,      // Nutrition
-                0.2f    // Saturation modifier
-        ));
+                "cucumber", 6, 3, 3, 800, 1,
+                0.15f, 1.6f, 20, 20, true, 1, 5, 1, 0.2f));
+
+        // Root crops mature underground and do not regrow after harvesting.
+        register(new PlantDefinition(
+                "potato", 6, 5, 5, 1400, 1,
+                0.10f, 1.5f, 25, 25, false, 2, 5, 2, 0.4f));
+
+        register(new PlantDefinition(
+                "carrot", 6, 5, 5, 1100, 1,
+                0.10f, 1.5f, 25, 25, false, 2, 4, 3, 0.5f));
+
+        register(new PlantDefinition(
+                "beetroot", 6, 5, 5, 1300, 1,
+                0.10f, 1.45f, 25, 25, false, 1, 3, 3, 0.45f));
     }
 
     private PlantRegistry() {
     }
 
     public static void register(PlantDefinition definition) {
-        Objects.requireNonNull(
-                definition,
-                "Plant definition cannot be null"
-        );
-
+        Objects.requireNonNull(definition, "Plant definition cannot be null");
         if (PLANTS.containsKey(definition.getId())) {
             throw new IllegalArgumentException(
-                    "Plant already registered: " + definition.getId()
-            );
+                    "Plant already registered: " + definition.getId());
         }
-
         PLANTS.put(definition.getId(), definition);
     }
 
@@ -78,9 +52,7 @@ public final class PlantRegistry {
     }
 
     public static Collection<PlantDefinition> getAll() {
-        return Collections.unmodifiableCollection(
-                PLANTS.values()
-        );
+        return Collections.unmodifiableCollection(PLANTS.values());
     }
 
     public static boolean contains(String id) {
