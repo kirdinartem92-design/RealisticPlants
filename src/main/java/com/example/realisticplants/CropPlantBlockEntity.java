@@ -47,20 +47,17 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
     protected abstract EnumProperty<PlantCondition> getConditionProperty();
 
     /**
-     * Returns the stage at which flowering begins.
+     * Returns the flowering stage configured for this plant.
      */
     protected int getFloweringStage() {
-        return Math.max(
-                0,
-                plantData.getDefinition().getMaxGrowthStage() - 2
-        );
+        return plantData.getDefinition().getFloweringStage();
     }
 
     /**
-     * Returns the stage used after harvesting.
+     * Returns the regrowth stage configured for this plant.
      */
     protected int getRegrowthStage() {
-        return getFloweringStage();
+        return plantData.getDefinition().getRegrowthStage();
     }
 
     public PlantData getPlantData() {
