@@ -4,7 +4,7 @@
     "stem": "realisticplants:block/cucumber_stem_wilting",
     "leaf": "realisticplants:block/cucumber_leaf_wilting",
     "flower": "realisticplants:block/cucumber_flower",
-    "fruit": "realisticplants:item/cucumber"
+    "fruit": "realisticplants:block/cucumber_fruit"
   },
   "elements": [
     {
@@ -46,7 +46,7 @@
         7
       ],
       "to": [
-        9,
+        8,
         6,
         9
       ],
@@ -105,128 +105,172 @@
     },
     {
       "from": [
-        1,
-        5,
-        7.7
+        0,
+        4.5,
+        7.975
       ],
       "to": [
         8,
-        11,
-        8.3
+        11.5,
+        8.025
       ],
-      "rotation": {
-        "origin": [
-          8,
-          8,
-          8
-        ],
-        "axis": "y",
-        "angle": -35,
-        "rescale": false
-      },
       "faces": {
         "north": {
           "texture": "#leaf"
         },
         "south": {
           "texture": "#leaf"
-        },
-        "east": {
-          "texture": "#leaf"
-        },
-        "west": {
-          "texture": "#leaf"
-        },
-        "up": {
-          "texture": "#leaf"
-        },
-        "down": {
-          "texture": "#leaf"
         }
+      },
+      "rotation": {
+        "origin": [
+          4,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -22.5,
+        "rescale": false
       }
     },
     {
       "from": [
-        8,
-        7,
-        7.7
+        0,
+        4.5,
+        7.975
       ],
       "to": [
-        15,
-        13,
-        8.3
+        8,
+        11.5,
+        8.025
       ],
+      "faces": {
+        "north": {
+          "texture": "#leaf"
+        },
+        "south": {
+          "texture": "#leaf"
+        }
+      },
       "rotation": {
         "origin": [
+          4,
           8,
+          8
+        ],
+        "axis": "y",
+        "angle": 67.5,
+        "rescale": false
+      }
+    },
+    {
+      "from": [
+        8.5,
+        7,
+        7.975
+      ],
+      "to": [
+        15.5,
+        13,
+        8.025
+      ],
+      "faces": {
+        "north": {
+          "texture": "#leaf"
+        },
+        "south": {
+          "texture": "#leaf"
+        }
+      },
+      "rotation": {
+        "origin": [
+          12,
           10,
           8
         ],
         "axis": "y",
-        "angle": 35,
+        "angle": 22.5,
         "rescale": false
-      },
+      }
+    },
+    {
+      "from": [
+        8.5,
+        7,
+        7.975
+      ],
+      "to": [
+        15.5,
+        13,
+        8.025
+      ],
       "faces": {
         "north": {
           "texture": "#leaf"
         },
         "south": {
           "texture": "#leaf"
-        },
-        "east": {
+        }
+      },
+      "rotation": {
+        "origin": [
+          12,
+          10,
+          8
+        ],
+        "axis": "y",
+        "angle": 112.5,
+        "rescale": false
+      }
+    },
+    {
+      "from": [
+        3.5,
+        10.5,
+        7.975
+      ],
+      "to": [
+        10.5,
+        15.5,
+        8.025
+      ],
+      "faces": {
+        "north": {
           "texture": "#leaf"
         },
-        "west": {
-          "texture": "#leaf"
-        },
-        "up": {
-          "texture": "#leaf"
-        },
-        "down": {
+        "south": {
           "texture": "#leaf"
         }
       }
     },
     {
       "from": [
-        3,
-        10,
-        8
+        3.5,
+        10.5,
+        7.975
       ],
       "to": [
-        10,
-        14,
-        8.5
+        10.5,
+        15.5,
+        8.025
       ],
-      "rotation": {
-        "origin": [
-          7,
-          12,
-          8
-        ],
-        "axis": "y",
-        "angle": -12,
-        "rescale": false
-      },
       "faces": {
         "north": {
           "texture": "#leaf"
         },
         "south": {
           "texture": "#leaf"
-        },
-        "east": {
-          "texture": "#leaf"
-        },
-        "west": {
-          "texture": "#leaf"
-        },
-        "up": {
-          "texture": "#leaf"
-        },
-        "down": {
-          "texture": "#leaf"
         }
+      },
+      "rotation": {
+        "origin": [
+          7,
+          13,
+          8
+        ],
+        "axis": "y",
+        "angle": 90,
+        "rescale": false
       }
     }
   ]
