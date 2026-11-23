@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import net.minecraft.world.food.FoodProperties;
@@ -26,6 +25,28 @@ public class ModItems {
                     "cucumber",
                     properties -> properties.food(
                             createFoodProperties("cucumber")
+                    )
+            );
+
+    public static final DeferredItem<Item> GOLDEN_VEGETABLE =
+            ITEMS.registerSimpleItem(
+                    "golden_vegetable",
+                    properties -> properties.food(
+                            new FoodProperties.Builder()
+                                    .nutrition(8)
+                                    .saturationModifier(1.2f)
+                                    .build()
+                    )
+            );
+
+    public static final DeferredItem<Item> MEGA_VEGETABLE =
+            ITEMS.registerSimpleItem(
+                    "mega_vegetable",
+                    properties -> properties.food(
+                            new FoodProperties.Builder()
+                                    .nutrition(20)
+                                    .saturationModifier(2.4f)
+                                    .build()
                     )
             );
 
