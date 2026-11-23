@@ -32,6 +32,26 @@ public class ModItems {
             ITEMS.registerSimpleItem("beetroot",
                     properties -> properties.food(createFoodProperties("beetroot")));
 
+    public static final DeferredItem<Item> ZUCCHINI =
+            ITEMS.registerSimpleItem("zucchini",
+                    properties -> properties.food(createFoodProperties("zucchini")));
+
+    public static final DeferredItem<Item> EGGPLANT =
+            ITEMS.registerSimpleItem("eggplant",
+                    properties -> properties.food(createFoodProperties("eggplant")));
+
+    public static final DeferredItem<Item> BELL_PEPPER =
+            ITEMS.registerSimpleItem("bell_pepper",
+                    properties -> properties.food(createFoodProperties("bell_pepper")));
+
+    public static final DeferredItem<Item> CHILI_PEPPER =
+            ITEMS.registerSimpleItem("chili_pepper",
+                    properties -> properties.food(createFoodProperties("chili_pepper")));
+
+    public static final DeferredItem<Item> BROCCOLI =
+            ITEMS.registerSimpleItem("broccoli",
+                    properties -> properties.food(createFoodProperties("broccoli")));
+
     public static final DeferredItem<RareVegetableItem> GOLDEN_VEGETABLE =
             ITEMS.registerItem("golden_vegetable",
                     properties -> new RareVegetableItem(
