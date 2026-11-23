@@ -30,7 +30,9 @@ public final class PlantRegistry {
                 20,     // Drought resistance
                 true,   // Regrows after harvest
                 1,      // Minimum harvest amount
-                4       // Maximum harvest amount
+                4,      // Maximum harvest amount
+                2,      // Nutrition
+                0.3f    // Saturation modifier
         ));
 
         // Cucumber
@@ -47,7 +49,9 @@ public final class PlantRegistry {
                 20,     // Drought resistance
                 true,   // Regrows after harvest
                 1,      // Minimum harvest amount
-                5       // Maximum harvest amount
+                5,      // Maximum harvest amount
+                1,      // Nutrition
+                0.2f    // Saturation modifier
         ));
     }
 
