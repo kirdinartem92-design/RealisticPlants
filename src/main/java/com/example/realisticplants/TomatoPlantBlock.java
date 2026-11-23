@@ -4,14 +4,11 @@ package com.realisticplants;
 import java.util.concurrent.ThreadLocalRandom;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Prediction;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -23,7 +20,6 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class TomatoPlantBlock extends CropPlantBlock {
 
-    // Совместимость со старым кодом томата.
     public static final IntegerProperty AGE = CropPlantBlock.AGE;
 
     public static final EnumProperty<PlantCondition> CONDITION =
@@ -40,7 +36,7 @@ public class TomatoPlantBlock extends CropPlantBlock {
             Level level,
             BlockPos pos,
             Player player,
-            InteractionHand hand,
+            net.minecraft.world.InteractionHand hand,
             BlockHitResult hitResult) {
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -85,41 +81,16 @@ public class TomatoPlantBlock extends CropPlantBlock {
             return InteractionResult.SUCCESS;
         }
 
-        // Полив обычным водным зельем: влажность +40.
-        if (itemStack.is(Items.POTION)) {
-            var potionContents =
-                    itemStack.get(DataComponents.POTION_CONTENTS);
-
-            if (potionContents == null
-                    || !potionContents.is(Potions.WATER)) {
-                return InteractionResult.TRY_WITH_EMPTY_HAND;
-            }
-
-            if (!level.isClientSide()) {
-                PlantGrowthManager.water(data, 40);
-                plant.setChanged();
-
-                if (!player.getAbilities().instabuild) {
-                    itemStack.shrink(1);
-
-                    ItemStack bottle =
-                            new ItemStack(Items.GLASS_BOTTLE);
-
-                    if (itemStack.isEmpty()) {
-                        player.setItemInHand(hand, bottle);
-                    } else {
-                        player.getInventory().placeItemBackInInventory(
-                                bottle,
-                                Prediction.SERVER_ONLY
-                        );
-                    }
-                }
-            }
-
-            return InteractionResult.SUCCESS;
-        }
-
-        return InteractionResult.TRY_WITH_EMPTY_HAND;
+        // Остальные предметы обрабатывает общий класс.
+        return super.useItemOn(
+                itemStack,
+                state,
+                level,
+                pos,
+                player,
+                hand,
+                hitResult
+        );
     }
 
     private static int getSeedAmount(PlantData data) {
