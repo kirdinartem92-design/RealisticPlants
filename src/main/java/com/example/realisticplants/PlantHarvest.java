@@ -41,40 +41,56 @@ public class PlantHarvest {
     }
 
     /**
-     * Calculates a random harvest amount
-     * based on plant health and moisture.
+     * Calculates harvest amount using the individual
+     * harvest settings of the plant species.
      */
     public static int getHarvestAmount(PlantData plant) {
+
         if (plant == null || !plant.isHarvestReady()) {
             return 0;
         }
+
+        PlantDefinition definition =
+                plant.getDefinition();
+
+        int minAmount = definition.getMinHarvestAmount();
+        int maxAmount = definition.getMaxHarvestAmount();
 
         int condition = Math.min(
                 plant.getHealth(),
                 plant.getMoisture()
         );
 
-        int roll = ThreadLocalRandom.current().nextInt(100);
+        int effectiveMax;
 
         if (condition >= 75) {
-            if (roll < 35) return 2;
-            if (roll < 75) return 3;
-            return 4;
+
+            // Healthy plants can produce their full harvest.
+            effectiveMax = maxAmount;
+
+        } else if (condition >= 45) {
+
+            // Weakened plants have a reduced maximum harvest.
+            effectiveMax = minAmount
+                    + (maxAmount - minAmount + 1) / 2;
+
+        } else {
+
+            // Poorly maintained plants produce the minimum.
+            effectiveMax = minAmount;
         }
 
-        if (condition >= 45) {
-            if (roll < 25) return 1;
-            if (roll < 75) return 2;
-            return 3;
-        }
-
-        return roll < 65 ? 1 : 2;
+        return ThreadLocalRandom.current().nextInt(
+                minAmount,
+                effectiveMax + 1
+        );
     }
 
     /**
      * Harvests the plant without destroying it.
      */
     public static boolean harvest(PlantData plant) {
+
         if (plant == null || !plant.isHarvestReady()) {
             return false;
         }
