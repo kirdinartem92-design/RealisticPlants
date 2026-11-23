@@ -26,6 +26,14 @@ public class ModBlocks {
                     )
             );
 
+    public static final DeferredBlock<CucumberPlantBlock> CUCUMBER_PLANT =
+            BLOCKS.registerBlock(
+                    "cucumber_plant",
+                    properties -> new CucumberPlantBlock(
+                            properties.mapColor(MapColor.PLANT)
+                    )
+            );
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
