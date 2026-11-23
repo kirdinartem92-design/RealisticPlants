@@ -1,0 +1,8 @@
+{
+  "parent": "realisticplants:block/tomato_plant_stage_6",
+  "textures": {
+    "particle": "realisticplants:block/tomato_leaf_dry",
+    "leaf": "realisticplants:block/tomato_leaf_dry",
+    "stem": "realisticplants:block/tomato_stem_dry"
+  }
+}
