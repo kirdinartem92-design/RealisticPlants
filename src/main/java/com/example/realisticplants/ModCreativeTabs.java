@@ -1,8 +1,10 @@
+
 package com.realisticplants;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -17,18 +19,27 @@ public class ModCreativeTabs {
             );
 
     public static final Supplier<CreativeModeTab> REALISTIC_PLANTS_TAB =
-            CREATIVE_TABS.register("realistic_plants",
+            CREATIVE_TABS.register(
+                    "realistic_plants",
                     () -> CreativeModeTab.builder()
                             .title(Component.translatable(
                                     "itemGroup.realisticplants"
                             ))
-                            .icon(() -> new net.minecraft.world.item.ItemStack(
+                            .icon(() -> new ItemStack(
                                     ModItems.TOMATO.get()
                             ))
                             .displayItems((parameters, output) -> {
+
                                 output.accept(ModItems.TOMATO.get());
                                 output.accept(ModItems.TOMATO_SEEDS.get());
                                 output.accept(ModItems.TOMATO_PLANT_ITEM.get());
+
+                                output.accept(ModItems.CUCUMBER.get());
+                                output.accept(ModItems.CUCUMBER_SEEDS.get());
+                                output.accept(ModItems.CUCUMBER_PLANT_ITEM.get());
+
+                                output.accept(ModItems.GOLDEN_VEGETABLE.get());
+                                output.accept(ModItems.MEGA_VEGETABLE.get());
                             })
                             .build()
             );
