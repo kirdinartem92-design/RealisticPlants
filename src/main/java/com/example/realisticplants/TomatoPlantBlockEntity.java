@@ -1,3 +1,4 @@
+
 package com.realisticplants;
 
 import java.util.function.Supplier;
@@ -95,10 +96,12 @@ public class TomatoPlantBlockEntity extends BlockEntity {
                     plant.plantData
             );
 
+            BlockState currentState = level.getBlockState(pos);
+
             plant.updateGrowth(
                     level,
                     pos,
-                    state,
+                    currentState,
                     temperature,
                     definition
             );
@@ -108,7 +111,7 @@ public class TomatoPlantBlockEntity extends BlockEntity {
     }
 
     /**
-     * Updates fractional growth progress.
+     * Updates fractional growth progress and checks harvest readiness.
      */
     private void updateGrowth(
             Level level,
@@ -120,7 +123,15 @@ public class TomatoPlantBlockEntity extends BlockEntity {
 
         int age = state.getValue(TomatoPlantBlock.AGE);
 
+        // A mature plant keeps checking whether it can produce fruit.
         if (age >= definition.getMaxGrowthStage()) {
+
+            if (plantData.isFlowering()
+                    && !plantData.isHarvestReady()) {
+
+                PlantHarvest.produceHarvest(plantData);
+            }
+
             return;
         }
 
