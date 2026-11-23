@@ -85,12 +85,13 @@ public class CucumberPlantBlock extends CropPlantBlock {
                 return InteractionResult.PASS;
             }
 
-            ItemStack cucumbers = new ItemStack(
-                    ModItems.CUCUMBER.get(),
-                    harvestAmount
+            giveItem(
+                    player,
+                    new ItemStack(
+                            ModItems.CUCUMBER.get(),
+                            harvestAmount
+                    )
             );
-
-            giveItem(player, cucumbers);
 
             int seedAmount = getSeedAmount(data);
 
@@ -98,6 +99,21 @@ public class CucumberPlantBlock extends CropPlantBlock {
                 giveItem(
                         player,
                         new ItemStack(ModItems.CUCUMBER_SEEDS.get(), 1)
+                );
+            }
+
+            PlantHarvest.RareHarvest rareHarvest =
+                    PlantHarvest.rollRareHarvest();
+
+            if (rareHarvest == PlantHarvest.RareHarvest.GOLDEN) {
+                giveItem(
+                        player,
+                        new ItemStack(ModItems.GOLDEN_VEGETABLE.get(), 1)
+                );
+            } else if (rareHarvest == PlantHarvest.RareHarvest.MEGA) {
+                giveItem(
+                        player,
+                        new ItemStack(ModItems.MEGA_VEGETABLE.get(), 1)
                 );
             }
 
