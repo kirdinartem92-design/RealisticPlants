@@ -8,7 +8,6 @@ import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -27,70 +26,6 @@ public class TomatoPlantBlock extends CropPlantBlock {
 
     public TomatoPlantBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected InteractionResult useItemOn(
-            ItemStack itemStack,
-            BlockState state,
-            Level level,
-            BlockPos pos,
-            Player player,
-            net.minecraft.world.InteractionHand hand,
-            BlockHitResult hitResult) {
-
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-
-        if (!(blockEntity instanceof TomatoPlantBlockEntity plant)) {
-            return InteractionResult.PASS;
-        }
-
-        PlantData data = plant.getPlantData();
-
-        // Костная мука ускоряет рост.
-        if (itemStack.is(Items.BONE_MEAL)) {
-            int age = state.getValue(AGE);
-
-            if (age >= 6
-                    || data.isDead()
-                    || data.getHealth() <= 30
-                    || data.getMoisture() <= 0) {
-                return InteractionResult.PASS;
-            }
-
-            if (!level.isClientSide()) {
-                int nextAge = age + 1;
-
-                level.setBlock(pos, state.setValue(AGE, nextAge), 3);
-
-                if (nextAge == 4 && !data.isFlowering()) {
-                    PlantHarvest.startFlowering(data);
-                }
-
-                if (nextAge == 6) {
-                    PlantHarvest.produceHarvest(data);
-                }
-
-                if (!player.getAbilities().instabuild) {
-                    itemStack.shrink(1);
-                }
-
-                plant.setChanged();
-            }
-
-            return InteractionResult.SUCCESS;
-        }
-
-        // Остальные предметы обрабатывает общий класс.
-        return super.useItemOn(
-                itemStack,
-                state,
-                level,
-                pos,
-                player,
-                hand,
-                hitResult
-        );
     }
 
     private static int getSeedAmount(PlantData data) {
