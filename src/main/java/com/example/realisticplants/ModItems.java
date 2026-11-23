@@ -1,3 +1,4 @@
+
 package com.realisticplants;
 
 import net.minecraft.world.food.FoodProperties;
@@ -20,6 +21,14 @@ public class ModItems {
                     )
             );
 
+    public static final DeferredItem<Item> CUCUMBER =
+            ITEMS.registerSimpleItem(
+                    "cucumber",
+                    properties -> properties.food(
+                            createFoodProperties("cucumber")
+                    )
+            );
+
     public static final DeferredItem<TomatoSeedsItem> TOMATO_SEEDS =
             ITEMS.registerItem(
                     "tomato_seeds",
@@ -28,6 +37,9 @@ public class ModItems {
 
     public static final DeferredItem<BlockItem> TOMATO_PLANT_ITEM =
             ITEMS.registerSimpleBlockItem(ModBlocks.TOMATO_PLANT);
+
+    public static final DeferredItem<BlockItem> CUCUMBER_PLANT_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlocks.CUCUMBER_PLANT);
 
     private ModItems() {
     }
