@@ -26,7 +26,6 @@ public class PlantDefinition {
 
     /**
      * Backward-compatible constructor.
-     * Flowering and regrowth stages default to maxGrowthStage - 2.
      */
     public PlantDefinition(
             String id,
@@ -71,9 +70,7 @@ public class PlantDefinition {
             boolean regrowsAfterHarvest
     ) {
         if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException(
-                    "Plant ID cannot be empty"
-            );
+            throw new IllegalArgumentException("Plant ID cannot be empty");
         }
 
         if (maxGrowthStage < 1 || maxGrowthStage > 6) {
@@ -82,17 +79,15 @@ public class PlantDefinition {
             );
         }
 
-        if (floweringStage < 0
-                || floweringStage > maxGrowthStage) {
+        if (floweringStage < 0 || floweringStage > maxGrowthStage) {
             throw new IllegalArgumentException(
-                    "Flowering stage must be between 0 and maximum growth stage"
+                    "Invalid flowering stage"
             );
         }
 
-        if (regrowthStage < 0
-                || regrowthStage > maxGrowthStage) {
+        if (regrowthStage < 0 || regrowthStage > maxGrowthStage) {
             throw new IllegalArgumentException(
-                    "Regrowth stage must be between 0 and maximum growth stage"
+                    "Invalid regrowth stage"
             );
         }
 
@@ -106,16 +101,12 @@ public class PlantDefinition {
         this.maxGrowthStage = maxGrowthStage;
         this.floweringStage = floweringStage;
         this.regrowthStage = regrowthStage;
-
         this.growthInterval = growthInterval;
         this.moistureConsumption = moistureConsumption;
-
         this.minTemperature = minTemperature;
         this.maxTemperature = maxTemperature;
-
         this.minimumMoisture = minimumMoisture;
         this.droughtResistance = droughtResistance;
-
         this.regrowsAfterHarvest = regrowsAfterHarvest;
     }
 
