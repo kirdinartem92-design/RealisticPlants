@@ -11,5 +11,15 @@
   "itemGroup.realisticplants": "Realistic Plants",
   "message.realisticplants.golden_found": "Incredible luck! You found a Golden Vegetable!",
   "message.realisticplants.mega_found": "LEGENDARY FIND! You discovered a Mega Vegetable!",
-  "item.realisticplants.cucumber_plant": "Cucumber Plant"
+  "item.realisticplants.cucumber_plant": "Cucumber Plant",
+  "item.realisticplants.zucchini": "Zucchini",
+  "item.realisticplants.zucchini_seeds": "Zucchini Seeds",
+  "item.realisticplants.eggplant": "Eggplant",
+  "item.realisticplants.eggplant_seeds": "Eggplant Seeds",
+  "item.realisticplants.bell_pepper": "Bell Pepper",
+  "item.realisticplants.bell_pepper_seeds": "Bell Pepper Seeds",
+  "item.realisticplants.chili_pepper": "Chili Pepper",
+  "item.realisticplants.chili_pepper_seeds": "Chili Pepper Seeds",
+  "item.realisticplants.broccoli": "Broccoli",
+  "item.realisticplants.broccoli_seeds": "Broccoli Seeds"
 }
