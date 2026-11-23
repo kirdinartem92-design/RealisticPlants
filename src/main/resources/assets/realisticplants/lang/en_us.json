@@ -1,4 +1,3 @@
-
 {
   "item.realisticplants.tomato": "Tomato",
   "item.realisticplants.tomato_seeds": "Tomato Seeds",
@@ -6,5 +5,7 @@
   "item.realisticplants.cucumber_seeds": "Cucumber Seeds",
   "item.realisticplants.golden_vegetable": "Golden Vegetable",
   "item.realisticplants.mega_vegetable": "Legendary Mega Vegetable",
-  "itemGroup.realisticplants": "Realistic Plants"
+  "itemGroup.realisticplants": "Realistic Plants",
+  "message.realisticplants.golden_found": "Incredible luck! You found a Golden Vegetable!",
+  "message.realisticplants.mega_found": "LEGENDARY FIND! You discovered a Mega Vegetable!"
 }
