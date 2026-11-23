@@ -24,6 +24,9 @@ public class PlantDefinition {
 
     private final boolean regrowsAfterHarvest;
 
+    private final int minHarvestAmount;
+    private final int maxHarvestAmount;
+
     /**
      * Backward-compatible constructor.
      */
@@ -49,7 +52,9 @@ public class PlantDefinition {
                 maxTemperature,
                 minimumMoisture,
                 droughtResistance,
-                regrowsAfterHarvest
+                regrowsAfterHarvest,
+                1,
+                4
         );
     }
 
@@ -68,6 +73,41 @@ public class PlantDefinition {
             int minimumMoisture,
             int droughtResistance,
             boolean regrowsAfterHarvest
+    ) {
+        this(
+                id,
+                maxGrowthStage,
+                floweringStage,
+                regrowthStage,
+                growthInterval,
+                moistureConsumption,
+                minTemperature,
+                maxTemperature,
+                minimumMoisture,
+                droughtResistance,
+                regrowsAfterHarvest,
+                1,
+                4
+        );
+    }
+
+    /**
+     * Constructor with individual growth and harvest settings.
+     */
+    public PlantDefinition(
+            String id,
+            int maxGrowthStage,
+            int floweringStage,
+            int regrowthStage,
+            int growthInterval,
+            int moistureConsumption,
+            float minTemperature,
+            float maxTemperature,
+            int minimumMoisture,
+            int droughtResistance,
+            boolean regrowsAfterHarvest,
+            int minHarvestAmount,
+            int maxHarvestAmount
     ) {
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("Plant ID cannot be empty");
@@ -97,6 +137,13 @@ public class PlantDefinition {
             );
         }
 
+        if (minHarvestAmount < 1
+                || maxHarvestAmount < minHarvestAmount) {
+            throw new IllegalArgumentException(
+                    "Invalid harvest amount range"
+            );
+        }
+
         this.id = id;
         this.maxGrowthStage = maxGrowthStage;
         this.floweringStage = floweringStage;
@@ -108,6 +155,8 @@ public class PlantDefinition {
         this.minimumMoisture = minimumMoisture;
         this.droughtResistance = droughtResistance;
         this.regrowsAfterHarvest = regrowsAfterHarvest;
+        this.minHarvestAmount = minHarvestAmount;
+        this.maxHarvestAmount = maxHarvestAmount;
     }
 
     public String getId() {
@@ -152,5 +201,13 @@ public class PlantDefinition {
 
     public boolean regrowsAfterHarvest() {
         return regrowsAfterHarvest;
+    }
+
+    public int getMinHarvestAmount() {
+        return minHarvestAmount;
+    }
+
+    public int getMaxHarvestAmount() {
+        return maxHarvestAmount;
     }
 }
