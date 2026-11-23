@@ -1,6 +1,7 @@
 
 package com.realisticplants;
 
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
@@ -13,7 +14,15 @@ public class ModItems {
             DeferredRegister.createItems(RealisticPlants.MOD_ID);
 
     public static final DeferredItem<Item> TOMATO =
-            ITEMS.registerSimpleItem("tomato");
+            ITEMS.registerSimpleItem(
+                    "tomato",
+                    properties -> properties.food(
+                            new FoodProperties.Builder()
+                                    .nutrition(2)
+                                    .saturationModifier(0.3f)
+                                    .build()
+                    )
+            );
 
     public static final DeferredItem<TomatoSeedsItem> TOMATO_SEEDS =
             ITEMS.registerItem(
