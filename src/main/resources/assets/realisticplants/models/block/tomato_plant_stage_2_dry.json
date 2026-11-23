@@ -1,8 +1,34 @@
+
 {
-  "parent": "realisticplants:block/tomato_plant_stage_2",
   "textures": {
     "particle": "realisticplants:block/tomato_leaf_dry",
-    "leaf": "realisticplants:block/tomato_leaf_dry",
-    "stem": "realisticplants:block/tomato_stem_dry"
-  }
+    "stem": "realisticplants:block/tomato_stem_dry",
+    "leaf": "realisticplants:block/tomato_leaf_dry"
+  },
+  "elements": [
+    {
+      "from": [7, 0, 7],
+      "to": [9, 6, 9],
+      "faces": {
+        "north": {"texture": "#stem"},
+        "south": {"texture": "#stem"},
+        "east": {"texture": "#stem"},
+        "west": {"texture": "#stem"},
+        "up": {"texture": "#stem"},
+        "down": {"texture": "#stem"}
+      }
+    },
+    {
+      "from": [4, 2, 7],
+      "to": [8, 3, 11],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    }
+  ]
 }
