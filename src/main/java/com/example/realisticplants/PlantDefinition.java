@@ -8,7 +8,10 @@ package com.realisticplants;
 public class PlantDefinition {
 
     private final String id;
+
     private final int maxGrowthStage;
+    private final int floweringStage;
+    private final int regrowthStage;
 
     private final int growthInterval;
     private final int moistureConsumption;
@@ -21,6 +24,10 @@ public class PlantDefinition {
 
     private final boolean regrowsAfterHarvest;
 
+    /**
+     * Backward-compatible constructor.
+     * Flowering and regrowth stages default to maxGrowthStage - 2.
+     */
     public PlantDefinition(
             String id,
             int maxGrowthStage,
@@ -32,14 +39,83 @@ public class PlantDefinition {
             int droughtResistance,
             boolean regrowsAfterHarvest
     ) {
+        this(
+                id,
+                maxGrowthStage,
+                Math.max(0, maxGrowthStage - 2),
+                Math.max(0, maxGrowthStage - 2),
+                growthInterval,
+                moistureConsumption,
+                minTemperature,
+                maxTemperature,
+                minimumMoisture,
+                droughtResistance,
+                regrowsAfterHarvest
+        );
+    }
+
+    /**
+     * Constructor with individual flowering and regrowth stages.
+     */
+    public PlantDefinition(
+            String id,
+            int maxGrowthStage,
+            int floweringStage,
+            int regrowthStage,
+            int growthInterval,
+            int moistureConsumption,
+            float minTemperature,
+            float maxTemperature,
+            int minimumMoisture,
+            int droughtResistance,
+            boolean regrowsAfterHarvest
+    ) {
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Plant ID cannot be empty"
+            );
+        }
+
+        if (maxGrowthStage < 1 || maxGrowthStage > 6) {
+            throw new IllegalArgumentException(
+                    "Maximum growth stage must be between 1 and 6"
+            );
+        }
+
+        if (floweringStage < 0
+                || floweringStage > maxGrowthStage) {
+            throw new IllegalArgumentException(
+                    "Flowering stage must be between 0 and maximum growth stage"
+            );
+        }
+
+        if (regrowthStage < 0
+                || regrowthStage > maxGrowthStage) {
+            throw new IllegalArgumentException(
+                    "Regrowth stage must be between 0 and maximum growth stage"
+            );
+        }
+
+        if (growthInterval < 1) {
+            throw new IllegalArgumentException(
+                    "Growth interval must be positive"
+            );
+        }
+
         this.id = id;
         this.maxGrowthStage = maxGrowthStage;
+        this.floweringStage = floweringStage;
+        this.regrowthStage = regrowthStage;
+
         this.growthInterval = growthInterval;
         this.moistureConsumption = moistureConsumption;
+
         this.minTemperature = minTemperature;
         this.maxTemperature = maxTemperature;
+
         this.minimumMoisture = minimumMoisture;
         this.droughtResistance = droughtResistance;
+
         this.regrowsAfterHarvest = regrowsAfterHarvest;
     }
 
@@ -49,6 +125,14 @@ public class PlantDefinition {
 
     public int getMaxGrowthStage() {
         return maxGrowthStage;
+    }
+
+    public int getFloweringStage() {
+        return floweringStage;
+    }
+
+    public int getRegrowthStage() {
+        return regrowthStage;
     }
 
     public int getGrowthInterval() {
