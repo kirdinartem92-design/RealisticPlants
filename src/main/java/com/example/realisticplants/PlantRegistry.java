@@ -1,165 +1,65 @@
 
 package com.realisticplants;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+
 /**
- * Defines the biological and growth properties of a plant species.
- * Shared by all plant types in Realistic Plants.
+ * Central registry of all plant species.
  */
-public class PlantDefinition {
+public final class PlantRegistry {
 
-    private final String id;
+    private static final Map<String, PlantDefinition> PLANTS =
+            new LinkedHashMap<>();
 
-    private final int maxGrowthStage;
-    private final int floweringStage;
-    private final int regrowthStage;
+    static {
+        register(new PlantDefinition(
+                "tomato",
+                6,      // Maximum growth stage
+                4,      // Flowering stage
+                4,      // Regrowth stage
+                1200,   // Growth interval
+                1,      // Moisture consumption
+                0.15f,  // Minimum temperature
+                1.6f,   // Maximum temperature
+                20,     // Minimum moisture
+                20,     // Drought resistance
+                true    // Regrows after harvest
+        ));
+    }
 
-    private final int growthInterval;
-    private final int moistureConsumption;
+    private PlantRegistry() {
+    }
 
-    private final float minTemperature;
-    private final float maxTemperature;
+    public static void register(PlantDefinition definition) {
+        Objects.requireNonNull(
+                definition,
+                "Plant definition cannot be null"
+        );
 
-    private final int minimumMoisture;
-    private final int droughtResistance;
+        if (PLANTS.containsKey(definition.getId())) {
+            throw new IllegalArgumentException(
+                    "Plant already registered: " + definition.getId()
+            );
+        }
 
-    private final boolean regrowsAfterHarvest;
+        PLANTS.put(definition.getId(), definition);
+    }
 
-    /**
-     * Backward-compatible constructor.
-     * Flowering and regrowth stages default to maxGrowthStage - 2.
-     */
-    public PlantDefinition(
-            String id,
-            int maxGrowthStage,
-            int growthInterval,
-            int moistureConsumption,
-            float minTemperature,
-            float maxTemperature,
-            int minimumMoisture,
-            int droughtResistance,
-            boolean regrowsAfterHarvest
-    ) {
-        this(
-                id,
-                maxGrowthStage,
-                Math.max(0, maxGrowthStage - 2),
-                Math.max(0, maxGrowthStage - 2),
-                growthInterval,
-                moistureConsumption,
-                minTemperature,
-                maxTemperature,
-                minimumMoisture,
-                droughtResistance,
-                regrowsAfterHarvest
+    public static PlantDefinition get(String id) {
+        return PLANTS.get(id);
+    }
+
+    public static Collection<PlantDefinition> getAll() {
+        return Collections.unmodifiableCollection(
+                PLANTS.values()
         );
     }
 
-    /**
-     * Constructor with individual flowering and regrowth stages.
-     */
-    public PlantDefinition(
-            String id,
-            int maxGrowthStage,
-            int floweringStage,
-            int regrowthStage,
-            int growthInterval,
-            int moistureConsumption,
-            float minTemperature,
-            float maxTemperature,
-            int minimumMoisture,
-            int droughtResistance,
-            boolean regrowsAfterHarvest
-    ) {
-        if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException(
-                    "Plant ID cannot be empty"
-            );
-        }
-
-        if (maxGrowthStage < 1 || maxGrowthStage > 6) {
-            throw new IllegalArgumentException(
-                    "Maximum growth stage must be between 1 and 6"
-            );
-        }
-
-        if (floweringStage < 0
-                || floweringStage > maxGrowthStage) {
-            throw new IllegalArgumentException(
-                    "Flowering stage must be between 0 and maximum growth stage"
-            );
-        }
-
-        if (regrowthStage < 0
-                || regrowthStage > maxGrowthStage) {
-            throw new IllegalArgumentException(
-                    "Regrowth stage must be between 0 and maximum growth stage"
-            );
-        }
-
-        if (growthInterval < 1) {
-            throw new IllegalArgumentException(
-                    "Growth interval must be positive"
-            );
-        }
-
-        this.id = id;
-        this.maxGrowthStage = maxGrowthStage;
-        this.floweringStage = floweringStage;
-        this.regrowthStage = regrowthStage;
-
-        this.growthInterval = growthInterval;
-        this.moistureConsumption = moistureConsumption;
-
-        this.minTemperature = minTemperature;
-        this.maxTemperature = maxTemperature;
-
-        this.minimumMoisture = minimumMoisture;
-        this.droughtResistance = droughtResistance;
-
-        this.regrowsAfterHarvest = regrowsAfterHarvest;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public int getMaxGrowthStage() {
-        return maxGrowthStage;
-    }
-
-    public int getFloweringStage() {
-        return floweringStage;
-    }
-
-    public int getRegrowthStage() {
-        return regrowthStage;
-    }
-
-    public int getGrowthInterval() {
-        return growthInterval;
-    }
-
-    public int getMoistureConsumption() {
-        return moistureConsumption;
-    }
-
-    public float getMinTemperature() {
-        return minTemperature;
-    }
-
-    public float getMaxTemperature() {
-        return maxTemperature;
-    }
-
-    public int getMinimumMoisture() {
-        return minimumMoisture;
-    }
-
-    public int getDroughtResistance() {
-        return droughtResistance;
-    }
-
-    public boolean regrowsAfterHarvest() {
-        return regrowsAfterHarvest;
+    public static boolean contains(String id) {
+        return PLANTS.containsKey(id);
     }
 }
