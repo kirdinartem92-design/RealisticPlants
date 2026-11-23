@@ -155,12 +155,22 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
         if (!level.isClientSide()) {
             PlantData data = plant.getPlantData();
 
+            int harvestAmount =
+                    PlantHarvest.getHarvestAmount(data);
+
+            if (harvestAmount <= 0) {
+                return InteractionResult.PASS;
+            }
+
             if (!PlantHarvest.harvest(data)) {
                 return InteractionResult.PASS;
             }
 
             ItemStack tomatoes =
-                    new ItemStack(ModItems.TOMATO.get());
+                    new ItemStack(
+                            ModItems.TOMATO.get(),
+                            harvestAmount
+                    );
 
             if (!player.getInventory().add(tomatoes)) {
                 player.drop(
