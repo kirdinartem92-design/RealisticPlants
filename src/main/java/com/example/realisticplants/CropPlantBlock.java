@@ -80,7 +80,7 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
     }
 
     /**
-     * Общая обработка полива всех культур.
+     * Общая обработка взаимодействия с растениями.
      */
     @Override
     protected InteractionResult useItemOn(
@@ -92,45 +92,88 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
             InteractionHand hand,
             BlockHitResult hitResult) {
 
-        if (!itemStack.is(Items.POTION)) {
-            return InteractionResult.TRY_WITH_EMPTY_HAND;
-        }
-
-        var potionContents =
-                itemStack.get(DataComponents.POTION_CONTENTS);
-
-        if (potionContents == null
-                || !potionContents.is(Potions.WATER)) {
-            return InteractionResult.TRY_WITH_EMPTY_HAND;
-        }
-
         BlockEntity blockEntity = level.getBlockEntity(pos);
 
         if (!(blockEntity instanceof CropPlantBlockEntity plant)) {
             return InteractionResult.PASS;
         }
 
-        if (!level.isClientSide()) {
-            PlantGrowthManager.water(plant.getPlantData(), 40);
-            plant.setChanged();
+        PlantData data = plant.getPlantData();
 
-            if (!player.getAbilities().instabuild) {
-                itemStack.shrink(1);
+        // Костная мука ускоряет рост.
+        if (itemStack.is(Items.BONE_MEAL)) {
 
-                ItemStack bottle =
-                        new ItemStack(Items.GLASS_BOTTLE);
+            int age = state.getValue(AGE);
 
-                if (itemStack.isEmpty()) {
-                    player.setItemInHand(hand, bottle);
-                } else {
-                    player.getInventory().placeItemBackInInventory(
-                            bottle,
-                            Prediction.SERVER_ONLY
-                    );
-                }
+            if (age >= 6
+                    || data.isDead()
+                    || data.getHealth() <= 30
+                    || data.getMoisture() <= 0) {
+                return InteractionResult.PASS;
             }
+
+            if (!level.isClientSide()) {
+                int nextAge = age + 1;
+
+                level.setBlock(
+                        pos,
+                        state.setValue(AGE, nextAge),
+                        3
+                );
+
+                if (nextAge == 4 && !data.isFlowering()) {
+                    PlantHarvest.startFlowering(data);
+                }
+
+                if (nextAge == 6) {
+                    PlantHarvest.produceHarvest(data);
+                }
+
+                if (!player.getAbilities().instabuild) {
+                    itemStack.shrink(1);
+                }
+
+                plant.setChanged();
+            }
+
+            return InteractionResult.SUCCESS;
         }
 
-        return InteractionResult.SUCCESS;
+        // Полив обычным водным зельем: влажность +40.
+        if (itemStack.is(Items.POTION)) {
+
+            var potionContents =
+                    itemStack.get(DataComponents.POTION_CONTENTS);
+
+            if (potionContents == null
+                    || !potionContents.is(Potions.WATER)) {
+                return InteractionResult.TRY_WITH_EMPTY_HAND;
+            }
+
+            if (!level.isClientSide()) {
+                PlantGrowthManager.water(data, 40);
+                plant.setChanged();
+
+                if (!player.getAbilities().instabuild) {
+                    itemStack.shrink(1);
+
+                    ItemStack bottle =
+                            new ItemStack(Items.GLASS_BOTTLE);
+
+                    if (itemStack.isEmpty()) {
+                        player.setItemInHand(hand, bottle);
+                    } else {
+                        player.getInventory().placeItemBackInInventory(
+                                bottle,
+                                Prediction.SERVER_ONLY
+                        );
+                    }
+                }
+            }
+
+            return InteractionResult.SUCCESS;
+        }
+
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 }
