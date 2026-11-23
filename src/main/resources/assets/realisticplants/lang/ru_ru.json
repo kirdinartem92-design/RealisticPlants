@@ -11,5 +11,15 @@
   "itemGroup.realisticplants": "Реалистичные растения",
   "message.realisticplants.golden_found": "Невероятная удача! Вы нашли золотой овощ!",
   "message.realisticplants.mega_found": "ЛЕГЕНДАРНАЯ НАХОДКА! Вы обнаружили мега-овощ!",
-  "item.realisticplants.cucumber_plant": "Растение огурца"
+  "item.realisticplants.cucumber_plant": "Растение огурца",
+  "item.realisticplants.zucchini": "Кабачок",
+  "item.realisticplants.zucchini_seeds": "Семена кабачка",
+  "item.realisticplants.eggplant": "Баклажан",
+  "item.realisticplants.eggplant_seeds": "Семена баклажана",
+  "item.realisticplants.bell_pepper": "Болгарский перец",
+  "item.realisticplants.bell_pepper_seeds": "Семена болгарского перца",
+  "item.realisticplants.chili_pepper": "Острый перец",
+  "item.realisticplants.chili_pepper_seeds": "Семена острого перца",
+  "item.realisticplants.broccoli": "Брокколи",
+  "item.realisticplants.broccoli_seeds": "Семена брокколи"
 }
