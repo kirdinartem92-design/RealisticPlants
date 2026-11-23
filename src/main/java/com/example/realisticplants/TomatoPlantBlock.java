@@ -61,20 +61,25 @@ public class TomatoPlantBlock extends CropPlantBlock {
             Player player,
             BlockHitResult hitResult) {
 
-        if (state.getValue(AGE) < 6) {
-            return InteractionResult.PASS;
-        }
-
         BlockEntity blockEntity = level.getBlockEntity(pos);
 
         if (!(blockEntity instanceof TomatoPlantBlockEntity plant)) {
             return InteractionResult.PASS;
         }
 
-        if (!level.isClientSide()) {
-            PlantData data = plant.getPlantData();
+        PlantData data = plant.getPlantData();
 
-            int harvestAmount = PlantHarvest.getHarvestAmount(data);
+        int maxGrowthStage =
+                data.getDefinition().getMaxGrowthStage();
+
+        if (state.getValue(AGE) < maxGrowthStage) {
+            return InteractionResult.PASS;
+        }
+
+        if (!level.isClientSide()) {
+
+            int harvestAmount =
+                    PlantHarvest.getHarvestAmount(data);
 
             if (harvestAmount <= 0 || !PlantHarvest.harvest(data)) {
                 return InteractionResult.PASS;
