@@ -86,7 +86,8 @@ public class PlantData {
     }
 
     public boolean isWilted() {
-        return health > 0 && health <= 30;
+        return !isDead()
+                && (health <= 30 || moisture <= 30);
     }
 
     public boolean isDead() {
@@ -94,15 +95,16 @@ public class PlantData {
     }
 
     public PlantCondition getCondition() {
+
         if (health <= 0) {
             return PlantCondition.DEAD;
         }
 
-        if (health <= 15) {
+        if (health <= 15 || moisture <= 15) {
             return PlantCondition.DRY;
         }
 
-        if (health <= 30) {
+        if (health <= 30 || moisture <= 30) {
             return PlantCondition.WILTING;
         }
 
