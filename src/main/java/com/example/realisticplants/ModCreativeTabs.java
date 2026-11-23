@@ -38,6 +38,17 @@ public class ModCreativeTabs {
                                 output.accept(ModItems.CHILI_PEPPER.get());
                                 output.accept(ModItems.BROCCOLI.get());
 
+                                output.accept(ModItems.ZUCCHINI_SEEDS.get());
+                                output.accept(ModItems.ZUCCHINI_PLANT_ITEM.get());
+                                output.accept(ModItems.EGGPLANT_SEEDS.get());
+                                output.accept(ModItems.EGGPLANT_PLANT_ITEM.get());
+                                output.accept(ModItems.BELL_PEPPER_SEEDS.get());
+                                output.accept(ModItems.BELL_PEPPER_PLANT_ITEM.get());
+                                output.accept(ModItems.CHILI_PEPPER_SEEDS.get());
+                                output.accept(ModItems.CHILI_PEPPER_PLANT_ITEM.get());
+                                output.accept(ModItems.BROCCOLI_SEEDS.get());
+                                output.accept(ModItems.BROCCOLI_PLANT_ITEM.get());
+
                                 output.accept(ModItems.GOLDEN_VEGETABLE.get());
                                 output.accept(ModItems.MEGA_VEGETABLE.get());
                             })
