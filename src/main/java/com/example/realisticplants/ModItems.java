@@ -28,25 +28,31 @@ public class ModItems {
                     )
             );
 
-    public static final DeferredItem<Item> GOLDEN_VEGETABLE =
-            ITEMS.registerSimpleItem(
+    public static final DeferredItem<RareVegetableItem> GOLDEN_VEGETABLE =
+            ITEMS.registerItem(
                     "golden_vegetable",
-                    properties -> properties.food(
-                            new FoodProperties.Builder()
-                                    .nutrition(8)
-                                    .saturationModifier(1.2f)
-                                    .build()
+                    properties -> new RareVegetableItem(
+                            properties.food(
+                                    new FoodProperties.Builder()
+                                            .nutrition(8)
+                                            .saturationModifier(1.2f)
+                                            .build()
+                            ),
+                            RareVegetableItem.Variant.GOLDEN
                     )
             );
 
-    public static final DeferredItem<Item> MEGA_VEGETABLE =
-            ITEMS.registerSimpleItem(
+    public static final DeferredItem<RareVegetableItem> MEGA_VEGETABLE =
+            ITEMS.registerItem(
                     "mega_vegetable",
-                    properties -> properties.food(
-                            new FoodProperties.Builder()
-                                    .nutrition(20)
-                                    .saturationModifier(2.4f)
-                                    .build()
+                    properties -> new RareVegetableItem(
+                            properties.food(
+                                    new FoodProperties.Builder()
+                                            .nutrition(20)
+                                            .saturationModifier(2.4f)
+                                            .build()
+                            ),
+                            RareVegetableItem.Variant.MEGA
                     )
             );
 
@@ -72,7 +78,9 @@ public class ModItems {
     }
 
     private static FoodProperties createFoodProperties(String plantId) {
-        PlantDefinition definition = PlantRegistry.get(plantId);
+
+        PlantDefinition definition =
+                PlantRegistry.get(plantId);
 
         if (definition == null) {
             throw new IllegalStateException(
