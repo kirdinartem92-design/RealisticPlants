@@ -1,5 +1,10 @@
+
 {
-"item.realisticplants.tomato": "Tomato",
-"item.realisticplants.tomato_seeds": "Tomato Seeds",
-"itemGroup.realisticplants": "Realistic Plants"
+  "item.realisticplants.tomato": "Tomato",
+  "item.realisticplants.tomato_seeds": "Tomato Seeds",
+  "item.realisticplants.cucumber": "Cucumber",
+  "item.realisticplants.cucumber_seeds": "Cucumber Seeds",
+  "item.realisticplants.golden_vegetable": "Golden Vegetable",
+  "item.realisticplants.mega_vegetable": "Legendary Mega Vegetable",
+  "itemGroup.realisticplants": "Realistic Plants"
 }
