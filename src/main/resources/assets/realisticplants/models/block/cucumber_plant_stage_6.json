@@ -4,7 +4,7 @@
     "stem": "realisticplants:block/cucumber_stem",
     "leaf": "realisticplants:block/cucumber_leaf",
     "flower": "realisticplants:block/cucumber_flower",
-    "fruit": "realisticplants:item/cucumber"
+    "fruit": "realisticplants:block/cucumber_fruit"
   },
   "elements": [
     {
@@ -426,12 +426,12 @@
     {
       "from": [
         2,
-        10,
+        9,
         3
       ],
       "to": [
         4,
-        15,
+        17,
         5
       ],
       "faces": {
@@ -458,12 +458,12 @@
     {
       "from": [
         11,
-        15,
+        14,
         8
       ],
       "to": [
         13,
-        20,
+        22,
         10
       ],
       "faces": {
@@ -490,7 +490,7 @@
     {
       "from": [
         5,
-        19,
+        17,
         2
       ],
       "to": [
