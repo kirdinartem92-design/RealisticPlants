@@ -72,11 +72,38 @@ public class ModItems {
     public static final DeferredItem<CucumberSeedsItem> CUCUMBER_SEEDS =
             ITEMS.registerItem("cucumber_seeds", CucumberSeedsItem::new);
 
+    public static final DeferredItem<CropSeedsItem> ZUCCHINI_SEEDS =
+            ITEMS.registerItem("zucchini_seeds",
+                    properties -> new CropSeedsItem(properties, ModBlocks.ZUCCHINI_PLANT));
+    public static final DeferredItem<CropSeedsItem> EGGPLANT_SEEDS =
+            ITEMS.registerItem("eggplant_seeds",
+                    properties -> new CropSeedsItem(properties, ModBlocks.EGGPLANT_PLANT));
+    public static final DeferredItem<CropSeedsItem> BELL_PEPPER_SEEDS =
+            ITEMS.registerItem("bell_pepper_seeds",
+                    properties -> new CropSeedsItem(properties, ModBlocks.BELL_PEPPER_PLANT));
+    public static final DeferredItem<CropSeedsItem> CHILI_PEPPER_SEEDS =
+            ITEMS.registerItem("chili_pepper_seeds",
+                    properties -> new CropSeedsItem(properties, ModBlocks.CHILI_PEPPER_PLANT));
+    public static final DeferredItem<CropSeedsItem> BROCCOLI_SEEDS =
+            ITEMS.registerItem("broccoli_seeds",
+                    properties -> new CropSeedsItem(properties, ModBlocks.BROCCOLI_PLANT));
+
     public static final DeferredItem<BlockItem> TOMATO_PLANT_ITEM =
             ITEMS.registerSimpleBlockItem(ModBlocks.TOMATO_PLANT);
 
     public static final DeferredItem<BlockItem> CUCUMBER_PLANT_ITEM =
             ITEMS.registerSimpleBlockItem(ModBlocks.CUCUMBER_PLANT);
+
+    public static final DeferredItem<BlockItem> ZUCCHINI_PLANT_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlocks.ZUCCHINI_PLANT);
+    public static final DeferredItem<BlockItem> EGGPLANT_PLANT_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlocks.EGGPLANT_PLANT);
+    public static final DeferredItem<BlockItem> BELL_PEPPER_PLANT_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlocks.BELL_PEPPER_PLANT);
+    public static final DeferredItem<BlockItem> CHILI_PEPPER_PLANT_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlocks.CHILI_PEPPER_PLANT);
+    public static final DeferredItem<BlockItem> BROCCOLI_PLANT_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlocks.BROCCOLI_PLANT);
 
     private ModItems() {
     }
