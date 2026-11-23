@@ -87,7 +87,57 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
             InteractionHand hand,
             BlockHitResult hitResult) {
 
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+
+        if (!(blockEntity instanceof TomatoPlantBlockEntity plant)) {
+            return InteractionResult.PASS;
+        }
+
+        PlantData data = plant.getPlantData();
+
+        // Bone meal: accelerate plant growth.
+        if (itemStack.is(Items.BONE_MEAL)) {
+
+            int age = state.getValue(AGE);
+
+            if (age >= 6
+                    || data.isDead()
+                    || data.getHealth() <= 30
+                    || data.getMoisture() <= 0) {
+                return InteractionResult.PASS;
+            }
+
+            if (!level.isClientSide()) {
+
+                int nextAge = age + 1;
+
+                level.setBlock(
+                        pos,
+                        state.setValue(AGE, nextAge),
+                        3
+                );
+
+                if (nextAge == 4 && !data.isFlowering()) {
+                    PlantHarvest.startFlowering(data);
+                }
+
+                if (nextAge == 6) {
+                    PlantHarvest.produceHarvest(data);
+                }
+
+                if (!player.getAbilities().instabuild) {
+                    itemStack.shrink(1);
+                }
+
+                plant.setChanged();
+            }
+
+            return InteractionResult.SUCCESS;
+        }
+
+        // Water bottle: increase plant moisture.
         if (itemStack.is(Items.POTION)) {
+
             var potionContents =
                     itemStack.get(DataComponents.POTION_CONTENTS);
 
@@ -96,21 +146,14 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
                 return InteractionResult.TRY_WITH_EMPTY_HAND;
             }
 
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-
-            if (!(blockEntity instanceof TomatoPlantBlockEntity plant)) {
-                return InteractionResult.PASS;
-            }
-
             if (!level.isClientSide()) {
-                PlantGrowthManager.water(
-                        plant.getPlantData(),
-                        40
-                );
+
+                PlantGrowthManager.water(data, 40);
 
                 plant.setChanged();
 
                 if (!player.getAbilities().instabuild) {
+
                     itemStack.shrink(1);
 
                     ItemStack bottle =
@@ -153,6 +196,7 @@ public class TomatoPlantBlock extends Block implements EntityBlock {
         }
 
         if (!level.isClientSide()) {
+
             PlantData data = plant.getPlantData();
 
             int harvestAmount =
