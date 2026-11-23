@@ -1,7 +1,6 @@
-
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minecraft:item/golden_apple"
+    "model": "realisticplants:item/golden_vegetable"
   }
 }
