@@ -2,8 +2,8 @@
 package com.realisticplants;
 
 /**
- * Defines the biological and growth properties of a plant species.
- * Shared by all plant types in Realistic Plants.
+ * Defines the biological, growth and food properties
+ * of a plant species.
  */
 public class PlantDefinition {
 
@@ -26,6 +26,9 @@ public class PlantDefinition {
 
     private final int minHarvestAmount;
     private final int maxHarvestAmount;
+
+    private final int nutrition;
+    private final float saturationModifier;
 
     /**
      * Backward-compatible constructor.
@@ -54,7 +57,9 @@ public class PlantDefinition {
                 droughtResistance,
                 regrowsAfterHarvest,
                 1,
-                4
+                4,
+                2,
+                0.3f
         );
     }
 
@@ -87,12 +92,14 @@ public class PlantDefinition {
                 droughtResistance,
                 regrowsAfterHarvest,
                 1,
-                4
+                4,
+                2,
+                0.3f
         );
     }
 
     /**
-     * Constructor with individual growth and harvest settings.
+     * Constructor with individual harvest settings.
      */
     public PlantDefinition(
             String id,
@@ -109,8 +116,49 @@ public class PlantDefinition {
             int minHarvestAmount,
             int maxHarvestAmount
     ) {
+        this(
+                id,
+                maxGrowthStage,
+                floweringStage,
+                regrowthStage,
+                growthInterval,
+                moistureConsumption,
+                minTemperature,
+                maxTemperature,
+                minimumMoisture,
+                droughtResistance,
+                regrowsAfterHarvest,
+                minHarvestAmount,
+                maxHarvestAmount,
+                2,
+                0.3f
+        );
+    }
+
+    /**
+     * Complete constructor with individual food properties.
+     */
+    public PlantDefinition(
+            String id,
+            int maxGrowthStage,
+            int floweringStage,
+            int regrowthStage,
+            int growthInterval,
+            int moistureConsumption,
+            float minTemperature,
+            float maxTemperature,
+            int minimumMoisture,
+            int droughtResistance,
+            boolean regrowsAfterHarvest,
+            int minHarvestAmount,
+            int maxHarvestAmount,
+            int nutrition,
+            float saturationModifier
+    ) {
         if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("Plant ID cannot be empty");
+            throw new IllegalArgumentException(
+                    "Plant ID cannot be empty"
+            );
         }
 
         if (maxGrowthStage < 1 || maxGrowthStage > 6) {
@@ -144,6 +192,12 @@ public class PlantDefinition {
             );
         }
 
+        if (nutrition < 0 || saturationModifier < 0) {
+            throw new IllegalArgumentException(
+                    "Food properties cannot be negative"
+            );
+        }
+
         this.id = id;
         this.maxGrowthStage = maxGrowthStage;
         this.floweringStage = floweringStage;
@@ -157,6 +211,8 @@ public class PlantDefinition {
         this.regrowsAfterHarvest = regrowsAfterHarvest;
         this.minHarvestAmount = minHarvestAmount;
         this.maxHarvestAmount = maxHarvestAmount;
+        this.nutrition = nutrition;
+        this.saturationModifier = saturationModifier;
     }
 
     public String getId() {
@@ -209,5 +265,13 @@ public class PlantDefinition {
 
     public int getMaxHarvestAmount() {
         return maxHarvestAmount;
+    }
+
+    public int getNutrition() {
+        return nutrition;
+    }
+
+    public float getSaturationModifier() {
+        return saturationModifier;
     }
 }
