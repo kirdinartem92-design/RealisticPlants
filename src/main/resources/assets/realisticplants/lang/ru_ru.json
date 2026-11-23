@@ -1,0 +1,11 @@
+{
+  "item.realisticplants.tomato": "Помидор",
+  "item.realisticplants.tomato_seeds": "Семена помидора",
+  "item.realisticplants.cucumber": "Огурец",
+  "item.realisticplants.cucumber_seeds": "Семена огурца",
+  "item.realisticplants.golden_vegetable": "Золотой овощ",
+  "item.realisticplants.mega_vegetable": "Легендарный мега-овощ",
+  "itemGroup.realisticplants": "Реалистичные растения",
+  "message.realisticplants.golden_found": "Невероятная удача! Вы нашли золотой овощ!",
+  "message.realisticplants.mega_found": "ЛЕГЕНДАРНАЯ НАХОДКА! Вы обнаружили мега-овощ!"
+}

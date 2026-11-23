@@ -1,0 +1,46 @@
+
+{
+  "textures": {
+    "particle": "realisticplants:block/tomato_leaf_wilting",
+    "stem": "realisticplants:block/tomato_stem_wilting",
+    "leaf": "realisticplants:block/tomato_leaf_wilting"
+  },
+  "elements": [
+    {
+      "from": [7, 0, 7],
+      "to": [9, 4, 9],
+      "faces": {
+        "north": {"texture": "#stem"},
+        "south": {"texture": "#stem"},
+        "east": {"texture": "#stem"},
+        "west": {"texture": "#stem"},
+        "up": {"texture": "#stem"},
+        "down": {"texture": "#stem"}
+      }
+    },
+    {
+      "from": [5, 1, 7],
+      "to": [8, 2, 10],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    },
+    {
+      "from": [8, 2, 6],
+      "to": [11, 3, 9],
+      "faces": {
+        "north": {"texture": "#leaf"},
+        "south": {"texture": "#leaf"},
+        "east": {"texture": "#leaf"},
+        "west": {"texture": "#leaf"},
+        "up": {"texture": "#leaf"},
+        "down": {"texture": "#leaf"}
+      }
+    }
+  ]
+}
