@@ -2,7 +2,7 @@
 package com.realisticplants;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Prediction;
+import net.minecraft.util.Prediction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
