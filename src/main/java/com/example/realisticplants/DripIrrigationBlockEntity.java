@@ -146,7 +146,7 @@ public class DripIrrigationBlockEntity extends BlockEntity {
                         ModSounds.DRIP_IRRIGATION.get(),
                         SoundSource.BLOCKS,
                         0.08f,
-                        1.8f
+                        1.65f + level.getRandom().nextFloat() * 0.30f
                 );
             }
         }
