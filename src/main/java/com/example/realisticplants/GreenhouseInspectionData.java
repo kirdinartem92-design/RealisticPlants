@@ -170,7 +170,7 @@ public record GreenhouseInspectionData(
         if (plants == 0) {
             return new GreenhouseInspectionData(
                     0, 0, 0, 0, 0, sprinklers, drippers, growLights,
-                    fans, water, capacity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0f, 1.0
+                    fans, water, capacity, 0, 0, 0, 0, 0, 0, 0, 0, 0.0f, 1.0
             );
         }
 
