@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "active=false": {
+      "model": "realisticplants:block/greenhouse_fan"
+    },
+    "active=true": {
       "model": "realisticplants:block/greenhouse_fan"
     }
   }
