@@ -200,7 +200,7 @@ public final class GreenhouseEnvironment {
      * Estimates greenhouse solar heating from the actual sky brightness at
      * crop height. Rain and a dark sky reduce incoming solar energy.
      */
-    private static float getUncooledGreenhouseTemperature(
+    public static float getUncooledGreenhouseTemperature(
             Level level,
             BlockPos plantPos,
             float ambientTemperature
