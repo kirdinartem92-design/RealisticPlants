@@ -126,6 +126,9 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         // crops added by this mod; vanilla Minecraft crops remain untouched.
         boolean inGreenhouse =
                 GreenhouseEnvironment.isInGreenhouse(level, pos, definition);
+        GreenhouseEnvironment.updateFans(
+                level, pos, inGreenhouse, ambientTemperature
+        );
         float temperature = GreenhouseEnvironment.getTemperature(
                 level,
                 pos,
