@@ -28,6 +28,7 @@ public class RealisticPlants {
         TomatoPlantBlockEntity.register(modEventBus);
         CucumberPlantBlockEntity.register(modEventBus);
         NewCropPlantBlockEntity.register(modEventBus);
+        IrrigationSprinklerBlockEntity.register(modEventBus);
 
         LOGGER.info("Realistic Plants is loading!");
         LOGGER.info("Plant configuration registered!");
