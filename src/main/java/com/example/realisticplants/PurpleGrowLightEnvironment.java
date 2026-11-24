@@ -111,9 +111,11 @@ public final class PurpleGrowLightEnvironment {
     public static double getGrowthMultiplier(
             Level level,
             BlockPos plantPos,
-            PlantDefinition definition
+            PlantDefinition definition,
+            boolean inGreenhouse
     ) {
         if (level == null || plantPos == null || definition == null
+                || !inGreenhouse
                 || !SUPPORTED_CROPS.contains(definition.getId())) {
             return 1.0;
         }
