@@ -1,7 +1,8 @@
 {
   "textures": {
     "particle": "realisticplants:block/chili_pepper_plant",
-    "plant": "realisticplants:block/chili_pepper_plant"
+    "plant": "realisticplants:block/chili_pepper_plant",
+    "fruit": "realisticplants:block/chili_pepper_fruit"
   },
   "elements": [
     {
@@ -161,6 +162,70 @@
         },
         "west": {
           "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7.28,
+        5.84,
+        7.89
+      ],
+      "to": [
+        8.72,
+        10.16,
+        8.11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
+        }
+      }
+    },
+    {
+      "from": [
+        7.89,
+        5.84,
+        7.28
+      ],
+      "to": [
+        8.11,
+        10.16,
+        8.72
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
         }
       }
     }
