@@ -1,7 +1,8 @@
 {
   "textures": {
     "particle": "realisticplants:block/broccoli_plant",
-    "plant": "realisticplants:block/broccoli_plant"
+    "plant": "realisticplants:block/broccoli_plant",
+    "fruit": "realisticplants:block/broccoli_fruit"
   },
   "elements": [
     {
@@ -207,20 +208,32 @@
     {
       "from": [
         2,
-        8.8,
-        2
+        2,
+        7.7
       ],
       "to": [
         14,
-        15.2,
-        14
+        14,
+        8.3
       ],
       "faces": {
         "north": {
-          "texture": "#plant"
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
         },
         "south": {
-          "texture": "#plant"
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
         }
       }
     }
