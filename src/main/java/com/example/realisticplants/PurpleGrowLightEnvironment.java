@@ -17,7 +17,6 @@ public final class PurpleGrowLightEnvironment {
     private static final int RADIUS = 4;
     private static final int NATURAL_LIGHT_THRESHOLD = 12;
     private static final double GROWTH_MULTIPLIER = 1.25;
-    private static final double DAYLIGHT_MULTIPLIER = 1.05;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
             "tomato",
@@ -118,11 +117,6 @@ public final class PurpleGrowLightEnvironment {
                 || !inGreenhouse
                 || !SUPPORTED_CROPS.contains(definition.getId())) {
             return 1.0;
-        }
-
-        int skyLight = level.getBrightness(LightLayer.SKY, plantPos);
-        if (skyLight >= NATURAL_LIGHT_THRESHOLD) {
-            return DAYLIGHT_MULTIPLIER;
         }
 
         if (hasNearbyActivePurpleGrowLight(level, plantPos)) {
