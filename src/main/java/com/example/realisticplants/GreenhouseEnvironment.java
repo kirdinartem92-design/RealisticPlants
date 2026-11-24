@@ -31,6 +31,43 @@ public final class GreenhouseEnvironment {
     private GreenhouseEnvironment() {
     }
 
+    /**
+     * Calculates the crop's greenhouse temperature after nearby fans run.
+     * Each fan removes a small part of the greenhouse heat bonus; cooling
+     * never pushes the crop below the biome's ambient temperature.
+     */
+    public static float getTemperature(
+            Level level,
+            BlockPos plantPos,
+            float ambientTemperature,
+            boolean inGreenhouse
+    ) {
+        if (!inGreenhouse || level == null || plantPos == null) {
+            return ambientTemperature;
+        }
+
+        int fans = 0;
+        int radius = 6;
+        for (int dx = -radius; dx <= radius && fans < 3; dx++) {
+            for (int dy = -2; dy <= 2 && fans < 3; dy++) {
+                for (int dz = -radius; dz <= radius && fans < 3; dz++) {
+                    if (level.getBlockState(plantPos.offset(dx, dy, dz))
+                            .is(ModBlocks.GREENHOUSE_FAN.get())) {
+                        fans++;
+                    }
+                }
+            }
+        }
+
+        float greenhouseTemperature =
+                ambientTemperature + TEMPERATURE_BONUS;
+        float cooling = Math.min(TEMPERATURE_BONUS, fans * 0.05f);
+        return Math.max(
+                ambientTemperature,
+                greenhouseTemperature - cooling
+        );
+    }
+
     public static boolean isInGreenhouse(
             Level level,
             BlockPos plantPos,
