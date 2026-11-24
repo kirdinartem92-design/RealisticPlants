@@ -1,26 +1,27 @@
 {
   "greenhouse_fan_hum": {
     "sounds": [
-      {
-        "name": "block/beacon/ambient",
-        "volume": 0.35
-      }
+      { "name": "block/beacon/ambient", "volume": 0.35 }
+    ]
+  },
+  "greenhouse_fan_start": {
+    "sounds": [
+      { "name": "block/lever/click", "volume": 0.35, "pitch": 0.8 }
+    ]
+  },
+  "greenhouse_fan_stop": {
+    "sounds": [
+      { "name": "block/lever/click", "volume": 0.25, "pitch": 0.65 }
     ]
   },
   "sprinkler_spray": {
     "sounds": [
-      {
-        "name": "block/water/splash",
-        "volume": 0.55
-      }
+      { "name": "block/water/splash", "volume": 0.55 }
     ]
   },
   "drip_irrigation": {
     "sounds": [
-      {
-        "name": "block/pointed_dripstone/drip_water",
-        "volume": 0.5
-      }
+      { "name": "block/pointed_dripstone/drip_water", "volume": 0.5 }
     ]
   }
 }
