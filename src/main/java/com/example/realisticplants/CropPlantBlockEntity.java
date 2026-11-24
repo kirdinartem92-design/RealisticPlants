@@ -152,9 +152,13 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
                     );
                 }
 
+                // Use the effective greenhouse temperature here as well:
+                // greenhouse warmth can increase evaporation, while active
+                // fan cooling reduces it. Using ambient temperature would
+                // make fan cooling affect growth but not soil drying.
                 PlantEnvironment.applyHeat(
                         plantData,
-                        ambientTemperature,
+                        temperature,
                         moistureConsumption
                 );
             }
