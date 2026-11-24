@@ -135,5 +135,6 @@
   "gui.realisticplants.greenhouse.dead_short": "Мёртв",
   "gui.realisticplants.greenhouse.lifecycle_breakdown": "ЦВЕТЕНИЕ И УРОЖАЙ",
   "gui.realisticplants.greenhouse.flowering_short": "Цветут",
-  "gui.realisticplants.greenhouse.harvest_ready_short": "Урожай"
+  "gui.realisticplants.greenhouse.harvest_ready_short": "Урожай",
+  "message.realisticplants.analyzer.equipment": "Рядом: распылители {0}, капельные системы {1}, активные фитолампы {2} | Вода в устройствах: {3}/{4}"
 }

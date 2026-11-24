@@ -135,5 +135,6 @@
   "gui.realisticplants.greenhouse.dead_short": "Dead",
   "gui.realisticplants.greenhouse.lifecycle_breakdown": "FLOWERING & HARVEST",
   "gui.realisticplants.greenhouse.flowering_short": "Bloom",
-  "gui.realisticplants.greenhouse.harvest_ready_short": "Ready"
+  "gui.realisticplants.greenhouse.harvest_ready_short": "Ready",
+  "message.realisticplants.analyzer.equipment": "Nearby: sprinklers {0}, drip units {1}, active grow lights {2} | Water in devices: {3}/{4}"
 }

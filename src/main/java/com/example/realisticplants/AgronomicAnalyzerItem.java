@@ -219,8 +219,73 @@ public class AgronomicAnalyzerItem extends Item {
                             )
                     )
             );
+
+            NearbyEquipment equipment = scanNearbyEquipment(level, pos);
+            context.getPlayer().sendSystemMessage(
+                    Component.translatable(
+                            "message.realisticplants.analyzer.equipment",
+                            equipment.sprinklers(),
+                            equipment.drippers(),
+                            equipment.activeLights(),
+                            equipment.storedWater(),
+                            equipment.waterCapacity()
+                    )
+            );
         }
 
         return InteractionResult.SUCCESS;
     }
+
+    private static NearbyEquipment scanNearbyEquipment(Level level, BlockPos plantPos) {
+        int sprinklers = 0;
+        int drippers = 0;
+        int activeLights = 0;
+        int storedWater = 0;
+        int waterCapacity = 0;
+        int radius = 4;
+
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                for (int dz = -radius; dz <= radius; dz++) {
+                    if (dx * dx + dy * dy + dz * dz > radius * radius) {
+                        continue;
+                    }
+                    BlockPos devicePos = plantPos.offset(dx, dy, dz);
+                    if (!level.hasChunkAt(devicePos)) {
+                        continue;
+                    }
+
+                    BlockEntity device = level.getBlockEntity(devicePos);
+                    if (device instanceof IrrigationSprinklerBlockEntity sprinkler) {
+                        sprinklers++;
+                        storedWater += sprinkler.getStoredWater();
+                        waterCapacity += sprinkler.getCapacity();
+                    } else if (device instanceof DripIrrigationBlockEntity dripper) {
+                        drippers++;
+                        storedWater += dripper.getStoredWater();
+                        waterCapacity += dripper.getCapacity();
+                    } else if (level.getBlockState(devicePos)
+                            .is(ModBlocks.PURPLE_GROW_LIGHT.get())
+                            && level.getBlockState(devicePos)
+                                    .getValue(PurpleGrowLightBlock.ACTIVE)) {
+                        activeLights++;
+                    }
+                }
+            }
+        }
+
+        return new NearbyEquipment(
+                sprinklers, drippers, activeLights, storedWater, waterCapacity
+        );
+    }
+
+    private record NearbyEquipment(
+            int sprinklers,
+            int drippers,
+            int activeLights,
+            int storedWater,
+            int waterCapacity
+    ) {
+    }
+
 }
