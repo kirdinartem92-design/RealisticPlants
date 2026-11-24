@@ -81,7 +81,9 @@ public class ModBlocks {
             BLOCKS.registerBlock(
                     "purple_grow_light",
                     properties -> new PurpleGrowLightBlock(
-                            PurpleGrowLightBlock.createProperties()
+                            properties.mapColor(MapColor.COLOR_PURPLE)
+                                    .strength(1.5f)
+                                    .lightLevel(state -> 12)
                     )
             );
 
