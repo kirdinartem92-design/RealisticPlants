@@ -100,10 +100,6 @@ public final class GreenhouseEnvironment {
 
         // Accept compact and larger greenhouse footprints. The bounded
         // directional scan avoids an unbounded flood-fill and never loads chunks.
-        int[][] directions = {
-                {1, 0}, {-1, 0}, {0, 1}, {0, -1}
-        };
-
         int northDistance = findWallDistance(level, plantPos, 0, -1);
         int southDistance = findWallDistance(level, plantPos, 0, 1);
         int westDistance = findWallDistance(level, plantPos, -1, 0);
