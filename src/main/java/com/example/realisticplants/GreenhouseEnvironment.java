@@ -98,7 +98,7 @@ public final class GreenhouseEnvironment {
                             .value().getBaseTemperature();
                     float switchThreshold = cropDefinition.getMaxTemperature()
                             - (anyFanActive ? FAN_SWITCH_HYSTERESIS : 0.0f);
-                    float controlTemperature = anyFanActive
+                    float targetTemperature = anyFanActive
                             ? getTemperature(
                                     level, cropPos, cropAmbientTemperature,
                                     true, cropDefinition
@@ -106,6 +106,13 @@ public final class GreenhouseEnvironment {
                             : getUncooledGreenhouseTemperature(
                                     level, cropPos, cropAmbientTemperature
                             );
+                    // Use the crop's thermally smoothed temperature rather
+                    // than the instantaneous target. This lets the greenhouse
+                    // cool down before fans stop, then warm gradually before
+                    // they start again instead of toggling every update.
+                    float controlTemperature = crop.getSimulatedTemperature(
+                            targetTemperature
+                    );
                     if (SUPPORTED_CROPS.contains(cropDefinition.getId())
                             && controlTemperature > switchThreshold) {
                         coolingNeeded = true;
