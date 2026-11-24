@@ -13,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -185,7 +184,7 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
             level.playSound(
                     null,
                     pos,
-                    SoundEvents.WEATHER_RAIN,
+                    ModSounds.SPRINKLER_SPRAY.get(),
                     SoundSource.BLOCKS,
                     0.22f,
                     1.35f
