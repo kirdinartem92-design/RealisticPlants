@@ -1,23 +1,20 @@
-# Optional purple lighting for the grow light
+# Optional colored lighting for the grow light
 
-Realistic Plants keeps its grow light independent of any colored-light renderer. Without an additional client mod, the grow light still emits ordinary Minecraft block light and continues to provide its plant-growth bonus.
+Realistic Plants does not require a colored-light renderer. Without an additional client mod, the grow light emits ordinary Minecraft block light and continues to provide its plant-growth bonus.
 
-## True purple-colored illumination (optional)
+## Colored Light compatibility status
 
-For colored light on nearby blocks, install **Colored Light** by comedy on each player's client.
+The optional **Colored Light** mod by comedy provides real RGB-style colored illumination on nearby block surfaces. It is client-side and does not need to be installed on a dedicated server.
 
-- Use the **NeoForge** build matching the exact Minecraft version.
-- For this project branch (Minecraft 26.3 / NeoForge), use the [NeoForge 26.3 release](https://www.curseforge.com/minecraft/mc-mods/colored-light/files/9579126).
-- Colored Light is client-side only. It does not need to be installed on a dedicated server.
-- Start Minecraft and open **Mods → Colored Light → Config**.
-- Open **Block Colors**. The mod supports custom colors for modded light-emitting blocks as well as vanilla blocks.
-- Find the Realistic Plants entry for **Purple Grow Light** (block name: `purple_grow_light`) and set its color to a purple value such as **`#A020F0`**.
-- Adjust **Color Intensity** to taste.
+For this project branch (Minecraft 26.3 / NeoForge), the candidate release is:
+https://www.curseforge.com/minecraft/mc-mods/colored-light/files/9579126
 
-Colored Light stores its client settings in `config/coloredlight.json`. Its Block Colors editor supports a hex/HSV color picker, presets, and per-block colors. The exact layout of the editor can vary between releases.
+**Important limitation discovered during source inspection:** the current Colored Light source derives colors from built-in block-name rules. Its current settings screen exposes global enable/intensity and stained-glass settings; it does not expose a per-block custom color picker. An unrecognized block name falls back to a warm light color. Therefore the current release does not yet let a player simply select `#A020F0` for `realisticplants:purple_grow_light`.
+
+We must not claim that installing Colored Light alone makes the Realistic Plants lamp purple. A small, optional client compatibility integration (or an upstream feature in Colored Light) is still needed to assign our grow-light block the purple RGB value. This integration must remain optional so Realistic Plants continues to load and function when Colored Light is absent.
 
 ## Compatibility notes
 
-Colored Light's published NeoForge support currently includes Minecraft 1.21 through 26.3. Always install the file matching the Minecraft version and loader in use. Realistic Plants itself must also have a build for that Minecraft/NeoForge version.
+Always use a Colored Light NeoForge build matching the exact Minecraft version and loader. Realistic Plants itself must also have a build for that Minecraft/NeoForge version.
 
-If Colored Light is absent, the grow light remains usable: ordinary white block lighting and the mod's plant-growth effect continue to work. No hard dependency is added.
+Until the optional color integration is implemented and tested in-game, the grow light remains ordinary vanilla block-light color. Its plant-growth effect is independent of Colored Light.
