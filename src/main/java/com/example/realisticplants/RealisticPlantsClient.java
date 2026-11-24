@@ -90,7 +90,28 @@ public final class RealisticPlantsClient {
             if (!state.is(ModBlocks.GREENHOUSE_FAN.get())
                     || !state.getValue(GreenhouseFanBlock.ACTIVE)) {
                 stop();
+                return;
             }
+
+            // Several nearby fans should create a fuller ambience, not a
+            // volume spike. Normalize each source by the square root of the
+            // number of active fan loops audible in the same dimension.
+            int nearbyFans = 1;
+            for (Map.Entry<GreenhouseFanBlockEntity, FanHumSound> entry
+                    : FAN_SOUNDS.entrySet()) {
+                GreenhouseFanBlockEntity otherFan = entry.getKey();
+                FanHumSound otherSound = entry.getValue();
+                if (otherFan == null || otherSound == this
+                        || otherSound.isStopped()
+                        || otherFan.getLevel() != level) {
+                    continue;
+                }
+
+                if (otherSound.fanPos.distSqr(fanPos) <= 256.0) {
+                    nearbyFans++;
+                }
+            }
+            this.volume = 0.22f / (float) Math.sqrt(nearbyFans);
         }
     }
 
