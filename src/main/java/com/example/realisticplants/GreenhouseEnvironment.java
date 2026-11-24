@@ -70,9 +70,12 @@ public final class GreenhouseEnvironment {
 
                     PlantDefinition cropDefinition =
                             crop.getPlantData().getDefinition();
+                    float cropAmbientTemperature = level.getBiome(cropPos)
+                            .value().getBaseTemperature();
                     if (SUPPORTED_CROPS.contains(cropDefinition.getId())
-                            && getUncooledGreenhouseTemperature(level, cropPos, ambientTemperature)
-                                    > cropDefinition.getMaxTemperature()) {
+                            && getUncooledGreenhouseTemperature(
+                                    level, cropPos, cropAmbientTemperature
+                            ) > cropDefinition.getMaxTemperature()) {
                         coolingNeeded = true;
                         break;
                     }
