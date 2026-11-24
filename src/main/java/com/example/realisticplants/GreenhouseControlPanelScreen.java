@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class GreenhouseControlPanelScreen extends AbstractContainerScreen<GreenhouseControlPanelMenu> {
     private static final int PANEL_WIDTH = 340;
-    private static final int PANEL_HEIGHT = 224;
+    private static final int PANEL_HEIGHT = 260;
 
     public GreenhouseControlPanelScreen(
             GreenhouseControlPanelMenu menu,
@@ -36,6 +36,7 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
         graphics.fill(x + 10, y + 36, x + 164, y + PANEL_HEIGHT - 10, 0xFF202B35);
         graphics.fill(x + 172, y + 36, x + PANEL_WIDTH - 10, y + PANEL_HEIGHT - 10, 0xFF202B35);
         graphics.fill(x + 10, y + 32, x + PANEL_WIDTH - 10, y + 34, 0xFFA56BE8);
+        graphics.fill(x + 10, y + 218, x + PANEL_WIDTH - 10, y + 252, 0xFF18242E);
     }
 
     @Override
@@ -88,6 +89,16 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
                 GreenhouseControlPanelMenu.OVERHEATED, GreenhouseControlPanelMenu.COLD);
         alertLine(graphics, x + 180, alertY + 36, "gui.realisticplants.greenhouse.light_alert",
                 GreenhouseControlPanelMenu.LOW_LIGHT, GreenhouseControlPanelMenu.WEAK);
+
+        // Exact population of every crop introduced by this mod.
+        section(graphics, x + 18, y + 222, "gui.realisticplants.greenhouse.crop_breakdown");
+        cropCount(graphics, x + 18, y + 237, "gui.realisticplants.greenhouse.tomato_short", GreenhouseControlPanelMenu.TOMATOES);
+        cropCount(graphics, x + 62, y + 237, "gui.realisticplants.greenhouse.cucumber_short", GreenhouseControlPanelMenu.CUCUMBERS);
+        cropCount(graphics, x + 106, y + 237, "gui.realisticplants.greenhouse.zucchini_short", GreenhouseControlPanelMenu.ZUCCHINIS);
+        cropCount(graphics, x + 150, y + 237, "gui.realisticplants.greenhouse.eggplant_short", GreenhouseControlPanelMenu.EGGPLANTS);
+        cropCount(graphics, x + 194, y + 237, "gui.realisticplants.greenhouse.bell_pepper_short", GreenhouseControlPanelMenu.BELL_PEPPERS);
+        cropCount(graphics, x + 238, y + 237, "gui.realisticplants.greenhouse.chili_short", GreenhouseControlPanelMenu.CHILI_PEPPERS);
+        cropCount(graphics, x + 282, y + 237, "gui.realisticplants.greenhouse.broccoli_short", GreenhouseControlPanelMenu.BROCCOLI);
     }
 
     private int value(int index) {
@@ -101,6 +112,11 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
     private void line(GuiGraphicsExtractor graphics, int x, int y, String key, Object value) {
         graphics.text(this.font, Component.translatable(key), x, y, 0xFFCFD8E0, false);
         graphics.text(this.font, String.valueOf(value), x + 92, y, 0xFFFFFFFF, false);
+    }
+
+    private void cropCount(GuiGraphicsExtractor graphics, int x, int y, String key, int index) {
+        graphics.text(this.font, Component.translatable(key), x, y, 0xFFBFD0DE, false);
+        graphics.text(this.font, Integer.toString(value(index)), x, y + 10, 0xFF8FE0A2, false);
     }
 
     private void alertLine(GuiGraphicsExtractor graphics, int x, int y, String key, int index) {
