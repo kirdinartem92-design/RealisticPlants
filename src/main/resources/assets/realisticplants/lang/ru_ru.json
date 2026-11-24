@@ -29,5 +29,14 @@
   "block.realisticplants.eggplant_plant": "Растение баклажана",
   "block.realisticplants.bell_pepper_plant": "Растение болгарского перца",
   "block.realisticplants.chili_pepper_plant": "Растение острого перца",
-  "block.realisticplants.broccoli_plant": "Растение брокколи"
+  "block.realisticplants.broccoli_plant": "Растение брокколи",
+  "item.realisticplants.potato_seeds": "Семена картофеля",
+  "item.realisticplants.carrot_seeds": "Семена моркови",
+  "item.realisticplants.beetroot_seeds": "Семена свёклы",
+  "item.realisticplants.potato_plant": "Растение картофеля",
+  "item.realisticplants.carrot_plant": "Растение моркови",
+  "item.realisticplants.beetroot_plant": "Растение свёклы",
+  "block.realisticplants.potato_plant": "Растение картофеля",
+  "block.realisticplants.carrot_plant": "Растение моркови",
+  "block.realisticplants.beetroot_plant": "Растение свёклы"
 }
