@@ -142,16 +142,29 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
                 definition
         );
 
-        // Greenhouses warm up and cool down gradually instead of instantly
-        // matching every change in sunlight, weather or fan activity.
-        if (!greenhouseTemperatureInitialized) {
+        // Outside a greenhouse, use the biome temperature directly. This
+        // prevents a plant moved out of a greenhouse from retaining its old
+        // greenhouse microclimate.
+        if (!inGreenhouse) {
+            greenhouseTemperature = ambientTemperature;
+            greenhouseTemperatureInitialized = false;
+        } else if (!greenhouseTemperatureInitialized) {
             greenhouseTemperature = targetTemperature;
             greenhouseTemperatureInitialized = true;
         } else {
+            // Thermal inertia is asymmetric: enclosed spaces warm gradually
+            // and lose stored heat more slowly when the sun goes away. Active
+            // ventilation increases the cooling response through the target
+            // temperature calculated by GreenhouseEnvironment.
+            double response = targetTemperature > greenhouseTemperature
+                    ? 0.16
+                    : 0.10;
             greenhouseTemperature +=
-                    (targetTemperature - greenhouseTemperature) * 0.25;
+                    (targetTemperature - greenhouseTemperature) * response;
         }
-        float temperature = (float) greenhouseTemperature;
+        float temperature = inGreenhouse
+                ? (float) greenhouseTemperature
+                : ambientTemperature;
 
         // Environmental simulation runs on its own cadence. Keeping its
         // interval equal to the old growth interval preserves current balance.
