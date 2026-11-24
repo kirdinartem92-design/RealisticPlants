@@ -102,6 +102,9 @@ public class DripIrrigationBlockEntity extends BlockEntity {
 
         for (int[] direction : HORIZONTAL_DIRECTIONS) {
             BlockPos cropPos = pos.above().offset(direction[0], 0, direction[1]);
+            if (!level.hasChunkAt(cropPos)) {
+                continue;
+            }
             BlockEntity candidate = level.getBlockEntity(cropPos);
 
             if (!(candidate instanceof CropPlantBlockEntity crop)) {
