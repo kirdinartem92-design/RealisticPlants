@@ -155,9 +155,12 @@ public record GreenhouseInspectionData(
                     // Calculate the effective temperature once per plant.
                     // This also performs the nearby-fan scan, so reusing the
                     // result avoids repeating an expensive world scan.
-                    float effectiveTemperature = GreenhouseEnvironment.getTemperature(
+                    float targetTemperature = GreenhouseEnvironment.getTemperature(
                             level, pos, ambientTemperature, inGreenhouse,
                             plant.getDefinition()
+                    );
+                    float effectiveTemperature = crop.getSimulatedTemperature(
+                            inGreenhouse ? targetTemperature : ambientTemperature
                     );
                     temperatureTotal += effectiveTemperature;
 
