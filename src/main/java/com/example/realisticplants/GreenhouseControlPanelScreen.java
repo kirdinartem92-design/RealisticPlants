@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class GreenhouseControlPanelScreen extends AbstractContainerScreen<GreenhouseControlPanelMenu> {
     private static final int PANEL_WIDTH = 340;
-    private static final int PANEL_HEIGHT = 260;
+    private static final int PANEL_HEIGHT = 292;
 
     public GreenhouseControlPanelScreen(
             GreenhouseControlPanelMenu menu,
@@ -36,7 +36,7 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
         graphics.fill(x + 10, y + 36, x + 164, y + PANEL_HEIGHT - 10, 0xFF202B35);
         graphics.fill(x + 172, y + 36, x + PANEL_WIDTH - 10, y + PANEL_HEIGHT - 10, 0xFF202B35);
         graphics.fill(x + 10, y + 32, x + PANEL_WIDTH - 10, y + 34, 0xFFA56BE8);
-        graphics.fill(x + 10, y + 218, x + PANEL_WIDTH - 10, y + 252, 0xFF18242E);
+        graphics.fill(x + 10, y + 218, x + PANEL_WIDTH - 10, y + 284, 0xFF18242E);
     }
 
     @Override
@@ -99,6 +99,14 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
         cropCount(graphics, x + 194, y + 237, "gui.realisticplants.greenhouse.bell_pepper_short", GreenhouseControlPanelMenu.BELL_PEPPERS);
         cropCount(graphics, x + 238, y + 237, "gui.realisticplants.greenhouse.chili_short", GreenhouseControlPanelMenu.CHILI_PEPPERS);
         cropCount(graphics, x + 282, y + 237, "gui.realisticplants.greenhouse.broccoli_short", GreenhouseControlPanelMenu.BROCCOLI);
+
+        // Live condition breakdown: mutually exclusive plant lifecycle states.
+        section(graphics, x + 18, y + 258, "gui.realisticplants.greenhouse.condition_breakdown");
+        conditionCount(graphics, x + 18, y + 274, "gui.realisticplants.greenhouse.healthy_short", GreenhouseControlPanelMenu.HEALTHY);
+        conditionCount(graphics, x + 82, y + 274, "gui.realisticplants.greenhouse.weak_short", GreenhouseControlPanelMenu.WEAK);
+        conditionCount(graphics, x + 146, y + 274, "gui.realisticplants.greenhouse.wilting_short", GreenhouseControlPanelMenu.WILTING);
+        conditionCount(graphics, x + 210, y + 274, "gui.realisticplants.greenhouse.dry_short", GreenhouseControlPanelMenu.DRY);
+        conditionCount(graphics, x + 274, y + 274, "gui.realisticplants.greenhouse.dead_short", GreenhouseControlPanelMenu.DEAD);
     }
 
     private int value(int index) {
@@ -117,6 +125,15 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
     private void cropCount(GuiGraphicsExtractor graphics, int x, int y, String key, int index) {
         graphics.text(this.font, Component.translatable(key), x, y, 0xFFBFD0DE, false);
         graphics.text(this.font, Integer.toString(value(index)), x, y + 10, 0xFF8FE0A2, false);
+    }
+
+
+    private void conditionCount(GuiGraphicsExtractor graphics, int x, int y, String key, int index) {
+        graphics.text(this.font, Component.translatable(key), x, y, 0xFFBFD0DE, false);
+        int count = value(index);
+        graphics.text(this.font, Integer.toString(count), x + 35, y,
+                count > 0 && index != GreenhouseControlPanelMenu.HEALTHY
+                        ? 0xFFFFB36B : 0xFF8FE0A2, false);
     }
 
     private void alertLine(GuiGraphicsExtractor graphics, int x, int y, String key, int index) {
