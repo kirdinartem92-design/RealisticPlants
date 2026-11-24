@@ -138,8 +138,11 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
                         3
                 );
 
-                if (nextAge == definition.getFloweringStage()
-                        && !data.isFlowering()) {
+                if (PlantLifecycleRules.shouldStartFlowering(
+                        nextAge,
+                        definition.getFloweringStage(),
+                        data.isFlowering()
+                )) {
                     PlantHarvest.startFlowering(data);
                 }
 

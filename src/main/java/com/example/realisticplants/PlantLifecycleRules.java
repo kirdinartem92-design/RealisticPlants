@@ -12,6 +12,19 @@ public final class PlantLifecycleRules {
     }
 
     /**
+     * Checks whether a growth-stage transition should start flowering.
+     * Using a threshold also supports crops whose regrowth stage is equal
+     * to their initial flowering stage.
+     */
+    public static boolean shouldStartFlowering(
+            int newAge,
+            int floweringStage,
+            boolean alreadyFlowering
+    ) {
+        return !alreadyFlowering && newAge >= floweringStage;
+    }
+
+    /**
      * Returns whether a plant is healthy and hydrated enough to flower
      * or form a harvest. Temperature is handled by growth rules separately.
      */

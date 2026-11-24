@@ -167,7 +167,11 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
             int nextAge = age + 1;
             level.setBlock(pos, state.setValue(ageProperty, nextAge), 3);
 
-            if (nextAge == getFloweringStage() && !plantData.isFlowering()) {
+            if (PlantLifecycleRules.shouldStartFlowering(
+                    nextAge,
+                    getFloweringStage(),
+                    plantData.isFlowering()
+            )) {
                 PlantHarvest.startFlowering(plantData);
             }
 
@@ -187,7 +191,9 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
             return;
         }
 
-        PlantHarvest.startFlowering(plantData);
+        // Regrowth starts from its configured stage, but flowering must
+        // happen again only after a subsequent growth-stage transition.
+        plantData.setFlowering(false);
 
         if (level != null) {
             BlockState state = getBlockState();

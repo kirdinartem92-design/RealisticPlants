@@ -11,6 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class PlantLifecycleRulesTest {
 
     @Test
+    void floweringStartsOnlyAfterARealGrowthTransitionReachesItsStage() {
+        assertFalse(PlantLifecycleRules.shouldStartFlowering(3, 4, false));
+        assertTrue(PlantLifecycleRules.shouldStartFlowering(4, 4, false));
+        assertTrue(PlantLifecycleRules.shouldStartFlowering(5, 4, false));
+        assertFalse(PlantLifecycleRules.shouldStartFlowering(5, 4, true));
+    }
+
+    @Test
     void lifecycleRequiresMinimumHealth() {
         PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
         tomato.setHealth(29);
