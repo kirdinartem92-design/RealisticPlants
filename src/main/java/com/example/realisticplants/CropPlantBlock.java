@@ -1,10 +1,12 @@
 package com.realisticplants;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Prediction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -17,6 +19,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidTags;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -82,7 +85,9 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
             BlockGetter level,
             BlockPos pos,
             CollisionContext context) {
-        return Shapes.empty();
+        // A very thin collision plate lets a falling player land on the crop
+        // instead of trampling the farmland underneath it.
+        return Block.box(1, 0, 1, 15, 2, 15);
     }
 
     @Override
@@ -90,7 +95,38 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
             BlockState state,
             LevelReader level,
             BlockPos pos) {
-        return level.getBlockState(pos.below()).is(Blocks.FARMLAND);
+        return level.getBlockState(pos.below()).is(Blocks.FARMLAND)
+                && level.getBlockState(pos.above()).isAir()
+                && !level.getFluidState(pos).is(FluidTags.WATER);
+    }
+
+    @Override
+    protected void neighborChanged(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Block neighborBlock,
+            BlockPos neighborPos,
+            boolean movedByPiston) {
+        if (!level.isClientSide() && !canSurvive(state, level, pos)) {
+            level.destroyBlock(pos, false);
+            return;
+        }
+        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
+    }
+
+    @Override
+    public void fallOn(
+            Level level,
+            BlockState state,
+            BlockPos pos,
+            Entity entity,
+            float fallDistance) {
+        if (!level.isClientSide() && fallDistance > 0.5F) {
+            // The crop is crushed by a real fall; the farmland beneath remains intact.
+            level.destroyBlock(pos, false);
+        }
+        super.fallOn(level, state, pos, entity, fallDistance);
     }
 
     /**
