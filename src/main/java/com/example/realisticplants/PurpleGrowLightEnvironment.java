@@ -18,9 +18,6 @@ public final class PurpleGrowLightEnvironment {
     private static final int NATURAL_LIGHT_THRESHOLD = 12;
     private static final double GROWTH_MULTIPLIER = 1.25;
     private static final double DAYLIGHT_MULTIPLIER = 1.05;
-    private static final long DAY_LENGTH = 24000L;
-    private static final long NIGHT_START = 13000L;
-    private static final long NIGHT_END = 23000L;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
             "tomato",
@@ -57,8 +54,9 @@ public final class PurpleGrowLightEnvironment {
             return;
         }
 
-        long timeOfDay = Math.floorMod(level.getLevelData().getDayTime(), DAY_LENGTH);
-        boolean night = timeOfDay >= NIGHT_START && timeOfDay < NIGHT_END;
+        // Minecraft 26.3 exposes the current global sky darkness through Level.
+        // A value of 4 or more means it is dark enough for nighttime lighting.
+        boolean night = level.getSkyDarken() >= 4;
         boolean lightNeeded = night;
 
         if (!lightNeeded) {
