@@ -50,8 +50,10 @@ public final class PurpleGrowLightEnvironment {
                     }
 
                     BlockPos lightPos = plantPos.offset(dx, dy, dz);
-                    if (level.getBlockState(lightPos)
-                            .is(ModBlocks.PURPLE_GROW_LIGHT.get())) {
+                    // Grow-light detection must not force-load nearby chunks.
+                    if (level.hasChunkAt(lightPos)
+                            && level.getBlockState(lightPos)
+                                    .is(ModBlocks.PURPLE_GROW_LIGHT.get())) {
                         hasPurpleGrowLight = true;
                         break;
                     }
