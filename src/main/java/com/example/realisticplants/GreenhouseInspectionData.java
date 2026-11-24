@@ -135,18 +135,16 @@ public record GreenhouseInspectionData(
                     if (plant.getMoisture() <= 30) {
                         drought++;
                     }
-                    if (temperatureTotal > 0) {
-                        // Count thermal stress using the same effective temperature
-                        // and crop-specific limits as the growth simulation.
-                        float effectiveTemperature = GreenhouseEnvironment.getTemperature(
-                                level, pos, ambientTemperature, inGreenhouse,
-                                plant.getDefinition()
-                        );
-                        if (effectiveTemperature > plant.getDefinition().getMaxTemperature()) {
-                            overheated++;
-                        } else if (effectiveTemperature < plant.getDefinition().getMinTemperature()) {
-                            cold++;
-                        }
+                    // Count thermal stress using the same effective temperature
+                    // and crop-specific limits as the growth simulation.
+                    float effectiveTemperature = GreenhouseEnvironment.getTemperature(
+                            level, pos, ambientTemperature, inGreenhouse,
+                            plant.getDefinition()
+                    );
+                    if (effectiveTemperature > plant.getDefinition().getMaxTemperature()) {
+                        overheated++;
+                    } else if (effectiveTemperature < plant.getDefinition().getMinTemperature()) {
+                        cold++;
                     }
                     if (plant.getCondition() == PlantCondition.DEAD) {
                         dead++;
