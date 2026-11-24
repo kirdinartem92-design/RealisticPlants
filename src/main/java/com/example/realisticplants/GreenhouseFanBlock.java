@@ -42,7 +42,7 @@ public class GreenhouseFanBlock extends BaseEntityBlock {
             BlockState state,
             BlockEntityType<T> type
     ) {
-        if (level.isClientSide() || type != GreenhouseFanBlockEntity.TYPE.get()) {
+        if (type != GreenhouseFanBlockEntity.TYPE.get()) {
             return null;
         }
         return (world, pos, blockState, blockEntity) ->
