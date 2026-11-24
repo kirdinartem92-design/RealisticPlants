@@ -265,6 +265,44 @@ tasks.register("validateCropResources") {
             }
         }
 
+        // Root crops use vanilla stage models, but their complete age/condition
+        // matrix must still be validated so missing or mismatched variants fail the build.
+        def rootCropStages = [
+                potato: (0..6).collect { it },
+                carrot: (0..6).collect { it },
+                beetroot: [0, 0, 1, 1, 2, 2, 3]
+        ]
+        rootCropStages.each { crop, stageMap ->
+            def blockstatePath = new File(cropResourcesRoot, "assets/realisticplants/blockstates/${crop}_plant.json")
+            if (!blockstatePath.isFile()) {
+                errors << "Missing root crop blockstate: ${blockstatePath}"
+            } else {
+                def blockstate
+                try {
+                    blockstate = jsonParser.parse(blockstatePath)
+                } catch (Exception exception) {
+                    errors << "Invalid root crop blockstate JSON: ${blockstatePath} (${exception.message})"
+                    blockstate = null
+                }
+
+                if (blockstate != null) {
+                    (0..6).each { age ->
+                        conditions.each { condition ->
+                            def variantKey = "age=${age},condition=${condition}"
+                            def modelId = blockstate.variants[variantKey]?.model
+                            def expectedModel = "minecraft:block/${crop == 'potato' ? 'potatoes' : crop == 'carrot' ? 'carrots' : 'beetroots'}_stage${stageMap[age]}"
+
+                            if (!modelId) {
+                                errors << "Missing root crop variant ${variantKey} in ${blockstatePath}"
+                            } else if (modelId != expectedModel) {
+                                errors << "Unexpected model for ${crop} ${variantKey}: expected ${expectedModel}, found ${modelId}"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         if (!errors.isEmpty()) {
             throw new GradleException(
                     "Crop resource validation failed:\\n - " + errors.join("\\n - ")
