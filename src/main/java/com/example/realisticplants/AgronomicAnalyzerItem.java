@@ -45,7 +45,7 @@ public class AgronomicAnalyzerItem extends Item {
             return InteractionResult.PASS;
         }
 
-        if (!level.isClientSide()) {
+        if (!level.isClientSide() && context.getPlayer() != null) {
             PlantInspectionData data =
                     PlantInspectionData.capture(level, pos, crop);
 
