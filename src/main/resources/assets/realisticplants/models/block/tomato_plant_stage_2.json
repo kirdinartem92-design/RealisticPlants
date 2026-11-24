@@ -156,66 +156,6 @@
         "angle": -22.5,
         "rescale": false
       }
-    },
-    {
-      "from": [
-        8,
-        5.022,
-        6.774999999999999
-      ],
-      "to": [
-        12.8,
-        8.478,
-        6.824999999999999
-      ],
-      "faces": {
-        "north": {
-          "texture": "#leaf"
-        },
-        "south": {
-          "texture": "#leaf"
-        }
-      },
-      "rotation": {
-        "origin": [
-          10.4,
-          6.75,
-          6.799999999999999
-        ],
-        "axis": "z",
-        "angle": 22.5,
-        "rescale": false
-      }
-    },
-    {
-      "from": [
-        10.375,
-        5.022,
-        4.399999999999999
-      ],
-      "to": [
-        10.425,
-        8.478,
-        9.2
-      ],
-      "faces": {
-        "east": {
-          "texture": "#leaf"
-        },
-        "west": {
-          "texture": "#leaf"
-        }
-      },
-      "rotation": {
-        "origin": [
-          10.4,
-          6.75,
-          6.799999999999999
-        ],
-        "axis": "x",
-        "angle": -22.5,
-        "rescale": false
-      }
     }
   ]
 }
