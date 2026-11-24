@@ -131,5 +131,8 @@
   "gui.realisticplants.greenhouse.weak_short": "Weak",
   "gui.realisticplants.greenhouse.wilting_short": "Wilt",
   "gui.realisticplants.greenhouse.dry_short": "Dry",
-  "gui.realisticplants.greenhouse.dead_short": "Dead"
+  "gui.realisticplants.greenhouse.dead_short": "Dead",
+  "gui.realisticplants.greenhouse.lifecycle_breakdown": "FLOWERING & HARVEST",
+  "gui.realisticplants.greenhouse.flowering_short": "Bloom",
+  "gui.realisticplants.greenhouse.harvest_ready_short": "Ready"
 }
