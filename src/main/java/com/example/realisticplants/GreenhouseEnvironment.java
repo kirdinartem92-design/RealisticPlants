@@ -19,6 +19,7 @@ public final class GreenhouseEnvironment {
 
     private static final float MAX_SOLAR_GAIN = 0.25f;
     private static final float MAX_FAN_COOLING = 0.20f;
+    private static final float FAN_SWITCH_HYSTERESIS = 0.03f;
     public static final int MOISTURE_SAVING = 1;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
@@ -57,6 +58,27 @@ public final class GreenhouseEnvironment {
             return;
         }
 
+        int fanCount = 0;
+        boolean anyFanActive = false;
+        for (int dx = -west + 1; dx < east; dx++) {
+            for (int dy = -2; dy <= 2; dy++) {
+                for (int dz = -north + 1; dz < south; dz++) {
+                    BlockPos candidatePos = plantPos.offset(dx, dy, dz);
+                    if (!level.hasChunkAt(candidatePos)) {
+                        continue;
+                    }
+                    BlockState candidateState = level.getBlockState(candidatePos);
+                    if (candidateState.is(ModBlocks.GREENHOUSE_FAN.get())) {
+                        fanCount++;
+                        anyFanActive |= candidateState.getValue(GreenhouseFanBlock.ACTIVE);
+                    }
+                }
+            }
+        }
+
+        // Once ventilation starts, keep it running until every crop has
+        // cooled below its limit by a small margin. This prevents rapid
+        // on/off switching around the exact temperature threshold.
         boolean coolingNeeded = false;
         for (int dx = -west + 1; dx < east && !coolingNeeded; dx++) {
             for (int dy = -2; dy <= 2 && !coolingNeeded; dy++) {
@@ -74,10 +96,12 @@ public final class GreenhouseEnvironment {
                             crop.getPlantData().getDefinition();
                     float cropAmbientTemperature = level.getBiome(cropPos)
                             .value().getBaseTemperature();
+                    float switchThreshold = cropDefinition.getMaxTemperature()
+                            - (anyFanActive ? FAN_SWITCH_HYSTERESIS : 0.0f);
                     if (SUPPORTED_CROPS.contains(cropDefinition.getId())
                             && getUncooledGreenhouseTemperature(
                                     level, cropPos, cropAmbientTemperature
-                            ) > cropDefinition.getMaxTemperature()) {
+                            ) > switchThreshold) {
                         coolingNeeded = true;
                         break;
                     }
@@ -85,19 +109,6 @@ public final class GreenhouseEnvironment {
             }
         }
 
-        int fanCount = 0;
-        for (int dx = -west + 1; dx < east; dx++) {
-            for (int dy = -2; dy <= 2; dy++) {
-                for (int dz = -north + 1; dz < south; dz++) {
-                    BlockPos candidatePos = plantPos.offset(dx, dy, dz);
-                    if (level.hasChunkAt(candidatePos)
-                            && level.getBlockState(candidatePos)
-                                    .is(ModBlocks.GREENHOUSE_FAN.get())) {
-                        fanCount++;
-                    }
-                }
-            }
-        }
         float transitionVolume = 0.35f / (float) Math.sqrt(Math.max(1, fanCount));
 
         for (int dx = -west + 1; dx < east; dx++) {
