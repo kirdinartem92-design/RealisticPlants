@@ -29,5 +29,14 @@
   "block.realisticplants.eggplant_plant": "Eggplant Plant",
   "block.realisticplants.bell_pepper_plant": "Bell Pepper Plant",
   "block.realisticplants.chili_pepper_plant": "Chili Pepper Plant",
-  "block.realisticplants.broccoli_plant": "Broccoli Plant"
+  "block.realisticplants.broccoli_plant": "Broccoli Plant",
+  "item.realisticplants.potato_seeds": "Potato Seeds",
+  "item.realisticplants.carrot_seeds": "Carrot Seeds",
+  "item.realisticplants.beetroot_seeds": "Beetroot Seeds",
+  "item.realisticplants.potato_plant": "Potato Plant",
+  "item.realisticplants.carrot_plant": "Carrot Plant",
+  "item.realisticplants.beetroot_plant": "Beetroot Plant",
+  "block.realisticplants.potato_plant": "Potato Plant",
+  "block.realisticplants.carrot_plant": "Carrot Plant",
+  "block.realisticplants.beetroot_plant": "Beetroot Plant"
 }
