@@ -25,7 +25,8 @@ public class GreenhouseControlPanelBlock extends BaseEntityBlock {
             BlockState state,
             Level level,
             BlockPos pos,
-            Player player
+            Player player,
+            net.minecraft.world.phys.BlockHitResult hitResult
     ) {
         if (level.getBlockEntity(pos) instanceof GreenhouseControlPanelBlockEntity panel) {
             if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
