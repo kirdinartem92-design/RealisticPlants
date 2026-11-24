@@ -96,6 +96,13 @@ public class ModBlocks {
                     )
             );
 
+    public static final DeferredBlock<Block> GREENHOUSE_FAN =
+            BLOCKS.registerSimpleBlock(
+                    "greenhouse_fan",
+                    properties -> properties.mapColor(MapColor.METAL)
+                            .strength(1.5f)
+            );
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
