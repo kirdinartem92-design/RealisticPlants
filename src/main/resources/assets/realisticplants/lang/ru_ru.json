@@ -53,6 +53,7 @@
   "message.realisticplants.panel.title": "§a[Панель теплицы]",
   "message.realisticplants.panel.plants": "Растений: {0} | Требуют внимания: {1}",
   "message.realisticplants.panel.condition": "Среднее здоровье: {0}/100 | Средняя влажность: {1}/100",
+  "message.realisticplants.panel.temperature": "Средняя температура (игровая шкала, не °C): {0}",
   "message.realisticplants.panel.light": "Средний свет: небо {0}/15, блоки {1}/15 | Коэффициент роста: {2}%",
   "message.realisticplants.panel.equipment": "Распылители: {0} | Капельные системы: {1} | Фитолампы: {2} | Вентиляторы: {3}",
   "message.realisticplants.panel.water": "Запас воды: {0}/{1} | Заполнение: {2}%",
