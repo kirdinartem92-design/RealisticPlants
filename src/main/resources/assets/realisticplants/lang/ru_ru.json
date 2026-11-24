@@ -106,6 +106,7 @@
   "gui.realisticplants.greenhouse.block": "Свет блоков",
   "gui.realisticplants.greenhouse.temperature": "Температура (игровая шкала)",
   "gui.realisticplants.greenhouse.growth": "Бонус роста",
+  "gui.realisticplants.greenhouse.cooling": "Эффект охлаждения (игр. шкала)",
   "gui.realisticplants.greenhouse.equipment": "ОБОРУДОВАНИЕ",
   "gui.realisticplants.greenhouse.sprinklers": "Распылители",
   "gui.realisticplants.greenhouse.drippers": "Капельный полив",
