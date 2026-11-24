@@ -98,10 +98,16 @@ public final class GreenhouseEnvironment {
                             .value().getBaseTemperature();
                     float switchThreshold = cropDefinition.getMaxTemperature()
                             - (anyFanActive ? FAN_SWITCH_HYSTERESIS : 0.0f);
-                    if (SUPPORTED_CROPS.contains(cropDefinition.getId())
-                            && getUncooledGreenhouseTemperature(
+                    float controlTemperature = anyFanActive
+                            ? getTemperature(
+                                    level, cropPos, cropAmbientTemperature,
+                                    true, cropDefinition
+                            )
+                            : getUncooledGreenhouseTemperature(
                                     level, cropPos, cropAmbientTemperature
-                            ) > switchThreshold) {
+                            );
+                    if (SUPPORTED_CROPS.contains(cropDefinition.getId())
+                            && controlTemperature > switchThreshold) {
                         coolingNeeded = true;
                         break;
                     }
