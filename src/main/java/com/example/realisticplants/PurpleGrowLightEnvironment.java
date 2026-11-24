@@ -5,13 +5,12 @@ import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Automatically prioritizes artificial grow lights when natural sky light
- * is insufficient. The system affects only the seven crops added by this mod.
- *
- * The block's vanilla light emission remains static; this class controls the
- * crop-growth benefit according to the natural light available at the plant.
+ * Automatically controls greenhouse grow lights and their crop-growth bonus.
+ * Lights are always active at night and activate during daytime when natural
+ * sky light is insufficient. Only the seven crops added by this mod are used.
  */
 public final class PurpleGrowLightEnvironment {
 
@@ -19,6 +18,9 @@ public final class PurpleGrowLightEnvironment {
     private static final int NATURAL_LIGHT_THRESHOLD = 12;
     private static final double GROWTH_MULTIPLIER = 1.25;
     private static final double DAYLIGHT_MULTIPLIER = 1.05;
+    private static final long DAY_LENGTH = 24000L;
+    private static final long NIGHT_START = 13000L;
+    private static final long NIGHT_END = 23000L;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
             "tomato",
@@ -33,6 +35,81 @@ public final class PurpleGrowLightEnvironment {
     private PurpleGrowLightEnvironment() {
     }
 
+    /**
+     * Switches all grow lights in the detected greenhouse together.
+     * At night they are always on; during daytime they turn on if any
+     * supported crop in the greenhouse receives insufficient sky light.
+     */
+    public static void updateGrowLights(
+            Level level,
+            BlockPos plantPos,
+            boolean inGreenhouse
+    ) {
+        if (level == null || plantPos == null || !inGreenhouse) {
+            return;
+        }
+
+        int north = GreenhouseEnvironment.findWallDistance(level, plantPos, 0, -1);
+        int south = GreenhouseEnvironment.findWallDistance(level, plantPos, 0, 1);
+        int west = GreenhouseEnvironment.findWallDistance(level, plantPos, -1, 0);
+        int east = GreenhouseEnvironment.findWallDistance(level, plantPos, 1, 0);
+        if (north < 0 || south < 0 || west < 0 || east < 0) {
+            return;
+        }
+
+        long timeOfDay = Math.floorMod(level.getDayTime(), DAY_LENGTH);
+        boolean night = timeOfDay >= NIGHT_START && timeOfDay < NIGHT_END;
+        boolean lightNeeded = night;
+
+        if (!lightNeeded) {
+            for (int dx = -west + 1; dx < east && !lightNeeded; dx++) {
+                for (int dy = -2; dy <= 2 && !lightNeeded; dy++) {
+                    for (int dz = -north + 1; dz < south; dz++) {
+                        BlockPos cropPos = plantPos.offset(dx, dy, dz);
+                        if (!level.hasChunkAt(cropPos)
+                                || !(level.getBlockEntity(cropPos)
+                                        instanceof CropPlantBlockEntity crop)) {
+                            continue;
+                        }
+
+                        if (SUPPORTED_CROPS.contains(
+                                crop.getPlantData().getDefinition().getId())
+                                && level.getBrightness(LightLayer.SKY, cropPos)
+                                        < NATURAL_LIGHT_THRESHOLD) {
+                            lightNeeded = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int dx = -west + 1; dx < east; dx++) {
+            for (int dy = -2; dy <= 2; dy++) {
+                for (int dz = -north + 1; dz < south; dz++) {
+                    BlockPos lightPos = plantPos.offset(dx, dy, dz);
+                    if (!level.hasChunkAt(lightPos)) {
+                        continue;
+                    }
+
+                    BlockState state = level.getBlockState(lightPos);
+                    if (!state.is(ModBlocks.PURPLE_GROW_LIGHT.get())) {
+                        continue;
+                    }
+
+                    boolean active = state.getValue(PurpleGrowLightBlock.ACTIVE);
+                    if (active != lightNeeded) {
+                        level.setBlock(
+                                lightPos,
+                                state.setValue(PurpleGrowLightBlock.ACTIVE, lightNeeded),
+                                3
+                        );
+                    }
+                }
+            }
+        }
+    }
+
     public static double getGrowthMultiplier(
             Level level,
             BlockPos plantPos,
@@ -44,25 +121,18 @@ public final class PurpleGrowLightEnvironment {
         }
 
         int skyLight = level.getBrightness(LightLayer.SKY, plantPos);
-        boolean hasStrongNaturalLight = skyLight >= NATURAL_LIGHT_THRESHOLD;
-
-        // Natural daylight is preferred. Artificial grow lights provide
-        // their stronger bonus only when the plant lacks sufficient sky light.
-        if (hasStrongNaturalLight) {
+        if (skyLight >= NATURAL_LIGHT_THRESHOLD) {
             return DAYLIGHT_MULTIPLIER;
         }
 
-        if (hasNearbyPurpleGrowLight(level, plantPos)) {
+        if (hasNearbyActivePurpleGrowLight(level, plantPos)) {
             return GROWTH_MULTIPLIER;
         }
 
         return 1.0;
     }
 
-    /**
-     * Checks a bounded spherical area without loading neighboring chunks.
-     */
-    private static boolean hasNearbyPurpleGrowLight(
+    private static boolean hasNearbyActivePurpleGrowLight(
             Level level,
             BlockPos plantPos
     ) {
@@ -75,9 +145,13 @@ public final class PurpleGrowLightEnvironment {
                     }
 
                     BlockPos lightPos = plantPos.offset(dx, dy, dz);
-                    if (level.hasChunkAt(lightPos)
-                            && level.getBlockState(lightPos)
-                                    .is(ModBlocks.PURPLE_GROW_LIGHT.get())) {
+                    if (!level.hasChunkAt(lightPos)) {
+                        continue;
+                    }
+
+                    BlockState state = level.getBlockState(lightPos);
+                    if (state.is(ModBlocks.PURPLE_GROW_LIGHT.get())
+                            && state.getValue(PurpleGrowLightBlock.ACTIVE)) {
                         return true;
                     }
                 }
