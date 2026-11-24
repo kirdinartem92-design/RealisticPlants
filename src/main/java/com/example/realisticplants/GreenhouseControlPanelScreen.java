@@ -66,6 +66,8 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
                 String.format(java.util.Locale.ROOT, "%.3f", value(GreenhouseControlPanelMenu.TEMPERATURE_MILLI) / 1000.0));
         line(graphics, x + 18, y + 187, "gui.realisticplants.greenhouse.growth",
                 String.format(java.util.Locale.ROOT, "%.2fx", value(GreenhouseControlPanelMenu.GROWTH_PERMILLE) / 1000.0));
+        line(graphics, x + 18, y + 201, "gui.realisticplants.greenhouse.cooling",
+                String.format(java.util.Locale.ROOT, "%.3f", value(GreenhouseControlPanelMenu.COOLING_EFFECT_MILLI) / 1000.0));
 
         // Equipment and water
         section(graphics, x + 180, y + 43, "gui.realisticplants.greenhouse.equipment");
