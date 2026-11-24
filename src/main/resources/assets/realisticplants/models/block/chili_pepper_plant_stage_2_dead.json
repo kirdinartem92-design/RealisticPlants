@@ -1,7 +1,128 @@
 {
-  "parent": "realisticplants:block/chili_pepper_plant_stage_2",
   "textures": {
     "particle": "realisticplants:block/chili_pepper_plant_dead",
     "plant": "realisticplants:block/chili_pepper_plant_dead"
-  }
+  },
+  "elements": [
+    {
+      "from": [
+        6,
+        0,
+        7.5
+      ],
+      "to": [
+        10,
+        3.22,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        0,
+        6
+      ],
+      "to": [
+        8.5,
+        3.22,
+        10
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        6.5,
+        0.92,
+        2
+      ],
+      "to": [
+        9.5,
+        1.38,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        0.92,
+        6.5
+      ],
+      "to": [
+        14,
+        1.38,
+        9.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        6.5,
+        1.38,
+        5
+      ],
+      "to": [
+        9.5,
+        1.84,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        1.38,
+        6.5
+      ],
+      "to": [
+        11,
+        1.84,
+        9.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    }
+  ]
 }

@@ -1,7 +1,88 @@
 {
-  "parent": "realisticplants:block/chili_pepper_plant_stage_1",
   "textures": {
     "particle": "realisticplants:block/chili_pepper_plant_wilting",
     "plant": "realisticplants:block/chili_pepper_plant_wilting"
-  }
+  },
+  "elements": [
+    {
+      "from": [
+        6.5,
+        0,
+        7.5
+      ],
+      "to": [
+        9.5,
+        4.1,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        0,
+        6.5
+      ],
+      "to": [
+        8.5,
+        4.1,
+        9.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        0.82,
+        2
+      ],
+      "to": [
+        9,
+        1.64,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        0.82,
+        7
+      ],
+      "to": [
+        14,
+        1.64,
+        9
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    }
+  ]
 }
