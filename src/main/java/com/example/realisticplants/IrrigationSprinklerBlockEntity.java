@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.HashSet;
 import java.util.function.Supplier;
 
 import net.minecraft.core.BlockPos;
@@ -29,6 +30,7 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
     private static final int TARGET_MOISTURE = 80;
     private static final int RADIUS = 3;
     private static final long CYCLE_TICKS = 100L;
+    private static final int MAX_CROPS_PER_CYCLE = 12;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
             "tomato",
@@ -101,6 +103,7 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
 
         int waterUsed = 0;
         List<IrrigationTarget> targets = new ArrayList<>();
+        Set<BlockPos> coveredCrops = new HashSet<>();
 
         // Collect every eligible crop first. Sorting by moisture means the
         // driest plants receive water before already healthier plants.
@@ -118,7 +121,8 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
                     candidate = level.getBlockEntity(cropPos);
                 }
 
-                if (!(candidate instanceof CropPlantBlockEntity crop)) {
+                if (!(candidate instanceof CropPlantBlockEntity crop)
+                        || !coveredCrops.add(cropPos.immutable())) {
                     continue;
                 }
 
@@ -140,8 +144,10 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
                         .thenComparingInt(IrrigationTarget::distanceSquared)
         );
 
+        int wateredCrops = 0;
         for (IrrigationTarget target : targets) {
-            if (sprinkler.storedWater < WATER_PER_MOISTURE_POINT) {
+            if (wateredCrops >= MAX_CROPS_PER_CYCLE
+                    || sprinkler.storedWater < WATER_PER_MOISTURE_POINT) {
                 break;
             }
 
@@ -160,6 +166,7 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
             sprinkler.storedWater -= cost;
             waterUsed += cost;
             target.crop().setChanged();
+            wateredCrops++;
         }
 
         if (waterUsed > 0) {
