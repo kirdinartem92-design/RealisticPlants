@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class GreenhouseControlPanelMenu extends AbstractContainerMenu {
-    public static final int DATA_COUNT = 22;
+    public static final int DATA_COUNT = 24;
 
     public static final int PLANTS = 0;
     public static final int MOISTURE = 1;
@@ -36,6 +36,8 @@ public class GreenhouseControlPanelMenu extends AbstractContainerMenu {
     public static final int DROUGHT = 19;
     public static final int TEMPERATURE_MILLI = 20;
     public static final int GROWTH_PERMILLE = 21;
+    public static final int STORED_WATER_HIGH = 22;
+    public static final int WATER_CAPACITY_HIGH = 23;
 
     private final ContainerData data;
     private final ContainerLevelAccess access;
@@ -121,10 +123,27 @@ public class GreenhouseControlPanelMenu extends AbstractContainerMenu {
         };
 
         for (int i = 0; i < values.length; i++) {
-            // Vanilla menu data is synchronized as signed 16-bit values.
-            // Saturate large greenhouse totals instead of allowing them to wrap negative.
+            if (i == STORED_WATER || i == WATER_CAPACITY) {
+                continue;
+            }
+            // Other dashboard values are bounded and fit in a signed short.
             data.set(i, Math.max(Short.MIN_VALUE, Math.min(Short.MAX_VALUE, values[i])));
         }
+
+        // Split water totals into two 16-bit words so large greenhouses do not
+        // lose their real reservoir totals when ContainerData synchronizes them.
+        setInt32(STORED_WATER, STORED_WATER_HIGH, snapshot.storedWater());
+        setInt32(WATER_CAPACITY, WATER_CAPACITY_HIGH, snapshot.totalWaterCapacity());
+    }
+
+    private void setInt32(int lowIndex, int highIndex, int value) {
+        data.set(lowIndex, value & 0xFFFF);
+        data.set(highIndex, value >>> 16);
+    }
+
+    /** Reassembles a 32-bit value from the two synchronized 16-bit words. */
+    public int getInt32(int lowIndex, int highIndex) {
+        return (data.get(highIndex) << 16) | (data.get(lowIndex) & 0xFFFF);
     }
 
     @Override
