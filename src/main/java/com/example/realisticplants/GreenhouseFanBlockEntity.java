@@ -59,7 +59,7 @@ public class GreenhouseFanBlockEntity extends BlockEntity {
         level.playSound(
                 null,
                 pos,
-                SoundEvents.BLOCK_BEACON_AMBIENT,
+                SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE,
                 SoundSource.BLOCKS,
                 0.16f,
                 0.72f
