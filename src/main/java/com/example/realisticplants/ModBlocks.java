@@ -103,6 +103,14 @@ public class ModBlocks {
                             .strength(1.5f)
             );
 
+    public static final DeferredBlock<GreenhouseControlPanelBlock> GREENHOUSE_CONTROL_PANEL =
+            BLOCKS.registerBlock(
+                    "greenhouse_control_panel",
+                    properties -> new GreenhouseControlPanelBlock(
+                            properties.mapColor(MapColor.METAL).strength(2.0f)
+                    )
+            );
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
