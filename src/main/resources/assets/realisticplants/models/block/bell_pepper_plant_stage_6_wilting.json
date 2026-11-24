@@ -1,0 +1,7 @@
+{
+  "parent": "realisticplants:block/bell_pepper_plant_stage_6",
+  "textures": {
+    "particle": "realisticplants:block/bell_pepper_plant_wilting",
+    "plant": "realisticplants:block/bell_pepper_plant_wilting"
+  }
+}

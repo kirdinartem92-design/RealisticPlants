@@ -1,0 +1,7 @@
+{
+  "parent": "realisticplants:block/broccoli_plant_stage_4",
+  "textures": {
+    "particle": "realisticplants:block/broccoli_plant_wilting",
+    "plant": "realisticplants:block/broccoli_plant_wilting"
+  }
+}

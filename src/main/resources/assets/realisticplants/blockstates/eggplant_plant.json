@@ -16,73 +16,73 @@
       "model": "realisticplants:block/eggplant_plant_stage_1"
     },
     "age=1,condition=wilting": {
-      "model": "realisticplants:block/eggplant_plant_stage_1"
+      "model": "realisticplants:block/eggplant_plant_stage_1_wilting"
     },
     "age=1,condition=dry": {
-      "model": "realisticplants:block/eggplant_plant_stage_1"
+      "model": "realisticplants:block/eggplant_plant_stage_1_dry"
     },
     "age=1,condition=dead": {
-      "model": "realisticplants:block/eggplant_plant_stage_1"
+      "model": "realisticplants:block/eggplant_plant_stage_1_dead"
     },
     "age=2,condition=healthy": {
       "model": "realisticplants:block/eggplant_plant_stage_2"
     },
     "age=2,condition=wilting": {
-      "model": "realisticplants:block/eggplant_plant_stage_2"
+      "model": "realisticplants:block/eggplant_plant_stage_2_wilting"
     },
     "age=2,condition=dry": {
-      "model": "realisticplants:block/eggplant_plant_stage_2"
+      "model": "realisticplants:block/eggplant_plant_stage_2_dry"
     },
     "age=2,condition=dead": {
-      "model": "realisticplants:block/eggplant_plant_stage_2"
+      "model": "realisticplants:block/eggplant_plant_stage_2_dead"
     },
     "age=3,condition=healthy": {
       "model": "realisticplants:block/eggplant_plant_stage_3"
     },
     "age=3,condition=wilting": {
-      "model": "realisticplants:block/eggplant_plant_stage_3"
+      "model": "realisticplants:block/eggplant_plant_stage_3_wilting"
     },
     "age=3,condition=dry": {
-      "model": "realisticplants:block/eggplant_plant_stage_3"
+      "model": "realisticplants:block/eggplant_plant_stage_3_dry"
     },
     "age=3,condition=dead": {
-      "model": "realisticplants:block/eggplant_plant_stage_3"
+      "model": "realisticplants:block/eggplant_plant_stage_3_dead"
     },
     "age=4,condition=healthy": {
       "model": "realisticplants:block/eggplant_plant_stage_4"
     },
     "age=4,condition=wilting": {
-      "model": "realisticplants:block/eggplant_plant_stage_4"
+      "model": "realisticplants:block/eggplant_plant_stage_4_wilting"
     },
     "age=4,condition=dry": {
-      "model": "realisticplants:block/eggplant_plant_stage_4"
+      "model": "realisticplants:block/eggplant_plant_stage_4_dry"
     },
     "age=4,condition=dead": {
-      "model": "realisticplants:block/eggplant_plant_stage_4"
+      "model": "realisticplants:block/eggplant_plant_stage_4_dead"
     },
     "age=5,condition=healthy": {
       "model": "realisticplants:block/eggplant_plant_stage_5"
     },
     "age=5,condition=wilting": {
-      "model": "realisticplants:block/eggplant_plant_stage_5"
+      "model": "realisticplants:block/eggplant_plant_stage_5_wilting"
     },
     "age=5,condition=dry": {
-      "model": "realisticplants:block/eggplant_plant_stage_5"
+      "model": "realisticplants:block/eggplant_plant_stage_5_dry"
     },
     "age=5,condition=dead": {
-      "model": "realisticplants:block/eggplant_plant_stage_5"
+      "model": "realisticplants:block/eggplant_plant_stage_5_dead"
     },
     "age=6,condition=healthy": {
       "model": "realisticplants:block/eggplant_plant_stage_6"
     },
     "age=6,condition=wilting": {
-      "model": "realisticplants:block/eggplant_plant_stage_6"
+      "model": "realisticplants:block/eggplant_plant_stage_6_wilting"
     },
     "age=6,condition=dry": {
-      "model": "realisticplants:block/eggplant_plant_stage_6"
+      "model": "realisticplants:block/eggplant_plant_stage_6_dry"
     },
     "age=6,condition=dead": {
-      "model": "realisticplants:block/eggplant_plant_stage_6"
+      "model": "realisticplants:block/eggplant_plant_stage_6_dead"
     }
   }
 }

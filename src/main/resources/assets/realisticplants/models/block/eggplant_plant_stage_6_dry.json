@@ -1,0 +1,7 @@
+{
+  "parent": "realisticplants:block/eggplant_plant_stage_6",
+  "textures": {
+    "particle": "realisticplants:block/eggplant_plant_dry",
+    "plant": "realisticplants:block/eggplant_plant_dry"
+  }
+}

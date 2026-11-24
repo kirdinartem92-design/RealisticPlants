@@ -1,0 +1,7 @@
+{
+  "parent": "realisticplants:block/chili_pepper_plant_stage_2",
+  "textures": {
+    "particle": "realisticplants:block/chili_pepper_plant_dry",
+    "plant": "realisticplants:block/chili_pepper_plant_dry"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "realisticplants:block/zucchini_plant_stage_2",
+  "textures": {
+    "particle": "realisticplants:block/zucchini_plant_wilting",
+    "plant": "realisticplants:block/zucchini_plant_wilting"
+  }
+}

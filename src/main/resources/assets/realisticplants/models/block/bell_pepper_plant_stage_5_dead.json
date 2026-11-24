@@ -1,0 +1,7 @@
+{
+  "parent": "realisticplants:block/bell_pepper_plant_stage_5",
+  "textures": {
+    "particle": "realisticplants:block/bell_pepper_plant_dead",
+    "plant": "realisticplants:block/bell_pepper_plant_dead"
+  }
+}
