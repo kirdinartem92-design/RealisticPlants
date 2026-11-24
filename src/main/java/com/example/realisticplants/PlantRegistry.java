@@ -18,7 +18,7 @@ public final class PlantRegistry {
                 0.15f, 1.6f, 20, 20, true, 1, 4, 2, 0.3f));
 
         register(new PlantDefinition(
-                "cucumber", 6, 3, 3, 800, 800, 1,
+                "cucumber", 6, 3, 3, 880, 880, 1,
                 0.15f, 1.6f, 20, 20, true, 1, 5, 1, 0.2f));
 
         // Root crops mature underground and do not regrow after harvesting.
@@ -40,19 +40,19 @@ public final class PlantRegistry {
                 0.16f, 1.55f, 25, 18, true, 1, 3, 3, 0.5f));
 
         register(new PlantDefinition(
-                "eggplant", 6, 4, 3, 1250, 1250, 1,
+                "eggplant", 6, 4, 3, 1280, 1280, 1,
                 0.18f, 1.65f, 25, 22, true, 1, 3, 3, 0.55f));
 
         register(new PlantDefinition(
-                "bell_pepper", 6, 4, 3, 1150, 1150, 1,
+                "bell_pepper", 6, 4, 3, 1080, 1080, 1,
                 0.16f, 1.6f, 25, 20, true, 1, 4, 2, 0.45f));
 
         register(new PlantDefinition(
-                "chili_pepper", 6, 4, 3, 1050, 1050, 1,
+                "chili_pepper", 6, 4, 3, 920, 920, 1,
                 0.18f, 1.7f, 25, 18, true, 1, 5, 2, 0.4f));
 
         register(new PlantDefinition(
-                "broccoli", 6, 5, 5, 1450, 1450, 1,
+                "broccoli", 6, 5, 5, 1440, 1440, 1,
                 0.10f, 1.45f, 30, 28, false, 1, 2, 4, 0.6f));
     }
 
