@@ -115,9 +115,16 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
                 }
 
                 BlockPos cropPos = pos.offset(dx, 0, dz);
+                if (!level.hasChunkAt(cropPos)) {
+                    continue;
+                }
+
                 BlockEntity candidate = level.getBlockEntity(cropPos);
                 if (!(candidate instanceof CropPlantBlockEntity)) {
                     cropPos = pos.offset(dx, 1, dz);
+                    if (!level.hasChunkAt(cropPos)) {
+                        continue;
+                    }
                     candidate = level.getBlockEntity(cropPos);
                 }
 
