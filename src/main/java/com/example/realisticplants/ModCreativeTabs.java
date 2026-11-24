@@ -21,6 +21,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.DRIP_IRRIGATION_ITEM.get());
                         output.accept(ModItems.GREENHOUSE_FAN_ITEM.get());
                         output.accept(ModItems.AGRONOMIC_ANALYZER.get());
+                        output.accept(ModItems.GREENHOUSE_CONTROL_PANEL_ITEM.get());
                         output.accept(ModItems.TOMATO.get());
                         output.accept(ModItems.TOMATO_SEEDS.get());
                         output.accept(ModItems.TOMATO_PLANT_ITEM.get());
