@@ -22,6 +22,7 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
 
     private final PlantData plantData;
     private int tickCounter = 0;
+    private int moistureTickCounter = 0;
 
     protected CropPlantBlockEntity(
             BlockEntityType<?> type,
@@ -86,12 +87,24 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
 
         PlantDefinition definition = plantData.getDefinition();
         tickCounter++;
+        moistureTickCounter++;
 
-        if (tickCounter >= definition.getGrowthInterval()) {
-            tickCounter = 0;
+        boolean moistureUpdate =
+                moistureTickCounter >= definition.getMoistureInterval();
+        boolean growthUpdate =
+                tickCounter >= definition.getGrowthInterval();
 
-            float temperature =
-                    level.getBiome(pos).value().getBaseTemperature();
+        if (!moistureUpdate && !growthUpdate) {
+            return;
+        }
+
+        float temperature =
+                level.getBiome(pos).value().getBaseTemperature();
+
+        // Environmental simulation runs on its own cadence. Keeping its
+        // interval equal to the old growth interval preserves current balance.
+        if (moistureUpdate) {
+            moistureTickCounter = 0;
 
             if (level.isRainingAt(pos)) {
                 PlantEnvironment.applyRain(plantData, 5);
@@ -103,18 +116,18 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
                 );
             }
 
-            // Natural water restores moisture gradually, once per
-            // plant growth interval. Multiple sources do not stack.
             PlantEnvironment.applyNearbyWater(level, pos, plantData);
-
             PlantGrowthManager.updateHealth(plantData);
             updateCondition();
+        }
 
+        if (growthUpdate) {
+            tickCounter = 0;
             BlockState currentState = level.getBlockState(pos);
             updateGrowth(level, pos, currentState, temperature);
-
-            setChanged();
         }
+
+        setChanged();
     }
 
     private void updateGrowth(
@@ -206,6 +219,7 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         output.putBoolean("flowering", plantData.isFlowering());
         output.putBoolean("harvest_ready", plantData.isHarvestReady());
         output.putInt("tick_counter", tickCounter);
+        output.putInt("moisture_tick_counter", moistureTickCounter);
         output.putDouble("growth_progress", plantData.getGrowthProgress());
         output.putInt(
                 "growth_counter",
@@ -222,6 +236,10 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         plantData.setFlowering(input.getBooleanOr("flowering", false));
         plantData.setHarvestReady(input.getBooleanOr("harvest_ready", false));
         tickCounter = input.getIntOr("tick_counter", 0);
+        // Old saves used one shared counter for growth and moisture.
+        moistureTickCounter = input.getIntOr(
+                "moisture_tick_counter", tickCounter
+        );
 
         double savedProgress = input.getDoubleOr(
                 "growth_progress",

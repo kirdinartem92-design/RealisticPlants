@@ -14,6 +14,7 @@ public class PlantDefinition {
     private final int regrowthStage;
 
     private final int growthInterval;
+    private final int moistureInterval;
     private final int moistureConsumption;
 
     private final float minTemperature;
@@ -49,6 +50,7 @@ public class PlantDefinition {
                 maxGrowthStage,
                 Math.max(0, maxGrowthStage - 2),
                 Math.max(0, maxGrowthStage - 2),
+                growthInterval,
                 growthInterval,
                 moistureConsumption,
                 minTemperature,
@@ -155,6 +157,37 @@ public class PlantDefinition {
             int nutrition,
             float saturationModifier
     ) {
+        this(
+                id, maxGrowthStage, floweringStage, regrowthStage,
+                growthInterval, growthInterval, moistureConsumption,
+                minTemperature, maxTemperature, minimumMoisture,
+                droughtResistance, regrowsAfterHarvest, minHarvestAmount,
+                maxHarvestAmount, nutrition, saturationModifier
+        );
+    }
+
+    /**
+     * Complete constructor with independently configurable growth and
+     * environmental moisture intervals.
+     */
+    public PlantDefinition(
+            String id,
+            int maxGrowthStage,
+            int floweringStage,
+            int regrowthStage,
+            int growthInterval,
+            int moistureInterval,
+            int moistureConsumption,
+            float minTemperature,
+            float maxTemperature,
+            int minimumMoisture,
+            int droughtResistance,
+            boolean regrowsAfterHarvest,
+            int minHarvestAmount,
+            int maxHarvestAmount,
+            int nutrition,
+            float saturationModifier
+    ) {
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException(
                     "Plant ID cannot be empty"
@@ -185,6 +218,12 @@ public class PlantDefinition {
             );
         }
 
+        if (moistureInterval < 1) {
+            throw new IllegalArgumentException(
+                    "Moisture interval must be positive"
+            );
+        }
+
         if (minHarvestAmount < 1
                 || maxHarvestAmount < minHarvestAmount) {
             throw new IllegalArgumentException(
@@ -203,6 +242,7 @@ public class PlantDefinition {
         this.floweringStage = floweringStage;
         this.regrowthStage = regrowthStage;
         this.growthInterval = growthInterval;
+        this.moistureInterval = moistureInterval;
         this.moistureConsumption = moistureConsumption;
         this.minTemperature = minTemperature;
         this.maxTemperature = maxTemperature;
@@ -233,6 +273,10 @@ public class PlantDefinition {
 
     public int getGrowthInterval() {
         return growthInterval;
+    }
+
+    public int getMoistureInterval() {
+        return moistureInterval;
     }
 
     public int getMoistureConsumption() {
