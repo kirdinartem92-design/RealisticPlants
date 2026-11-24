@@ -38,5 +38,7 @@
   "item.realisticplants.beetroot_plant": "Растение свёклы",
   "block.realisticplants.potato_plant": "Растение картофеля",
   "block.realisticplants.carrot_plant": "Растение моркови",
-  "block.realisticplants.beetroot_plant": "Растение свёклы"
+  "block.realisticplants.beetroot_plant": "Растение свёклы",
+  "block.realisticplants.irrigation_sprinkler": "Автоматический распылитель",
+  "item.realisticplants.irrigation_sprinkler": "Автоматический распылитель"
 }
