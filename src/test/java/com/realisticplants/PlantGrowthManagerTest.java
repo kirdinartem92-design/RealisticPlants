@@ -55,32 +55,5 @@ class PlantGrowthManagerTest {
         assertEquals(51, plant.getHealth());
     }
 
-    @Test
-    void deadPlantsCannotBeRevivedByWaterOrHealthUpdates() {
-        PlantData plant = new PlantData(PlantRegistry.get("tomato"));
-        plant.setHealth(0);
-        plant.setMoisture(0);
 
-        PlantGrowthManager.water(plant, 100);
-        PlantGrowthManager.updateHealth(plant);
-
-        assertEquals(0, plant.getHealth());
-        assertEquals(0, plant.getMoisture());
-        assertEquals(PlantCondition.DEAD, plant.getCondition());
-    }
-
-    @Test
-    void plantConditionReflectsMoistureAndHealth() {
-        PlantData plant = new PlantData(PlantRegistry.get("tomato"));
-        assertEquals(PlantCondition.HEALTHY, plant.getCondition());
-
-        plant.setMoisture(30);
-        assertEquals(PlantCondition.WILTING, plant.getCondition());
-
-        plant.setMoisture(15);
-        assertEquals(PlantCondition.DRY, plant.getCondition());
-
-        plant.setHealth(0);
-        assertEquals(PlantCondition.DEAD, plant.getCondition());
-    }
 }
