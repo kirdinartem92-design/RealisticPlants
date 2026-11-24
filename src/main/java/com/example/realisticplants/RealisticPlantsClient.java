@@ -27,7 +27,7 @@ public final class RealisticPlantsClient {
 
     /**
      * Keeps one looping positional hum for each active fan on the client.
-     * This method is called only through DistExecutor from the block entity.
+     * This method is called only on the client distribution, after the block entity's client-side check.
      */
     public static void updateFanAudio(
             GreenhouseFanBlockEntity fan,
