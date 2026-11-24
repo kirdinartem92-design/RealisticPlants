@@ -84,5 +84,14 @@
   "message.realisticplants.advice.protect_from_cold": "Protect the plant from cold or improve greenhouse conditions.",
   "message.realisticplants.advice.cool_down": "Lower the temperature and check greenhouse ventilation.",
   "message.realisticplants.advice.check_health": "Check moisture, lighting and overall plant condition.",
-  "message.realisticplants.advice.good": "No critical problems detected."
+  "message.realisticplants.advice.good": "No critical problems detected.",
+  "message.realisticplants.panel.thermal_breakdown": "Overheated: {0} | Too cold: {1} | Drought: {2}",
+  "message.realisticplants.panel.priority": "Top priority: {0} (plants: {1})",
+  "message.realisticplants.panel.alert.dead": "Remove dead plants",
+  "message.realisticplants.panel.alert.drought": "Restore irrigation urgently",
+  "message.realisticplants.panel.alert.overheated": "Lower temperature and check ventilation",
+  "message.realisticplants.panel.alert.cold": "Protect plants from cold",
+  "message.realisticplants.panel.alert.low_light": "Improve lighting",
+  "message.realisticplants.panel.alert.general_care": "Check wilting and dry plants",
+  "message.realisticplants.panel.alert.good": "No critical issues detected"
 }
