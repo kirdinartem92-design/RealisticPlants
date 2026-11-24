@@ -104,7 +104,7 @@
   "gui.realisticplants.greenhouse.health": "Здоровье",
   "gui.realisticplants.greenhouse.sky": "Небесный свет",
   "gui.realisticplants.greenhouse.block": "Свет блоков",
-  "gui.realisticplants.greenhouse.temperature": "Температура",
+  "gui.realisticplants.greenhouse.temperature": "Температура (игровая шкала)",
   "gui.realisticplants.greenhouse.growth": "Бонус роста",
   "gui.realisticplants.greenhouse.equipment": "ОБОРУДОВАНИЕ",
   "gui.realisticplants.greenhouse.sprinklers": "Распылители",
