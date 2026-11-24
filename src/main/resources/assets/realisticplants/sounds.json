@@ -10,18 +10,16 @@
   "greenhouse_fan_start": {
     "sounds": [
       {
-        "name": "block/lever/click",
-        "volume": 0.35,
-        "pitch": 0.8
+        "name": "greenhouse_fan_start",
+        "volume": 0.65
       }
     ]
   },
   "greenhouse_fan_stop": {
     "sounds": [
       {
-        "name": "block/lever/click",
-        "volume": 0.25,
-        "pitch": 0.65
+        "name": "greenhouse_fan_stop",
+        "volume": 0.55
       }
     ]
   },
