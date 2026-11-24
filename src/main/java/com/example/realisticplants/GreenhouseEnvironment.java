@@ -4,6 +4,7 @@ import java.util.Set;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AbstractGlassBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -74,7 +75,10 @@ public final class GreenhouseEnvironment {
     }
 
     private static boolean isGreenhouseGlass(BlockState state) {
-        return state.is(Blocks.GLASS)
-                || state.is(Blocks.TINTED_GLASS);
+        // Full glass blocks, stained glass and glass panes all work as
+        // greenhouse glazing. Tinted glass is deliberately excluded because
+        // it blocks light and should not qualify as a transparent roof/wall.
+        return state.getBlock() instanceof AbstractGlassBlock
+                && !state.is(Blocks.TINTED_GLASS);
     }
 }
