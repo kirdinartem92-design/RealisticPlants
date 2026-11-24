@@ -5,6 +5,10 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 
 public class GreenhouseControlPanelBlock extends BaseEntityBlock {
     public GreenhouseControlPanelBlock(Properties properties) {
@@ -14,6 +18,22 @@ public class GreenhouseControlPanelBlock extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new GreenhouseControlPanelBlockEntity(pos, state);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player
+    ) {
+        if (level.getBlockEntity(pos) instanceof GreenhouseControlPanelBlockEntity panel) {
+            if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
+                serverPlayer.openMenu(panel);
+            }
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.PASS;
     }
 
     @Override
