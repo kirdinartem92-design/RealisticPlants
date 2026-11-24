@@ -1,7 +1,8 @@
 {
   "textures": {
     "particle": "realisticplants:block/broccoli_plant",
-    "plant": "realisticplants:block/broccoli_plant"
+    "plant": "realisticplants:block/broccoli_plant",
+    "fruit": "realisticplants:block/broccoli_fruit"
   },
   "elements": [
     {
@@ -181,6 +182,70 @@
         },
         "south": {
           "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        3.68,
+        3.68,
+        7.78
+      ],
+      "to": [
+        12.32,
+        12.32,
+        8.22
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
+        }
+      }
+    },
+    {
+      "from": [
+        7.78,
+        3.68,
+        3.68
+      ],
+      "to": [
+        8.22,
+        12.32,
+        12.32
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
         }
       }
     }
