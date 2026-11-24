@@ -32,7 +32,10 @@ public class NewCropPlantBlockEntity extends CropPlantBlockEntity {
                             ModBlocks.EGGPLANT_PLANT.get(),
                             ModBlocks.BELL_PEPPER_PLANT.get(),
                             ModBlocks.CHILI_PEPPER_PLANT.get(),
-                            ModBlocks.BROCCOLI_PLANT.get()
+                            ModBlocks.BROCCOLI_PLANT.get(),
+                            ModBlocks.POTATO_PLANT.get(),
+                            ModBlocks.CARROT_PLANT.get(),
+                            ModBlocks.BEETROOT_PLANT.get()
                     )
             );
 
@@ -56,6 +59,10 @@ public class NewCropPlantBlockEntity extends CropPlantBlockEntity {
         if (state.is(ModBlocks.BROCCOLI_PLANT.get())) {
             return PlantRegistry.get("broccoli");
         }
+
+        if (state.is(ModBlocks.POTATO_PLANT.get())) return PlantRegistry.get("potato");
+        if (state.is(ModBlocks.CARROT_PLANT.get())) return PlantRegistry.get("carrot");
+        if (state.is(ModBlocks.BEETROOT_PLANT.get())) return PlantRegistry.get("beetroot");
 
         throw new IllegalArgumentException(
                 "Unknown configurable crop block: " + state.getBlock()
