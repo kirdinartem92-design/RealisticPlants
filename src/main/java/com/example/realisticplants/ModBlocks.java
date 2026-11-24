@@ -96,11 +96,13 @@ public class ModBlocks {
                     )
             );
 
-    public static final DeferredBlock<Block> GREENHOUSE_FAN =
-            BLOCKS.registerSimpleBlock(
+    public static final DeferredBlock<GreenhouseFanBlock> GREENHOUSE_FAN =
+            BLOCKS.registerBlock(
                     "greenhouse_fan",
-                    properties -> properties.mapColor(MapColor.METAL)
-                            .strength(1.5f)
+                    properties -> new GreenhouseFanBlock(
+                            properties.mapColor(MapColor.METAL)
+                                    .strength(1.5f)
+                    )
             );
 
     public static final DeferredBlock<GreenhouseControlPanelBlock> GREENHOUSE_CONTROL_PANEL =
