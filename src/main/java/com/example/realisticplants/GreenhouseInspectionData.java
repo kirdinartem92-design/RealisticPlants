@@ -168,11 +168,11 @@ public record GreenhouseInspectionData(
                     } else if (effectiveTemperature < plant.getDefinition().getMinTemperature()) {
                         cold++;
                     }
-                    if (!plant.isDead() && plant.getHealth() > 0
+                    if (plant.getCondition() == PlantCondition.HEALTHY
                             && plant.getHealth() <= 50) {
                         weak++;
                     }
-                    if (plant.getCondition() == PlantCondition.HEALTHY) {
+                    if (plant.getCondition() == PlantCondition.HEALTHY && plant.getHealth() > 50) {
                         healthy++;
                     }
                     if (plant.getCondition() == PlantCondition.DEAD) {
