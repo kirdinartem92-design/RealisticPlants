@@ -1,7 +1,9 @@
 {
   "textures": {
-    "particle": "realisticplants:block/tomato_stem",
-    "seed": "realisticplants:block/tomato_stem"
+    "particle": "realisticplants:block/tomato_leaf",
+    "seed": "realisticplants:block/tomato_stem",
+    "stem": "realisticplants:block/tomato_stem",
+    "leaf": "realisticplants:block/tomato_leaf"
   },
   "elements": [
     {
@@ -33,6 +35,98 @@
         },
         "down": {
           "texture": "#seed"
+        }
+      }
+    },
+    {
+      "from": [
+        7.2,
+        0.8,
+        7.2
+      ],
+      "to": [
+        8.8,
+        3.1,
+        8.8
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stem"
+        },
+        "south": {
+          "texture": "#stem"
+        },
+        "east": {
+          "texture": "#stem"
+        },
+        "west": {
+          "texture": "#stem"
+        },
+        "up": {
+          "texture": "#stem"
+        },
+        "down": {
+          "texture": "#stem"
+        }
+      }
+    },
+    {
+      "from": [
+        5.2,
+        1.35,
+        8.575
+      ],
+      "to": [
+        8,
+        3.05,
+        8.625
+      ],
+      "rotation": {
+        "origin": [
+          6.6,
+          2.2,
+          8.6
+        ],
+        "axis": "z",
+        "angle": 20,
+        "rescale": false
+      },
+      "faces": {
+        "north": {
+          "texture": "#leaf"
+        },
+        "south": {
+          "texture": "#leaf"
+        }
+      }
+    },
+    {
+      "from": [
+        7.975,
+        1.35,
+        5.2
+      ],
+      "to": [
+        8.025,
+        3.05,
+        8
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          2.2,
+          6.6
+        ],
+        "axis": "x",
+        "angle": -20,
+        "rescale": false
+      },
+      "faces": {
+        "east": {
+          "texture": "#leaf"
+        },
+        "west": {
+          "texture": "#leaf"
         }
       }
     }
