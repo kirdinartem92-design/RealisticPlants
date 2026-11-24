@@ -40,7 +40,7 @@ public final class RealisticPlantsClient {
         FanHumSound current = FAN_SOUNDS.get(fan);
         if (!active) {
             if (current != null) {
-                current.stop();
+                current.stopSound();
                 FAN_SOUNDS.remove(fan);
             }
             return;
@@ -71,6 +71,10 @@ public final class RealisticPlantsClient {
             this.z = pos.getZ() + 0.5;
             this.relative = false;
             this.attenuation = Attenuation.LINEAR;
+        }
+
+        public void stopSound() {
+            stop();
         }
 
         @Override
