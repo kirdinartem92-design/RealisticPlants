@@ -77,6 +77,12 @@ public class AgronomicAnalyzerItem extends Item {
                 );
                 context.getPlayer().sendSystemMessage(
                         Component.translatable(
+                                "message.realisticplants.panel.weak_plants",
+                                data.weakPlants()
+                        )
+                );
+                context.getPlayer().sendSystemMessage(
+                        Component.translatable(
                                 "message.realisticplants.panel.thermal_breakdown",
                                 data.overheatedPlants(),
                                 data.coldPlants(),
