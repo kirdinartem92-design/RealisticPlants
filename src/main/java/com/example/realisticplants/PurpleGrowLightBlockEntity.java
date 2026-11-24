@@ -70,8 +70,11 @@ public class PurpleGrowLightBlockEntity extends BlockEntity {
                                         instanceof CropPlantBlockEntity crop)) {
                             continue;
                         }
-                        if (SUPPORTED_CROPS.contains(crop.getPlantData()
-                                .getDefinition().getId())
+                        PlantDefinition definition =
+                                crop.getPlantData().getDefinition();
+                        if (SUPPORTED_CROPS.contains(definition.getId())
+                                && GreenhouseEnvironment.isInGreenhouse(
+                                        level, cropPos, definition)
                                 && level.getBrightness(LightLayer.SKY, cropPos)
                                         < NATURAL_LIGHT_THRESHOLD) {
                             insufficientDaylight = true;
