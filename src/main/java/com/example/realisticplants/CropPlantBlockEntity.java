@@ -170,6 +170,12 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
                 temperature
         );
 
+        growthAmount *= PurpleGrowLightEnvironment.getGrowthMultiplier(
+                level,
+                pos,
+                definition
+        );
+
         if (growthAmount <= 0.0) {
             return;
         }
