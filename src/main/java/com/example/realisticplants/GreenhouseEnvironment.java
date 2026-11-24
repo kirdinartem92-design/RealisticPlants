@@ -92,14 +92,8 @@ public final class GreenhouseEnvironment {
             return false;
         }
 
-        // A roof three blocks above the plant leaves room for mature crops.
-        // Require a small connected-looking roof patch, not a lone glass block.
-        if (!hasGlassRoof(level, plantPos)) {
-            return false;
-        }
-
-        // Accept compact and larger greenhouse footprints. The bounded
-        // directional scan avoids an unbounded flood-fill and never loads chunks.
+        // Find all four walls first so the roof check can use the actual
+        // greenhouse footprint instead of sampling only above the crop.
         int northDistance = findWallDistance(level, plantPos, 0, -1);
         int southDistance = findWallDistance(level, plantPos, 0, 1);
         int westDistance = findWallDistance(level, plantPos, -1, 0);
@@ -110,9 +104,8 @@ public final class GreenhouseEnvironment {
             return false;
         }
 
-        // Each side must contain a substantial glass section between the
-        // opposite walls. This rejects isolated panes that merely happen to
-        // exist in all four directions from the crop.
+        // Every side must contain a substantial glass section between the
+        // opposite walls, and the roof must cover the detected footprint.
         return isMostlyGlassWall(
                     level, plantPos, 0, -1, northDistance, westDistance, eastDistance)
                 && isMostlyGlassWall(
@@ -120,32 +113,53 @@ public final class GreenhouseEnvironment {
                 && isMostlyGlassWall(
                     level, plantPos, -1, 0, westDistance, northDistance, southDistance)
                 && isMostlyGlassWall(
-                    level, plantPos, 1, 0, eastDistance, northDistance, southDistance);
+                    level, plantPos, 1, 0, eastDistance, northDistance, southDistance)
+                && hasGlassRoof(
+                    level, plantPos, northDistance, southDistance,
+                    westDistance, eastDistance);
     }
 
     /**
-     * Checks a 3x3 roof patch above the crop. At least five of its nine
-     * positions must be glass, including the position directly above it.
-     * Unloaded chunks are ignored rather than force-loaded.
+     * Checks the full detected roof footprint three blocks above the crop.
+     * The center and all four corners must be glass, and at least two thirds
+     * of the roof area must be glass. The maximum scan is bounded to 17x17.
+     * Unloaded chunks are treated as missing roof blocks, never force-loaded.
      */
-    private static boolean hasGlassRoof(Level level, BlockPos plantPos) {
-        BlockPos center = plantPos.above(3);
-        if (!level.hasChunkAt(center)
-                || !isGreenhouseGlass(level.getBlockState(center))) {
+    private static boolean hasGlassRoof(
+            Level level,
+            BlockPos plantPos,
+            int northDistance,
+            int southDistance,
+            int westDistance,
+            int eastDistance
+    ) {
+        BlockPos roofCenter = plantPos.above(3);
+        if (!isGlassAt(level, roofCenter)
+                || !isGlassAt(level, plantPos.offset(-westDistance, 3, -northDistance))
+                || !isGlassAt(level, plantPos.offset(eastDistance, 3, -northDistance))
+                || !isGlassAt(level, plantPos.offset(-westDistance, 3, southDistance))
+                || !isGlassAt(level, plantPos.offset(eastDistance, 3, southDistance))) {
             return false;
         }
 
+        int total = (westDistance + eastDistance + 1)
+                * (northDistance + southDistance + 1);
         int glassCount = 0;
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dz = -1; dz <= 1; dz++) {
-                BlockPos roofPos = center.offset(dx, 0, dz);
-                if (level.hasChunkAt(roofPos)
-                        && isGreenhouseGlass(level.getBlockState(roofPos))) {
+
+        for (int x = -westDistance; x <= eastDistance; x++) {
+            for (int z = -northDistance; z <= southDistance; z++) {
+                if (isGlassAt(level, plantPos.offset(x, 3, z))) {
                     glassCount++;
                 }
             }
         }
-        return glassCount >= 5;
+
+        return glassCount * 3 >= total * 2;
+    }
+
+    private static boolean isGlassAt(Level level, BlockPos pos) {
+        return level.hasChunkAt(pos)
+                && isGreenhouseGlass(level.getBlockState(pos));
     }
 
     /**
