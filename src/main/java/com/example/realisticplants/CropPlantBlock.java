@@ -1,7 +1,6 @@
 package com.realisticplants;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.util.Prediction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
@@ -19,7 +18,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FluidTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
