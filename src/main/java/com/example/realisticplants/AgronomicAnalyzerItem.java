@@ -77,6 +77,24 @@ public class AgronomicAnalyzerItem extends Item {
                 );
                 context.getPlayer().sendSystemMessage(
                         Component.translatable(
+                                "message.realisticplants.panel.thermal_breakdown",
+                                data.overheatedPlants(),
+                                data.coldPlants(),
+                                data.droughtPlants()
+                        )
+                );
+                context.getPlayer().sendSystemMessage(
+                        Component.translatable(
+                                "message.realisticplants.panel.priority",
+                                Component.translatable(
+                                        "message.realisticplants.panel.alert."
+                                                + data.getPriorityAlertKey()
+                                ),
+                                data.getPriorityAlertCount()
+                        )
+                );
+                context.getPlayer().sendSystemMessage(
+                        Component.translatable(
                                 "message.realisticplants.panel.temperature",
                                 String.format(java.util.Locale.ROOT, "%.3f", data.averageTemperature())
                         )
