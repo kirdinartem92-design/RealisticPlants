@@ -150,8 +150,7 @@ public final class GreenhouseEnvironment {
             return ambientTemperature;
         }
 
-        int fans = countActiveGreenhouseFans(level, plantPos);
-        float cooling = Math.min(MAX_FAN_COOLING, fans * 0.07f);
+        float cooling = getNearbyFanCooling(level, plantPos);
         return Math.max(
                 ambientTemperature,
                 uncooledTemperature - cooling
@@ -190,32 +189,66 @@ public final class GreenhouseEnvironment {
         return ambientTemperature + solarGain;
     }
 
-    private static int countActiveGreenhouseFans(Level level, BlockPos plantPos) {
+    /**
+     * Calculates cooling from the three nearest active fans in this
+     * greenhouse. Nearby fans contribute more than distant ones, removing
+     * the old scan-order bias where the first three fans always won.
+     */
+    private static float getNearbyFanCooling(Level level, BlockPos plantPos) {
         int north = findWallDistance(level, plantPos, 0, -1);
         int south = findWallDistance(level, plantPos, 0, 1);
         int west = findWallDistance(level, plantPos, -1, 0);
         int east = findWallDistance(level, plantPos, 1, 0);
         if (north < 0 || south < 0 || west < 0 || east < 0) {
-            return 0;
+            return 0.0f;
         }
 
-        int fans = 0;
-        for (int dx = -west + 1; dx < east && fans < 3; dx++) {
-            for (int dy = -2; dy <= 2 && fans < 3; dy++) {
-                for (int dz = -north + 1; dz < south && fans < 3; dz++) {
+        double[] nearestDistances = {
+                Double.POSITIVE_INFINITY,
+                Double.POSITIVE_INFINITY,
+                Double.POSITIVE_INFINITY
+        };
+
+        for (int dx = -west + 1; dx < east; dx++) {
+            for (int dy = -2; dy <= 2; dy++) {
+                for (int dz = -north + 1; dz < south; dz++) {
+                    double distanceSquared = dx * dx + dy * dy + dz * dz;
+                    if (distanceSquared > 36.0) {
+                        continue;
+                    }
+
                     BlockPos fanPos = plantPos.offset(dx, dy, dz);
                     if (!level.hasChunkAt(fanPos)) {
                         continue;
                     }
+
                     BlockState state = level.getBlockState(fanPos);
-                    if (state.is(ModBlocks.GREENHOUSE_FAN.get())
-                            && state.getValue(GreenhouseFanBlock.ACTIVE)) {
-                        fans++;
+                    if (!state.is(ModBlocks.GREENHOUSE_FAN.get())
+                            || !state.getValue(GreenhouseFanBlock.ACTIVE)) {
+                        continue;
+                    }
+
+                    for (int i = 0; i < nearestDistances.length; i++) {
+                        if (distanceSquared < nearestDistances[i]) {
+                            for (int j = nearestDistances.length - 1; j > i; j--) {
+                                nearestDistances[j] = nearestDistances[j - 1];
+                            }
+                            nearestDistances[i] = distanceSquared;
+                            break;
+                        }
                     }
                 }
             }
         }
-        return fans;
+
+        float cooling = 0.0f;
+        for (double distanceSquared : nearestDistances) {
+            if (Double.isFinite(distanceSquared)) {
+                double distance = Math.sqrt(distanceSquared);
+                cooling += (float) (0.07 / (1.0 + distance * 0.12));
+            }
+        }
+        return Math.min(MAX_FAN_COOLING, cooling);
     }
 
     public static boolean isInGreenhouse(
