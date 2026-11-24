@@ -23,6 +23,8 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
     private final PlantData plantData;
     private int tickCounter = 0;
     private int moistureTickCounter = 0;
+    private double greenhouseTemperature;
+    private boolean greenhouseTemperatureInitialized;
 
     protected CropPlantBlockEntity(
             BlockEntityType<?> type,
@@ -132,13 +134,24 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         PurpleGrowLightEnvironment.updateGrowLights(
                 level, pos, inGreenhouse
         );
-        float temperature = GreenhouseEnvironment.getTemperature(
+        float targetTemperature = GreenhouseEnvironment.getTemperature(
                 level,
                 pos,
                 ambientTemperature,
                 inGreenhouse,
                 definition
         );
+
+        // Greenhouses warm up and cool down gradually instead of instantly
+        // matching every change in sunlight, weather or fan activity.
+        if (!greenhouseTemperatureInitialized) {
+            greenhouseTemperature = targetTemperature;
+            greenhouseTemperatureInitialized = true;
+        } else {
+            greenhouseTemperature +=
+                    (targetTemperature - greenhouseTemperature) * 0.25;
+        }
+        float temperature = (float) greenhouseTemperature;
 
         // Environmental simulation runs on its own cadence. Keeping its
         // interval equal to the old growth interval preserves current balance.
@@ -290,6 +303,8 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         output.putBoolean("harvest_ready", plantData.isHarvestReady());
         output.putInt("tick_counter", tickCounter);
         output.putInt("moisture_tick_counter", moistureTickCounter);
+        output.putDouble("greenhouse_temperature", greenhouseTemperature);
+        output.putBoolean("greenhouse_temperature_initialized", greenhouseTemperatureInitialized);
         output.putDouble("growth_progress", plantData.getGrowthProgress());
         output.putInt(
                 "growth_counter",
@@ -317,6 +332,10 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         moistureTickCounter = clampCounter(
                 input.getIntOr("moisture_tick_counter", tickCounter),
                 definition.getMoistureInterval()
+        );
+        greenhouseTemperature = input.getDoubleOr("greenhouse_temperature", 0.0);
+        greenhouseTemperatureInitialized = input.getBooleanOr(
+                "greenhouse_temperature_initialized", false
         );
 
         double savedProgress = input.getDoubleOr(
