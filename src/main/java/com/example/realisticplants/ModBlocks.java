@@ -83,7 +83,8 @@ public class ModBlocks {
                     properties -> new PurpleGrowLightBlock(
                             properties.mapColor(MapColor.COLOR_PURPLE)
                                     .strength(1.5f)
-                                    .lightLevel(state -> 12)
+                                    .lightLevel(state ->
+                                            state.getValue(PurpleGrowLightBlock.ACTIVE) ? 12 : 0)
                     )
             );
 
