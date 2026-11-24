@@ -1,0 +1,140 @@
+package com.realisticplants;
+
+import java.util.Set;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.entity.BlockEntity;
+
+/**
+ * Read-only summary of a greenhouse-sized area around a selected position.
+ * This is the data layer for the future central greenhouse control panel.
+ */
+public record GreenhouseInspectionData(
+        int plantCount,
+        int averageMoisture,
+        int averageHealth,
+        int averageSkyLight,
+        int averageBlockLight,
+        int sprinklerCount,
+        int dripIrrigationCount,
+        int purpleGrowLightCount,
+        int fanCount,
+        int storedWater,
+        int totalWaterCapacity,
+        int plantsNeedingCare,
+        double averageGrowthMultiplier
+) {
+    private static final int HORIZONTAL_RADIUS = 8;
+    private static final int MIN_Y = -2;
+    private static final int MAX_Y = 4;
+
+    private static final Set<String> SUPPORTED_CROPS = Set.of(
+            "tomato", "cucumber", "zucchini", "eggplant",
+            "bell_pepper", "chili_pepper", "broccoli"
+    );
+
+    /**
+     * Scans a bounded 17x17x7 area around the selected position.
+     * Only the seven crops introduced by this mod are included.
+     */
+    public static GreenhouseInspectionData capture(Level level, BlockPos center) {
+        if (level == null || center == null) {
+            throw new IllegalArgumentException("Level and center are required");
+        }
+
+        int plants = 0;
+        int moistureTotal = 0;
+        int healthTotal = 0;
+        int skyLightTotal = 0;
+        int blockLightTotal = 0;
+        int sprinklers = 0;
+        int drippers = 0;
+        int growLights = 0;
+        int fans = 0;
+        int water = 0;
+        int capacity = 0;
+        int needsCare = 0;
+        double growthMultiplierTotal = 0.0;
+
+        for (int dx = -HORIZONTAL_RADIUS; dx <= HORIZONTAL_RADIUS; dx++) {
+            for (int dy = MIN_Y; dy <= MAX_Y; dy++) {
+                for (int dz = -HORIZONTAL_RADIUS; dz <= HORIZONTAL_RADIUS; dz++) {
+                    BlockPos pos = center.offset(dx, dy, dz);
+                    var state = level.getBlockState(pos);
+
+                    if (state.is(ModBlocks.IRRIGATION_SPRINKLER.get())) {
+                        sprinklers++;
+                    } else if (state.is(ModBlocks.DRIP_IRRIGATION.get())) {
+                        drippers++;
+                    } else if (state.is(ModBlocks.PURPLE_GROW_LIGHT.get())) {
+                        growLights++;
+                    } else if (state.is(ModBlocks.GREENHOUSE_FAN.get())) {
+                        fans++;
+                    }
+
+                    BlockEntity entity = level.getBlockEntity(pos);
+                    if (entity instanceof IrrigationSprinklerBlockEntity sprinkler) {
+                        water += sprinkler.getStoredWater();
+                        capacity += sprinkler.getCapacity();
+                    } else if (entity instanceof DripIrrigationBlockEntity drip) {
+                        water += drip.getStoredWater();
+                        capacity += drip.getCapacity();
+                    }
+
+                    if (!(entity instanceof CropPlantBlockEntity crop)) {
+                        continue;
+                    }
+
+                    PlantData plant = crop.getPlantData();
+                    if (!SUPPORTED_CROPS.contains(plant.getDefinition().getId())) {
+                        continue;
+                    }
+
+                    plants++;
+                    moistureTotal += plant.getMoisture();
+                    healthTotal += plant.getHealth();
+                    skyLightTotal += level.getBrightness(LightLayer.SKY, pos);
+                    blockLightTotal += level.getBrightness(LightLayer.BLOCK, pos);
+                    growthMultiplierTotal += PurpleGrowLightEnvironment
+                            .getGrowthMultiplier(level, pos, plant.getDefinition());
+
+                    if (plant.isDead() || plant.getHealth() <= 50
+                            || plant.getMoisture() <= 30) {
+                        needsCare++;
+                    }
+                }
+            }
+        }
+
+        if (plants == 0) {
+            return new GreenhouseInspectionData(
+                    0, 0, 0, 0, 0, sprinklers, drippers, growLights,
+                    fans, water, capacity, 0, 1.0
+            );
+        }
+
+        return new GreenhouseInspectionData(
+                plants,
+                moistureTotal / plants,
+                healthTotal / plants,
+                skyLightTotal / plants,
+                blockLightTotal / plants,
+                sprinklers,
+                drippers,
+                growLights,
+                fans,
+                water,
+                capacity,
+                needsCare,
+                growthMultiplierTotal / plants
+        );
+    }
+
+    public int getWaterPercent() {
+        return totalWaterCapacity <= 0
+                ? 0
+                : (int) Math.round(storedWater * 100.0 / totalWaterCapacity);
+    }
+}
