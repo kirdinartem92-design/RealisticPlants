@@ -57,7 +57,7 @@
   "message.realisticplants.panel.temperature": "Average temperature (game scale, not °C): {0}",
   "message.realisticplants.panel.light": "Average light: sky {0}/15, blocks {1}/15 | Growth multiplier: {2}%",
   "message.realisticplants.panel.equipment": "Sprinklers: {0} | Drip units: {1} | Grow lights: {2} | Fans: {3}",
-  "message.realisticplants.panel.water": "Water reserve: {0}/{1} | Fill: {2}%");
+  "message.realisticplants.panel.water": "Water reserve: {0}/{1} | Fill: {2}%",
   "message.realisticplants.analyzer.title": "§a[Plant Analysis] §f{0}",
   "message.realisticplants.analyzer.condition": "Condition: {0} | Health: {1}/100 | Moisture: {2}/100",
   "message.realisticplants.analyzer.growth": "Growth: stage {0}/{1} | Progress: {2}%",
