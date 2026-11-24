@@ -6,13 +6,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
  * Softens overlapping irrigation sound effects in densely equipped areas.
- * Only nearby, stocked irrigation devices are counted; vanilla blocks and
- * crops are never modified.
+ * Only nearby, stocked devices on the current irrigation cycle are counted;
+ * vanilla blocks and crops are never modified.
  */
 public final class IrrigationAudioBalance {
 
     private static final int HORIZONTAL_RADIUS = 6;
     private static final int VERTICAL_RADIUS = 2;
+    private static final long IRRIGATION_CYCLE_TICKS = 100L;
 
     private IrrigationAudioBalance() {
     }
@@ -22,7 +23,11 @@ public final class IrrigationAudioBalance {
             return Math.max(0.0f, baseVolume);
         }
 
-        int stockedDevices = 0;
+        if (level.getGameTime() % IRRIGATION_CYCLE_TICKS != 0) {
+            return baseVolume;
+        }
+
+        int scheduledDevices = 0;
         for (int dx = -HORIZONTAL_RADIUS; dx <= HORIZONTAL_RADIUS; dx++) {
             for (int dy = -VERTICAL_RADIUS; dy <= VERTICAL_RADIUS; dy++) {
                 for (int dz = -HORIZONTAL_RADIUS; dz <= HORIZONTAL_RADIUS; dz++) {
@@ -38,16 +43,16 @@ public final class IrrigationAudioBalance {
                     BlockEntity candidate = level.getBlockEntity(checkPos);
                     if (candidate instanceof IrrigationSprinklerBlockEntity sprinkler
                             && sprinkler.getStoredWater() > 0) {
-                        stockedDevices++;
+                        scheduledDevices++;
                     } else if (candidate instanceof DripIrrigationBlockEntity drip
                             && drip.getStoredWater() > 0) {
-                        stockedDevices++;
+                        scheduledDevices++;
                     }
                 }
             }
         }
 
-        int deviceCount = Math.max(1, stockedDevices);
+        int deviceCount = Math.max(1, scheduledDevices);
         return baseVolume / (float) Math.sqrt(deviceCount);
     }
 }
