@@ -4,7 +4,7 @@
       "model": "realisticplants:block/greenhouse_fan"
     },
     "active=true": {
-      "model": "realisticplants:block/greenhouse_fan"
+      "model": "realisticplants:block/greenhouse_fan_active"
     }
   }
 }
