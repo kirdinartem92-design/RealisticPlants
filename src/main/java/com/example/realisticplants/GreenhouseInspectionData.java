@@ -40,7 +40,8 @@ public record GreenhouseInspectionData(
         int eggplantCount,
         int bellPepperCount,
         int chiliPepperCount,
-        int broccoliCount
+        int broccoliCount,
+        int healthyPlants
 ) {
     private static final int HORIZONTAL_RADIUS = 8;
     private static final int MIN_Y = -2;
@@ -171,6 +172,9 @@ public record GreenhouseInspectionData(
                             && plant.getHealth() <= 50) {
                         weak++;
                     }
+                    if (plant.getCondition() == PlantCondition.HEALTHY) {
+                        healthy++;
+                    }
                     if (plant.getCondition() == PlantCondition.DEAD) {
                         dead++;
                     } else if (plant.getCondition() == PlantCondition.WILTING) {
@@ -190,7 +194,7 @@ public record GreenhouseInspectionData(
             return new GreenhouseInspectionData(
                     0, 0, 0, 0, 0, sprinklers, drippers, growLights,
                     fans, water, capacity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0f, 1.0,
-                    0, 0, 0, 0, 0, 0, 0
+                    0, 0, 0, 0, 0, 0, 0, 0
             );
         }
 
@@ -218,7 +222,7 @@ public record GreenhouseInspectionData(
                 (float) (temperatureTotal / plants),
                 growthMultiplierTotal / plants,
                 tomatoes, cucumbers, zucchinis, eggplants,
-                bellPeppers, chiliPeppers, broccoli
+                bellPeppers, chiliPeppers, broccoli, healthy
         );
     }
 
