@@ -2,6 +2,7 @@ package com.realisticplants;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -94,6 +95,37 @@ class PlantHarvestTest {
         assertTrue(PlantHarvest.harvest(tomato));
         assertFalse(tomato.isHarvestReady());
         assertFalse(tomato.isFlowering());
+        assertFalse(PlantHarvest.harvest(tomato));
+    }
+
+    @Test
+    void deadPlantWithStaleHarvestFlagCannotBeHarvested() {
+        PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
+        PlantHarvest.startFlowering(tomato);
+        PlantHarvest.produceHarvest(tomato);
+        tomato.setHealth(0);
+
+        assertEquals(0, PlantHarvest.getHarvestAmount(tomato));
+        assertFalse(PlantHarvest.harvest(tomato));
+    }
+
+    @Test
+    void dryPlantWithStaleHarvestFlagCannotBeHarvested() {
+        PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
+        PlantHarvest.startFlowering(tomato);
+        PlantHarvest.produceHarvest(tomato);
+        tomato.setMoisture(0);
+
+        assertEquals(0, PlantHarvest.getHarvestAmount(tomato));
+        assertFalse(PlantHarvest.harvest(tomato));
+    }
+
+    @Test
+    void harvestReadyWithoutFloweringIsRejected() {
+        PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
+        tomato.setHarvestReady(true);
+
+        assertEquals(0, PlantHarvest.getHarvestAmount(tomato));
         assertFalse(PlantHarvest.harvest(tomato));
     }
 

@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -56,7 +55,7 @@ public class PlantHarvest {
             return;
         }
 
-        if (plant.getHealth() > 0) {
+        if (!plant.isDead()) {
             plant.setFlowering(true);
             plant.setHarvestReady(false);
         }
@@ -71,10 +70,21 @@ public class PlantHarvest {
         }
 
         if (plant.isFlowering()
-                && plant.getHealth() > 0
+                && !plant.isDead()
                 && plant.getMoisture() > 0) {
             plant.setHarvestReady(true);
         }
+    }
+
+    /**
+     * Checks whether the plant currently has a valid harvest.
+     */
+    private static boolean canHarvest(PlantData plant) {
+        return plant != null
+                && !plant.isDead()
+                && plant.getMoisture() > 0
+                && plant.isFlowering()
+                && plant.isHarvestReady();
     }
 
     /**
@@ -83,7 +93,7 @@ public class PlantHarvest {
      */
     public static int getHarvestAmount(PlantData plant) {
 
-        if (plant == null || !plant.isHarvestReady()) {
+        if (!canHarvest(plant)) {
             return 0;
         }
 
@@ -125,7 +135,7 @@ public class PlantHarvest {
      */
     public static boolean harvest(PlantData plant) {
 
-        if (plant == null || !plant.isHarvestReady()) {
+        if (!canHarvest(plant)) {
             return false;
         }
 
