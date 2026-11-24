@@ -13,17 +13,15 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Adds a quiet positional operating hum to active greenhouse fans.
- * The sound is emitted server-side so every nearby player hears it with
- * Minecraft's normal block-volume and distance attenuation.
+ * Updates client rotor animation and delegates looping positional fan audio
+ * to the client-only sound manager. The dedicated server never loads audio classes.
  */
 public class GreenhouseFanBlockEntity extends BlockEntity {
 
     private float rotationAngle;
     private float previousRotationAngle;
     private float rotationSpeed;
-    private float previousRotationSpeed;
-
+    
     public float getInterpolatedRotation(float partialTick) {
         return previousRotationAngle
                 + (rotationAngle - previousRotationAngle) * partialTick;
@@ -31,7 +29,6 @@ public class GreenhouseFanBlockEntity extends BlockEntity {
 
     private void clientTick(boolean active) {
         previousRotationAngle = rotationAngle;
-        previousRotationSpeed = rotationSpeed;
 
         float targetSpeed = active ? 18.0f : 0.0f;
         rotationSpeed += (targetSpeed - rotationSpeed) * 0.18f;
@@ -74,7 +71,7 @@ public class GreenhouseFanBlockEntity extends BlockEntity {
             fan.clientTick(active);
             DistExecutor.unsafeRunWhenOn(
                     net.neoforged.api.distmarker.Dist.CLIENT,
-                    () -> () -> GreenhouseFanClientAudio.update(fan, active)
+                    () -> () -> RealisticPlantsClient.updateFanAudio(fan, active)
             );
         }
     }
