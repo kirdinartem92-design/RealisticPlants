@@ -40,5 +40,6 @@
   "block.realisticplants.carrot_plant": "Carrot Plant",
   "block.realisticplants.beetroot_plant": "Beetroot Plant",
   "block.realisticplants.irrigation_sprinkler": "Automatic Sprinkler",
-  "item.realisticplants.irrigation_sprinkler": "Automatic Sprinkler"
+  "item.realisticplants.irrigation_sprinkler": "Automatic Sprinkler",
+  "block.realisticplants.purple_grow_light": "Purple Grow Light"
 }
