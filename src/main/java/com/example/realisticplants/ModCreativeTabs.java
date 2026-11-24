@@ -17,6 +17,7 @@ public class ModCreativeTabs {
                     .icon(() -> new ItemStack(ModItems.TOMATO.get()))
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.IRRIGATION_SPRINKLER_ITEM.get());
+                        output.accept(ModItems.PURPLE_GROW_LIGHT_ITEM.get());
                         output.accept(ModItems.TOMATO.get());
                         output.accept(ModItems.TOMATO_SEEDS.get());
                         output.accept(ModItems.TOMATO_PLANT_ITEM.get());
