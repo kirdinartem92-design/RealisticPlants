@@ -94,7 +94,8 @@ public final class GreenhouseEnvironment {
 
         // A roof three blocks above the plant leaves room for mature crops.
         BlockPos roofPos = plantPos.above(3);
-        if (!isGreenhouseGlass(level.getBlockState(roofPos))) {
+        if (!level.hasChunkAt(roofPos)
+                || !isGreenhouseGlass(level.getBlockState(roofPos))) {
             return false;
         }
 
@@ -110,7 +111,8 @@ public final class GreenhouseEnvironment {
                 BlockPos wallPos = plantPos.offset(
                         direction[0], y, direction[1]
                 );
-                if (isGreenhouseGlass(level.getBlockState(wallPos))) {
+                if (level.hasChunkAt(wallPos)
+                        && isGreenhouseGlass(level.getBlockState(wallPos))) {
                     wallFound = true;
                     break;
                 }
