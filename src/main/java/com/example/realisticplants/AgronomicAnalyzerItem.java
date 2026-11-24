@@ -68,6 +68,15 @@ public class AgronomicAnalyzerItem extends Item {
                 );
                 context.getPlayer().sendSystemMessage(
                         Component.translatable(
+                                "message.realisticplants.panel.health_breakdown",
+                                data.deadPlants(),
+                                data.wiltingPlants(),
+                                data.dryPlants(),
+                                data.lowLightPlants()
+                        )
+                );
+                context.getPlayer().sendSystemMessage(
+                        Component.translatable(
                                 "message.realisticplants.panel.temperature",
                                 String.format(java.util.Locale.ROOT, "%.3f", data.averageTemperature())
                         )
