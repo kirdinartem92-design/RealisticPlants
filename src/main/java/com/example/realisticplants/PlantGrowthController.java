@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 /**
@@ -45,7 +44,7 @@ public final class PlantGrowthController {
             return false;
         }
 
-        return PlantEnvironment.getGrowthMultiplier(temperature) > 0;
+        return PlantClimateRules.getGrowthMultiplier(temperature) > 0;
     }
 
     /**
@@ -71,7 +70,7 @@ public final class PlantGrowthController {
         );
 
         double temperatureMultiplier =
-                PlantEnvironment.getGrowthMultiplier(temperature);
+                PlantClimateRules.getGrowthMultiplier(temperature);
 
         double moistureMultiplier = moisture / 100.0;
         double healthMultiplier = health / 100.0;

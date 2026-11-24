@@ -103,21 +103,9 @@ public class PlantEnvironment {
     }
 
     /**
-     * Returns the growth multiplier based on Minecraft biome temperature.
+     * Compatibility entry point; climate calculations live in a pure class.
      */
     public static double getGrowthMultiplier(float temperature) {
-        if (temperature < 0.15f) {
-            return 0.0;
-        }
-        if (temperature < 0.5f) {
-            return 0.5;
-        }
-        if (temperature <= 1.2f) {
-            return 1.0;
-        }
-        if (temperature <= 1.6f) {
-            return 0.5;
-        }
-        return 0.0;
+        return PlantClimateRules.getGrowthMultiplier(temperature);
     }
 }
