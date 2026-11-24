@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    { "item": "realisticplants:tomato" },
-    { "item": "realisticplants:zucchini" },
-    { "item": "realisticplants:eggplant" }
+    "realisticplants:tomato",
+    "realisticplants:zucchini",
+    "realisticplants:eggplant"
   ],
   "result": {
     "id": "realisticplants:ratatouille",
