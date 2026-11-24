@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "realisticplants:bell_pepper" },
+    { "item": "realisticplants:eggplant" },
+    { "item": "realisticplants:tomato" },
+    { "item": "realisticplants:chili_pepper" }
+  ],
+  "result": {
+    "id": "realisticplants:stuffed_pepper",
+    "count": 2
+  }
+}
