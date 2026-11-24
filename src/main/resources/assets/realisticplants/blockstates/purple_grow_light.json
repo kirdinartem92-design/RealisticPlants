@@ -4,7 +4,7 @@
       "model": "realisticplants:block/purple_grow_light"
     },
     "active=true": {
-      "model": "minecraft:block/sea_lantern"
+      "model": "realisticplants:block/purple_grow_light_active"
     }
   }
 }
