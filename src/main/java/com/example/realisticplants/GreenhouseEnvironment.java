@@ -2,6 +2,8 @@ package com.realisticplants;
 
 import java.util.Set;
 
+import net.minecraft.sounds.SoundSource;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -104,6 +106,16 @@ public final class GreenhouseEnvironment {
                                         GreenhouseFanBlock.ACTIVE, coolingNeeded
                                 ),
                                 3
+                        );
+                        level.playSound(
+                                null,
+                                fanPos,
+                                coolingNeeded
+                                        ? ModSounds.GREENHOUSE_FAN_START.get()
+                                        : ModSounds.GREENHOUSE_FAN_STOP.get(),
+                                SoundSource.BLOCKS,
+                                0.35f,
+                                coolingNeeded ? 0.9f : 0.75f
                         );
                     }
                 }
