@@ -53,6 +53,18 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
     }
 
     /**
+     * Returns the temperature currently used by this crop after greenhouse
+     * thermal inertia has been applied. Before the first greenhouse update,
+     * the caller-provided target is used as a safe fallback.
+     */
+    public float getSimulatedTemperature(float fallbackTemperature) {
+        return greenhouseTemperatureInitialized
+                ? (float) greenhouseTemperature
+                : fallbackTemperature;
+    }
+
+
+    /**
      * Current visual growth stage, exposed for inspection tools.
      */
     public int getGrowthStage() {
