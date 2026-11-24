@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "realisticplants:block/drip_irrigation"
+    "model": "realisticplants:item/drip_irrigation"
   }
 }

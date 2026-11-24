@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "realisticplants:block/purple_grow_light"
+    "model": "realisticplants:item/purple_grow_light"
   }
 }
