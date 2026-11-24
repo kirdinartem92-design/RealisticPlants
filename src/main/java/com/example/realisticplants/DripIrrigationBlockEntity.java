@@ -95,8 +95,11 @@ public class DripIrrigationBlockEntity extends BlockEntity {
             return;
         }
 
-        // The emitter is placed beside the crop's farmland. The plant block
-        // itself is one block above that soil level.
+        // Check all four neighboring crops and select the driest eligible
+        // one, rather than always favoring the first direction in the array.
+        CropPlantBlockEntity driestCrop = null;
+        int driestMoisture = TARGET_MOISTURE;
+
         for (int[] direction : HORIZONTAL_DIRECTIONS) {
             BlockPos cropPos = pos.above().offset(direction[0], 0, direction[1]);
             BlockEntity candidate = level.getBlockEntity(cropPos);
@@ -107,21 +110,31 @@ public class DripIrrigationBlockEntity extends BlockEntity {
 
             PlantData plant = crop.getPlantData();
             if (plant.isDead()
-                    || !SUPPORTED_CROPS.contains(
-                            plant.getDefinition().getId())
+                    || !SUPPORTED_CROPS.contains(plant.getDefinition().getId())
                     || plant.getMoisture() >= TARGET_MOISTURE) {
                 continue;
             }
 
+            if (plant.getMoisture() < driestMoisture) {
+                driestMoisture = plant.getMoisture();
+                driestCrop = crop;
+            }
+        }
+
+        if (driestCrop != null) {
+            PlantData plant = driestCrop.getPlantData();
             int moistureNeeded = Math.min(
                     MOISTURE_PER_CYCLE,
                     TARGET_MOISTURE - plant.getMoisture()
             );
-            PlantGrowthManager.water(plant, moistureNeeded);
-            emitter.storedWater -= moistureNeeded * WATER_PER_MOISTURE_POINT;
-            emitter.setChanged();
-            crop.setChanged();
-            break;
+            int cost = moistureNeeded * WATER_PER_MOISTURE_POINT;
+
+            if (moistureNeeded > 0 && emitter.storedWater >= cost) {
+                PlantGrowthManager.water(plant, moistureNeeded);
+                emitter.storedWater -= cost;
+                emitter.setChanged();
+                driestCrop.setChanged();
+            }
         }
     }
 
