@@ -92,4 +92,27 @@ public record PlantInspectionData(
         }
         return "comfortable";
     }
+
+    /**
+     * Returns the most important actionable care hint for the player.
+     */
+    public String getRecommendationKey() {
+        if (condition == PlantCondition.DEAD) {
+            return "dead";
+        }
+        if (moisture <= 30) {
+            return "water";
+        }
+        if (getTemperatureStatus().equals("cold")) {
+            return "protect_from_cold";
+        }
+        if (getTemperatureStatus().equals("hot")) {
+            return "cool_down";
+        }
+        if (condition == PlantCondition.WILTING
+                || condition == PlantCondition.DRY) {
+            return "check_health";
+        }
+        return "good";
+    }
 }
