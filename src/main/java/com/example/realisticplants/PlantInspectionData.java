@@ -75,7 +75,8 @@ public record PlantInspectionData(
                 PurpleGrowLightEnvironment.getGrowthMultiplier(
                         level,
                         pos,
-                        definition
+                        definition,
+                        inGreenhouse
                 )
         );
     }
