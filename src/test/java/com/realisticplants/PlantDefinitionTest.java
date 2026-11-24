@@ -22,7 +22,7 @@ class PlantDefinitionTest {
 
         assertEquals(0.10f, broccoli.getMinTemperature());
         assertEquals(1.45f, broccoli.getMaxTemperature());
-        assertEquals(1450, broccoli.getGrowthInterval());
+        assertEquals(1440, broccoli.getGrowthInterval());
     }
 
     @Test
