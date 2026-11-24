@@ -74,8 +74,8 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
         line(graphics, x + 180, y + 96, "gui.realisticplants.greenhouse.fans", value(GreenhouseControlPanelMenu.FANS));
 
         section(graphics, x + 180, y + 117, "gui.realisticplants.greenhouse.water");
-        int stored = value(GreenhouseControlPanelMenu.STORED_WATER);
-        int capacity = value(GreenhouseControlPanelMenu.WATER_CAPACITY);
+        int stored = menu.getInt32(GreenhouseControlPanelMenu.STORED_WATER, GreenhouseControlPanelMenu.STORED_WATER_HIGH);
+        int capacity = menu.getInt32(GreenhouseControlPanelMenu.WATER_CAPACITY, GreenhouseControlPanelMenu.WATER_CAPACITY_HIGH);
         line(graphics, x + 180, y + 132, "gui.realisticplants.greenhouse.reservoir",
                 stored + " / " + capacity);
         bar(graphics, x + 180, y + 146, 138, stored, capacity, 0xFF4C9FE8);
@@ -119,7 +119,7 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
 
     private void bar(GuiGraphicsExtractor graphics, int x, int y, int width, int amount, int maximum, int color) {
         graphics.fill(x, y, x + width, y + 5, 0xFF101820);
-        int filled = maximum <= 0 ? 0 : Math.max(0, Math.min(width, width * amount / maximum));
+        int filled = maximum <= 0 ? 0 : (int) Math.max(0L, Math.min((long) width, (long) width * amount / maximum));
         if (filled > 0) {
             graphics.fill(x, y, x + filled, y + 5, color);
         }
