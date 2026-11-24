@@ -193,17 +193,10 @@ public final class GreenhouseEnvironment {
         int glassCount = 0;
 
         for (int offset = -negativeExtent; offset <= positiveExtent; offset++) {
-            BlockPos base = plantPos.offset(
-                    dx * (dx == 0 ? 0 : 0) + (dx == 0 ? offset : 0),
-                    0,
-                    dz * (dz == 0 ? 0 : 0) + (dz == 0 ? offset : 0)
-            );
             // For north/south walls, vary X; for west/east walls, vary Z.
-            if (dx != 0) {
-                base = plantPos.offset(dx, 0, offset);
-            } else {
-                base = plantPos.offset(offset, 0, dz);
-            }
+            BlockPos base = dx != 0
+                    ? plantPos.offset(dx, 0, offset)
+                    : plantPos.offset(offset, 0, dz);
 
             boolean glassAtPosition = false;
             for (int y = 1; y <= 2; y++) {
