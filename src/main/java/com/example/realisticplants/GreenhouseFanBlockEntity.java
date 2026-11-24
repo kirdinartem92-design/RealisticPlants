@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.fml.DistExecutor;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -69,10 +69,9 @@ public class GreenhouseFanBlockEntity extends BlockEntity {
         boolean active = state.getValue(GreenhouseFanBlock.ACTIVE);
         if (level.isClientSide()) {
             fan.clientTick(active);
-            DistExecutor.unsafeRunWhenOn(
-                    net.neoforged.api.distmarker.Dist.CLIENT,
-                    () -> () -> RealisticPlantsClient.updateFanAudio(fan, active)
-            );
+            if (FMLEnvironment.getDist().isClient()) {
+                RealisticPlantsClient.updateFanAudio(fan, active);
+            }
         }
     }
 }
