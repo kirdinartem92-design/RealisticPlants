@@ -75,12 +75,12 @@
       "from": [
         5.2,
         1.88,
-        7.97
+        7.65
       ],
       "to": [
         10.8,
         5.65,
-        8.03
+        8.35
       ],
       "faces": {
         "north": {
@@ -88,17 +88,29 @@
         },
         "south": {
           "texture": "#leaf"
+        },
+        "east": {
+          "texture": "#leaf"
+        },
+        "west": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
+          "texture": "#leaf"
         }
       }
     },
     {
       "from": [
-        7.97,
+        7.65,
         1.88,
         4.75
       ],
       "to": [
-        8.03,
+        8.35,
         5.65,
         11.25
       ],
@@ -108,6 +120,18 @@
         },
         "west": {
           "texture": "#leaf"
+        },
+        "north": {
+          "texture": "#leaf"
+        },
+        "south": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
+          "texture": "#leaf"
         }
       }
     },
@@ -115,12 +139,12 @@
       "from": [
         8,
         3.2,
-        8
+        7.73
       ],
       "to": [
         12.1,
         3.55,
-        8.16
+        8.43
       ],
       "rotation": {
         "origin": [
@@ -157,12 +181,12 @@
       "from": [
         8.4,
         2.9,
-        7.97
+        7.65
       ],
       "to": [
         12.1,
         4.45,
-        8.03
+        8.35
       ],
       "rotation": {
         "origin": [
@@ -180,17 +204,29 @@
         },
         "south": {
           "texture": "#leaf"
+        },
+        "east": {
+          "texture": "#leaf"
+        },
+        "west": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
+          "texture": "#leaf"
         }
       }
     },
     {
       "from": [
-        10.2,
+        9.88,
         3.35,
         7.97
       ],
       "to": [
-        10.26,
+        10.58,
         4.9,
         10.9
       ],
@@ -209,6 +245,18 @@
           "texture": "#leaf"
         },
         "west": {
+          "texture": "#leaf"
+        },
+        "north": {
+          "texture": "#leaf"
+        },
+        "south": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
           "texture": "#leaf"
         }
       }
