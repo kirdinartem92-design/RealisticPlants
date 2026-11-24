@@ -132,7 +132,9 @@ public class DripIrrigationBlockEntity extends BlockEntity {
             );
             int cost = moistureNeeded * WATER_PER_MOISTURE_POINT;
 
-            if (moistureNeeded > 0 && emitter.storedWater >= cost) {
+            if (moistureNeeded > 0 && emitter.storedWater >= cost
+                    && IrrigationCoordination.tryClaim(
+                            level, level.getGameTime(), driestCrop.getBlockPos())) {
                 PlantGrowthManager.water(plant, moistureNeeded);
                 emitter.storedWater -= cost;
                 emitter.setChanged();
