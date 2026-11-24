@@ -40,9 +40,11 @@ public final class GreenhouseEnvironment {
             Level level,
             BlockPos plantPos,
             float ambientTemperature,
-            boolean inGreenhouse
+            boolean inGreenhouse,
+            PlantDefinition definition
     ) {
-        if (!inGreenhouse || level == null || plantPos == null) {
+        if (!inGreenhouse || level == null || plantPos == null
+                || definition == null) {
             return ambientTemperature;
         }
 
@@ -61,6 +63,13 @@ public final class GreenhouseEnvironment {
 
         float greenhouseTemperature =
                 ambientTemperature + TEMPERATURE_BONUS;
+
+        // Fans are automatic: they remain idle unless the greenhouse would
+        // exceed this crop's own maximum temperature.
+        if (fans == 0 || greenhouseTemperature <= definition.getMaxTemperature()) {
+            return greenhouseTemperature;
+        }
+
         float cooling = Math.min(TEMPERATURE_BONUS, fans * 0.05f);
         return Math.max(
                 ambientTemperature,
