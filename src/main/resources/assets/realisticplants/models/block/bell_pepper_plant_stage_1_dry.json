@@ -1,7 +1,88 @@
 {
-  "parent": "realisticplants:block/bell_pepper_plant_stage_1",
   "textures": {
     "particle": "realisticplants:block/bell_pepper_plant_dry",
     "plant": "realisticplants:block/bell_pepper_plant_dry"
-  }
+  },
+  "elements": [
+    {
+      "from": [
+        6.5,
+        0,
+        7.5
+      ],
+      "to": [
+        9.5,
+        3.2,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        0,
+        6.5
+      ],
+      "to": [
+        8.5,
+        3.2,
+        9.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        0.64,
+        2
+      ],
+      "to": [
+        9,
+        1.28,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        0.64,
+        7
+      ],
+      "to": [
+        14,
+        1.28,
+        9
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    }
+  ]
 }
