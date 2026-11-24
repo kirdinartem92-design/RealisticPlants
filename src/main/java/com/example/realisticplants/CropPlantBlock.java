@@ -95,7 +95,6 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
             LevelReader level,
             BlockPos pos) {
         return level.getBlockState(pos.below()).is(Blocks.FARMLAND)
-                && level.getBlockState(pos.above()).isAir()
                 && !level.getFluidState(pos).is(FluidTags.WATER);
     }
 
