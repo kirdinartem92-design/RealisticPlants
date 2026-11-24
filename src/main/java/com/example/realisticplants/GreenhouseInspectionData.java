@@ -28,6 +28,9 @@ public record GreenhouseInspectionData(
         int wiltingPlants,
         int dryPlants,
         int lowLightPlants,
+        int overheatedPlants,
+        int coldPlants,
+        int droughtPlants,
         float averageTemperature,
         double averageGrowthMultiplier
 ) {
@@ -65,6 +68,9 @@ public record GreenhouseInspectionData(
         int wilting = 0;
         int dry = 0;
         int lowLight = 0;
+        int overheated = 0;
+        int cold = 0;
+        int drought = 0;
         double growthMultiplierTotal = 0.0;
         double temperatureTotal = 0.0;
 
@@ -126,6 +132,22 @@ public record GreenhouseInspectionData(
                             || plant.getMoisture() <= 30) {
                         needsCare++;
                     }
+                    if (plant.getMoisture() <= 30) {
+                        drought++;
+                    }
+                    if (temperatureTotal > 0) {
+                        // Count thermal stress using the same effective temperature
+                        // and crop-specific limits as the growth simulation.
+                        float effectiveTemperature = GreenhouseEnvironment.getTemperature(
+                                level, pos, ambientTemperature, inGreenhouse,
+                                plant.getDefinition()
+                        );
+                        if (effectiveTemperature > plant.getDefinition().getMaxTemperature()) {
+                            overheated++;
+                        } else if (effectiveTemperature < plant.getDefinition().getMinTemperature()) {
+                            cold++;
+                        }
+                    }
                     if (plant.getCondition() == PlantCondition.DEAD) {
                         dead++;
                     } else if (plant.getCondition() == PlantCondition.WILTING) {
@@ -144,7 +166,7 @@ public record GreenhouseInspectionData(
         if (plants == 0) {
             return new GreenhouseInspectionData(
                     0, 0, 0, 0, 0, sprinklers, drippers, growLights,
-                    fans, water, capacity, 0, 0, 0, 0, 0, 0.0f, 1.0
+                    fans, water, capacity, 0, 0, 0, 0, 0, 0, 0, 0.0f, 1.0
             );
         }
 
@@ -165,6 +187,9 @@ public record GreenhouseInspectionData(
                 wilting,
                 dry,
                 lowLight,
+                overheated,
+                cold,
+                drought,
                 (float) (temperatureTotal / plants),
                 growthMultiplierTotal / plants
         );
