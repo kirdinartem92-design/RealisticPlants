@@ -106,6 +106,7 @@
   "gui.realisticplants.greenhouse.block": "Block light",
   "gui.realisticplants.greenhouse.temperature": "Temperature (game scale)",
   "gui.realisticplants.greenhouse.growth": "Growth bonus",
+  "gui.realisticplants.greenhouse.cooling": "Cooling effect (game scale)"
   "gui.realisticplants.greenhouse.equipment": "EQUIPMENT",
   "gui.realisticplants.greenhouse.sprinklers": "Sprinklers",
   "gui.realisticplants.greenhouse.drippers": "Drip units",
