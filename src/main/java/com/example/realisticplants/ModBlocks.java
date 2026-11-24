@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import net.minecraft.world.level.block.Block;
@@ -68,6 +67,15 @@ public class ModBlocks {
     public static final DeferredBlock<NewCropPlantBlock> BEETROOT_PLANT =
             BLOCKS.registerBlock("beetroot_plant", p -> new NewCropPlantBlock(p.mapColor(MapColor.PLANT),
                     "beetroot", ModItems.BEETROOT, ModItems.BEETROOT_SEEDS));
+
+    public static final DeferredBlock<IrrigationSprinklerBlock> IRRIGATION_SPRINKLER =
+            BLOCKS.registerBlock(
+                    "irrigation_sprinkler",
+                    properties -> new IrrigationSprinklerBlock(
+                            properties.mapColor(MapColor.METAL)
+                                    .strength(2.0f)
+                    )
+            );
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
