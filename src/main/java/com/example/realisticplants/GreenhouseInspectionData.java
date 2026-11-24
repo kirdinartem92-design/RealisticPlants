@@ -24,6 +24,10 @@ public record GreenhouseInspectionData(
         int storedWater,
         int totalWaterCapacity,
         int plantsNeedingCare,
+        int deadPlants,
+        int wiltingPlants,
+        int dryPlants,
+        int lowLightPlants,
         float averageTemperature,
         double averageGrowthMultiplier
 ) {
@@ -57,6 +61,10 @@ public record GreenhouseInspectionData(
         int water = 0;
         int capacity = 0;
         int needsCare = 0;
+        int dead = 0;
+        int wilting = 0;
+        int dry = 0;
+        int lowLight = 0;
         double growthMultiplierTotal = 0.0;
         double temperatureTotal = 0.0;
 
@@ -118,6 +126,17 @@ public record GreenhouseInspectionData(
                             || plant.getMoisture() <= 30) {
                         needsCare++;
                     }
+                    if (plant.getCondition() == PlantCondition.DEAD) {
+                        dead++;
+                    } else if (plant.getCondition() == PlantCondition.WILTING) {
+                        wilting++;
+                    } else if (plant.getCondition() == PlantCondition.DRY) {
+                        dry++;
+                    }
+                    if (level.getBrightness(LightLayer.SKY, pos) < 8
+                            && level.getBrightness(LightLayer.BLOCK, pos) < 8) {
+                        lowLight++;
+                    }
                 }
             }
         }
@@ -125,7 +144,7 @@ public record GreenhouseInspectionData(
         if (plants == 0) {
             return new GreenhouseInspectionData(
                     0, 0, 0, 0, 0, sprinklers, drippers, growLights,
-                    fans, water, capacity, 0, 0.0f, 1.0
+                    fans, water, capacity, 0, 0, 0, 0, 0, 0.0f, 1.0
             );
         }
 
@@ -142,6 +161,10 @@ public record GreenhouseInspectionData(
                 water,
                 capacity,
                 needsCare,
+                dead,
+                wilting,
+                dry,
+                lowLight,
                 (float) (temperatureTotal / plants),
                 growthMultiplierTotal / plants
         );
