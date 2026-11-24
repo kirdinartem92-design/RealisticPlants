@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class GreenhouseControlPanelMenu extends AbstractContainerMenu {
-    public static final int DATA_COUNT = 24;
+    public static final int DATA_COUNT = 31;
 
     public static final int PLANTS = 0;
     public static final int MOISTURE = 1;
@@ -38,6 +38,13 @@ public class GreenhouseControlPanelMenu extends AbstractContainerMenu {
     public static final int GROWTH_PERMILLE = 21;
     public static final int STORED_WATER_HIGH = 22;
     public static final int WATER_CAPACITY_HIGH = 23;
+    public static final int TOMATOES = 24;
+    public static final int CUCUMBERS = 25;
+    public static final int ZUCCHINIS = 26;
+    public static final int EGGPLANTS = 27;
+    public static final int BELL_PEPPERS = 28;
+    public static final int CHILI_PEPPERS = 29;
+    public static final int BROCCOLI = 30;
 
     private final ContainerData data;
     private final ContainerLevelAccess access;
@@ -119,7 +126,8 @@ public class GreenhouseControlPanelMenu extends AbstractContainerMenu {
                 snapshot.coldPlants(),
                 snapshot.droughtPlants(),
                 Math.round(snapshot.averageTemperature() * 1000.0f),
-                (int) Math.round(snapshot.averageGrowthMultiplier() * 1000.0)
+                (int) Math.round(snapshot.averageGrowthMultiplier() * 1000.0),
+                0, 0
         };
 
         for (int i = 0; i < values.length; i++) {
@@ -134,6 +142,13 @@ public class GreenhouseControlPanelMenu extends AbstractContainerMenu {
         // lose their real reservoir totals when ContainerData synchronizes them.
         setInt32(STORED_WATER, STORED_WATER_HIGH, snapshot.storedWater());
         setInt32(WATER_CAPACITY, WATER_CAPACITY_HIGH, snapshot.totalWaterCapacity());
+        data.set(TOMATOES, snapshot.tomatoCount());
+        data.set(CUCUMBERS, snapshot.cucumberCount());
+        data.set(ZUCCHINIS, snapshot.zucchiniCount());
+        data.set(EGGPLANTS, snapshot.eggplantCount());
+        data.set(BELL_PEPPERS, snapshot.bellPepperCount());
+        data.set(CHILI_PEPPERS, snapshot.chiliPepperCount());
+        data.set(BROCCOLI, snapshot.broccoliCount());
     }
 
     private void setInt32(int lowIndex, int highIndex, int value) {
