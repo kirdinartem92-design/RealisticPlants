@@ -1,7 +1,148 @@
 {
-  "parent": "realisticplants:block/zucchini_plant_stage_2",
   "textures": {
     "particle": "realisticplants:block/zucchini_plant_dead",
     "plant": "realisticplants:block/zucchini_plant_dead"
-  }
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        0,
+        7.5
+      ],
+      "to": [
+        11,
+        3.22,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        0,
+        5
+      ],
+      "to": [
+        8.5,
+        3.22,
+        11
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        0.92,
+        2
+      ],
+      "to": [
+        10,
+        1.38,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        0.92,
+        6
+      ],
+      "to": [
+        14,
+        1.38,
+        10
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5.5,
+        1.38,
+        5
+      ],
+      "to": [
+        10.5,
+        1.84,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        1.38,
+        5.5
+      ],
+      "to": [
+        11,
+        1.84,
+        10.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        1.127,
+        4
+      ],
+      "to": [
+        16,
+        2.093,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    }
+  ]
 }
