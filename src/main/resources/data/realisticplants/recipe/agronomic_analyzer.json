@@ -6,9 +6,9 @@
     " C "
   ],
   "key": {
-    "R": { "item": "minecraft:redstone" },
-    "C": { "item": "minecraft:copper_ingot" },
-    "G": { "item": "minecraft:spyglass" }
+    "R": "minecraft:redstone",
+    "C": "minecraft:copper_ingot",
+    "G": "minecraft:spyglass"
   },
   "result": {
     "id": "realisticplants:agronomic_analyzer",
