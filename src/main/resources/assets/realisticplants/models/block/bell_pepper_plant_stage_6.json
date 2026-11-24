@@ -1,7 +1,8 @@
 {
   "textures": {
     "particle": "realisticplants:block/bell_pepper_plant",
-    "plant": "realisticplants:block/bell_pepper_plant"
+    "plant": "realisticplants:block/bell_pepper_plant",
+    "fruit": "realisticplants:block/bell_pepper_fruit"
   },
   "elements": [
     {
@@ -206,69 +207,33 @@
     },
     {
       "from": [
-        4,
-        1,
-        6.5
+        2,
+        2,
+        7.7
       ],
       "to": [
-        12,
-        7,
-        9.5
+        14,
+        14,
+        8.3
       ],
       "faces": {
         "north": {
           "uv": [
-            4,
-            9,
-            12,
-            15
+            0,
+            0,
+            16,
+            16
           ],
-          "texture": "#plant"
+          "texture": "#fruit"
         },
         "south": {
           "uv": [
-            4,
-            9,
-            12,
-            15
+            0,
+            0,
+            16,
+            16
           ],
-          "texture": "#plant"
-        },
-        "east": {
-          "uv": [
-            4,
-            9,
-            4.5,
-            15
-          ],
-          "texture": "#plant"
-        },
-        "west": {
-          "uv": [
-            4,
-            9,
-            4.5,
-            15
-          ],
-          "texture": "#plant"
-        },
-        "up": {
-          "uv": [
-            4,
-            9,
-            12,
-            9.5
-          ],
-          "texture": "#plant"
-        },
-        "down": {
-          "uv": [
-            4,
-            9,
-            12,
-            9.5
-          ],
-          "texture": "#plant"
+          "texture": "#fruit"
         }
       }
     }
