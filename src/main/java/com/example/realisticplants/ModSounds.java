@@ -11,9 +11,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /**
  * Sound event registry for greenhouse machinery and irrigation.
  *
- * The sound definitions currently use quiet vanilla event aliases while
- * original audio assets are being prepared. The event IDs are kept stable
- * so the audio can be replaced later without changing gameplay code.
+ * The event IDs are kept stable while the sound definitions use original
+ * OGG assets for the fan and irrigation equipment.
  */
 public final class ModSounds {
 
