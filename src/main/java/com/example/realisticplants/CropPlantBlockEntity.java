@@ -185,6 +185,10 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         plantData.setHarvestReady(false);
         plantData.setGrowthProgress(0.0);
 
+        // A new regrowth cycle must earn its next stage from a fresh interval.
+        // Do not let time accumulated before harvesting cause near-instant growth.
+        tickCounter = 0;
+
         if (!plantData.getDefinition().regrowsAfterHarvest()) {
             plantData.setFlowering(false);
             setChanged();
