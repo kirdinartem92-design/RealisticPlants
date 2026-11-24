@@ -67,5 +67,12 @@
   "message.realisticplants.flowering": "Да",
   "message.realisticplants.not_flowering": "Нет",
   "message.realisticplants.harvest_ready": "Готов",
-  "message.realisticplants.not_ready": "Не готов"
+  "message.realisticplants.not_ready": "Не готов",
+  "message.realisticplants.analyzer.advice": "Рекомендация: {0}",
+  "message.realisticplants.advice.dead": "Растение погибло. Посадите новое.",
+  "message.realisticplants.advice.water": "Необходимо полить растение.",
+  "message.realisticplants.advice.protect_from_cold": "Защитите растение от холода или улучшите условия теплицы.",
+  "message.realisticplants.advice.cool_down": "Снизьте температуру и проверьте вентиляцию теплицы.",
+  "message.realisticplants.advice.check_health": "Проверьте влажность, освещение и состояние растения.",
+  "message.realisticplants.advice.good": "Критических проблем не обнаружено."
 }
