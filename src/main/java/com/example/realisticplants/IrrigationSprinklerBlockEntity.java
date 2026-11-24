@@ -165,7 +165,9 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
             );
             int cost = moistureNeeded * WATER_PER_MOISTURE_POINT;
 
-            if (moistureNeeded <= 0 || sprinkler.storedWater < cost) {
+            if (moistureNeeded <= 0 || sprinkler.storedWater < cost
+                    || !IrrigationCoordination.tryClaim(
+                            level, level.getGameTime(), target.pos())) {
                 continue;
             }
 
