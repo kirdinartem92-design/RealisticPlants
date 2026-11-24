@@ -57,7 +57,7 @@ public final class PurpleGrowLightEnvironment {
             return;
         }
 
-        long timeOfDay = Math.floorMod(level.getDayTime(), DAY_LENGTH);
+        long timeOfDay = Math.floorMod(level.getLevelData().getDayTime(), DAY_LENGTH);
         boolean night = timeOfDay >= NIGHT_START && timeOfDay < NIGHT_END;
         boolean lightNeeded = night;
 
