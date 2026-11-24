@@ -87,6 +87,15 @@ public class ModBlocks {
                     )
             );
 
+    public static final DeferredBlock<DripIrrigationBlock> DRIP_IRRIGATION =
+            BLOCKS.registerBlock(
+                    "drip_irrigation",
+                    properties -> new DripIrrigationBlock(
+                            properties.mapColor(MapColor.METAL)
+                                    .strength(1.5f)
+                    )
+            );
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
