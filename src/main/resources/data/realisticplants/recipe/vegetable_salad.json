@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    { "item": "realisticplants:tomato" },
-    { "item": "realisticplants:cucumber" },
-    { "item": "realisticplants:bell_pepper" }
+    "realisticplants:tomato",
+    "realisticplants:cucumber",
+    "realisticplants:bell_pepper"
   ],
   "result": {
     "id": "realisticplants:vegetable_salad",
