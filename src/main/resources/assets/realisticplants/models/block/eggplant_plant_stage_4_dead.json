@@ -1,7 +1,188 @@
 {
-  "parent": "realisticplants:block/eggplant_plant_stage_4",
   "textures": {
     "particle": "realisticplants:block/eggplant_plant_dead",
     "plant": "realisticplants:block/eggplant_plant_dead"
-  }
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        0,
+        7.5
+      ],
+      "to": [
+        12,
+        5.06,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        0,
+        4
+      ],
+      "to": [
+        8.5,
+        5.06,
+        12
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        1.38,
+        2
+      ],
+      "to": [
+        11,
+        2.3,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        1.38,
+        5
+      ],
+      "to": [
+        14,
+        2.3,
+        11
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        2.3,
+        5
+      ],
+      "to": [
+        11,
+        3.22,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        2.3,
+        5
+      ],
+      "to": [
+        11,
+        3.22,
+        11
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        4.5,
+        3.22,
+        2
+      ],
+      "to": [
+        11.5,
+        4.14,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        3.22,
+        4.5
+      ],
+      "to": [
+        14,
+        4.14,
+        11.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        2.53,
+        2
+      ],
+      "to": [
+        13,
+        4.554,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    }
+  ]
 }
