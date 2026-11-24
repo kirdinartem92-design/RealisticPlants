@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import java.util.Objects;
@@ -83,6 +82,23 @@ public class PlantData {
 
     public void setHarvestReady(boolean harvestReady) {
         this.harvestReady = harvestReady;
+    }
+
+    /**
+     * Repairs impossible lifecycle combinations after loading saved data.
+     * A dead plant cannot remain flowering or harvest-ready. A harvest-ready
+     * plant must still be flowering and have at least some moisture.
+     */
+    public void normalizeLifecycleState() {
+        if (isDead()) {
+            flowering = false;
+            harvestReady = false;
+            return;
+        }
+
+        if (!flowering || moisture <= 0) {
+            harvestReady = false;
+        }
     }
 
     public boolean isWilted() {

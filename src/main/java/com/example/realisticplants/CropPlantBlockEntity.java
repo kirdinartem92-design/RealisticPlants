@@ -235,10 +235,18 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         plantData.setHealth(input.getIntOr("health", 100));
         plantData.setFlowering(input.getBooleanOr("flowering", false));
         plantData.setHarvestReady(input.getBooleanOr("harvest_ready", false));
-        tickCounter = input.getIntOr("tick_counter", 0);
+        plantData.normalizeLifecycleState();
+
+        PlantDefinition definition = plantData.getDefinition();
+        tickCounter = clampCounter(
+                input.getIntOr("tick_counter", 0),
+                definition.getGrowthInterval()
+        );
+
         // Old saves used one shared counter for growth and moisture.
-        moistureTickCounter = input.getIntOr(
-                "moisture_tick_counter", tickCounter
+        moistureTickCounter = clampCounter(
+                input.getIntOr("moisture_tick_counter", tickCounter),
+                definition.getMoistureInterval()
         );
 
         double savedProgress = input.getDoubleOr(
@@ -246,5 +254,9 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
                 input.getIntOr("growth_counter", 0)
         );
         plantData.setGrowthProgress(savedProgress);
+    }
+
+    private static int clampCounter(int counter, int interval) {
+        return Math.max(0, Math.min(interval - 1, counter));
     }
 }
