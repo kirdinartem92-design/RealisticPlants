@@ -30,6 +30,7 @@ public class RealisticPlants {
         NewCropPlantBlockEntity.register(modEventBus);
         IrrigationSprinklerBlockEntity.register(modEventBus);
         DripIrrigationBlockEntity.register(modEventBus);
+        GreenhouseControlPanelBlockEntity.register(modEventBus);
 
         LOGGER.info("Realistic Plants is loading!");
         LOGGER.info("Plant configuration registered!");
