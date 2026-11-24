@@ -74,12 +74,12 @@
       "from": [
         5.2,
         1.35,
-        8.575
+        8.25
       ],
       "to": [
         8,
         3.05,
-        8.625
+        8.95
       ],
       "rotation": {
         "origin": [
@@ -97,17 +97,29 @@
         },
         "south": {
           "texture": "#leaf"
+        },
+        "east": {
+          "texture": "#leaf"
+        },
+        "west": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
+          "texture": "#leaf"
         }
       }
     },
     {
       "from": [
-        7.975,
+        7.65,
         1.35,
         5.2
       ],
       "to": [
-        8.025,
+        8.35,
         3.05,
         8
       ],
@@ -126,6 +138,18 @@
           "texture": "#leaf"
         },
         "west": {
+          "texture": "#leaf"
+        },
+        "north": {
+          "texture": "#leaf"
+        },
+        "south": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
           "texture": "#leaf"
         }
       }

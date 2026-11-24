@@ -41,18 +41,30 @@
       "from": [
         3.1999999999999993,
         3.522,
-        9.174999999999999
+        8.85
       ],
       "to": [
         8,
         6.978,
-        9.225
+        9.55
       ],
       "faces": {
         "north": {
           "texture": "#leaf"
         },
         "south": {
+          "texture": "#leaf"
+        },
+        "east": {
+          "texture": "#leaf"
+        },
+        "west": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
           "texture": "#leaf"
         }
       },
@@ -69,12 +81,12 @@
     },
     {
       "from": [
-        5.574999999999999,
+        5.25,
         3.522,
         6.799999999999999
       ],
       "to": [
-        5.625,
+        5.95,
         6.978,
         11.6
       ],
@@ -83,6 +95,18 @@
           "texture": "#leaf"
         },
         "west": {
+          "texture": "#leaf"
+        },
+        "north": {
+          "texture": "#leaf"
+        },
+        "south": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
           "texture": "#leaf"
         }
       },
@@ -101,18 +125,30 @@
       "from": [
         8,
         5.022,
-        6.7749999999999995
+        6.45
       ],
       "to": [
         12.8,
         8.478,
-        6.825
+        7.15
       ],
       "faces": {
         "north": {
           "texture": "#leaf"
         },
         "south": {
+          "texture": "#leaf"
+        },
+        "east": {
+          "texture": "#leaf"
+        },
+        "west": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
           "texture": "#leaf"
         }
       },
@@ -129,12 +165,12 @@
     },
     {
       "from": [
-        10.375,
+        10.05,
         5.022,
         4.3999999999999995
       ],
       "to": [
-        10.425,
+        10.75,
         8.478,
         9.2
       ],
@@ -143,6 +179,18 @@
           "texture": "#leaf"
         },
         "west": {
+          "texture": "#leaf"
+        },
+        "north": {
+          "texture": "#leaf"
+        },
+        "south": {
+          "texture": "#leaf"
+        },
+        "up": {
+          "texture": "#leaf"
+        },
+        "down": {
           "texture": "#leaf"
         }
       },
