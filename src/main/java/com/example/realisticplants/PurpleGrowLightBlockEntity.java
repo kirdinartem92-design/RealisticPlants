@@ -55,9 +55,10 @@ public class PurpleGrowLightBlockEntity extends BlockEntity {
         }
 
         boolean night = level.getSkyDarken() >= 4;
+        boolean hasGreenhouseCrop = false;
         boolean insufficientDaylight = false;
 
-        if (!night) {
+        {
             for (int dx = -RADIUS; dx <= RADIUS && !insufficientDaylight; dx++) {
                 for (int dy = -RADIUS; dy <= RADIUS && !insufficientDaylight; dy++) {
                     for (int dz = -RADIUS; dz <= RADIUS; dz++) {
@@ -72,20 +73,24 @@ public class PurpleGrowLightBlockEntity extends BlockEntity {
                         }
                         PlantDefinition definition =
                                 crop.getPlantData().getDefinition();
-                        if (SUPPORTED_CROPS.contains(definition.getId())
-                                && GreenhouseEnvironment.isInGreenhouse(
-                                        level, cropPos, definition)
-                                && level.getBrightness(LightLayer.SKY, cropPos)
-                                        < NATURAL_LIGHT_THRESHOLD) {
+                        if (!SUPPORTED_CROPS.contains(definition.getId())
+                                || !GreenhouseEnvironment.isInGreenhouse(
+                                        level, cropPos, definition)) {
+                            continue;
+                        }
+
+                        hasGreenhouseCrop = true;
+                        if (level.getBrightness(LightLayer.SKY, cropPos)
+                                < NATURAL_LIGHT_THRESHOLD) {
                             insufficientDaylight = true;
-                            break;
                         }
                     }
                 }
             }
         }
 
-        boolean shouldBeActive = night || insufficientDaylight;
+        boolean shouldBeActive = hasGreenhouseCrop
+                && (night || insufficientDaylight);
         if (state.getValue(PurpleGrowLightBlock.ACTIVE) != shouldBeActive) {
             level.setBlock(pos,
                     state.setValue(PurpleGrowLightBlock.ACTIVE, shouldBeActive), 3);
