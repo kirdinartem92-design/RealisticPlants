@@ -57,6 +57,14 @@ public class PlantGrowthManager {
      * and individual drought resistance.
      */
     public static void updateHealth(PlantData plant) {
+        updateHealth(plant, Float.NaN);
+    }
+
+    /**
+     * Updates health from moisture and, for this mod's seven new crops only,
+     * excessive heat. Vanilla crop definitions retain the old health rules.
+     */
+    public static void updateHealth(PlantData plant, float temperature) {
         if (plant == null || plant.isDead()) {
             return;
         }
@@ -69,6 +77,25 @@ public class PlantGrowthManager {
 
         int moisture = plant.getMoisture();
         int health = plant.getHealth();
+
+        boolean modCrop = switch (definition.getId()) {
+            case "tomato", "cucumber", "zucchini", "eggplant",
+                    "bell_pepper", "chili_pepper", "broccoli" -> true;
+            default -> false;
+        };
+
+        if (modCrop && Float.isFinite(temperature)
+                && temperature > definition.getMaxTemperature()) {
+            // Heat stress accumulates gradually on the same environmental
+            // cadence as moisture. A severe excess causes faster damage.
+            float excess = temperature - definition.getMaxTemperature();
+            int heatDamage = excess >= 0.5f ? 2 : 1;
+            plant.setHealth(Math.max(MIN_HEALTH, health - heatDamage));
+            health = plant.getHealth();
+            if (plant.isDead()) {
+                return;
+            }
+        }
 
         int droughtResistance = Math.max(
                 0,
