@@ -42,5 +42,6 @@
   "block.realisticplants.irrigation_sprinkler": "Автоматический распылитель",
   "item.realisticplants.irrigation_sprinkler": "Автоматический распылитель",
   "block.realisticplants.purple_grow_light": "Фиолетовая фитолампа",
-  "item.realisticplants.purple_grow_light": "Фиолетовая фитолампа"
+  "item.realisticplants.purple_grow_light": "Фиолетовая фитолампа",
+  "block.realisticplants.drip_irrigation": "Капельный полив"
 }
