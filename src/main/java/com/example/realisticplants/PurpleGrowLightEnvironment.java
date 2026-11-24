@@ -8,9 +8,9 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Automatically controls greenhouse grow lights and their crop-growth bonus.
- * Lights are always active at night and activate during daytime when natural
- * sky light is insufficient. Only the seven crops added by this mod are used.
+ * Controls grow lights for mod crops both inside and outside greenhouses.
+ * A lamp activates at night or when a nearby supported crop receives too
+ * little natural sky light. Active lamps grant a growth bonus in either place.
  */
 public final class PurpleGrowLightEnvironment {
 
@@ -19,71 +19,34 @@ public final class PurpleGrowLightEnvironment {
     private static final double GROWTH_MULTIPLIER = 1.25;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
-            "tomato",
-            "cucumber",
-            "zucchini",
-            "eggplant",
-            "bell_pepper",
-            "chili_pepper",
-            "broccoli"
+            "tomato", "cucumber", "zucchini", "eggplant",
+            "bell_pepper", "chili_pepper", "broccoli"
     );
 
     private PurpleGrowLightEnvironment() {
     }
 
     /**
-     * Switches all grow lights in the detected greenhouse together.
-     * At night they are always on; during daytime they turn on if any
-     * supported crop in the greenhouse receives insufficient sky light.
+     * Updates every lamp in range. The greenhouse flag is retained for
+     * compatibility with existing callers, but lamps are not greenhouse-only.
      */
     public static void updateGrowLights(
             Level level,
             BlockPos plantPos,
             boolean inGreenhouse
     ) {
-        if (level == null || plantPos == null || !inGreenhouse) {
+        if (level == null || plantPos == null) {
             return;
         }
 
-        int north = GreenhouseEnvironment.findWallDistance(level, plantPos, 0, -1);
-        int south = GreenhouseEnvironment.findWallDistance(level, plantPos, 0, 1);
-        int west = GreenhouseEnvironment.findWallDistance(level, plantPos, -1, 0);
-        int east = GreenhouseEnvironment.findWallDistance(level, plantPos, 1, 0);
-        if (north < 0 || south < 0 || west < 0 || east < 0) {
-            return;
-        }
-
-        // Minecraft 26.3 exposes the current global sky darkness through Level.
-        // A value of 4 or more means it is dark enough for nighttime lighting.
-        boolean night = level.getSkyDarken() >= 4;
-        boolean lightNeeded = night;
-
-        if (!lightNeeded) {
-            for (int dx = -west + 1; dx < east && !lightNeeded; dx++) {
-                for (int dy = -2; dy <= 2 && !lightNeeded; dy++) {
-                    for (int dz = -north + 1; dz < south; dz++) {
-                        BlockPos cropPos = plantPos.offset(dx, dy, dz);
-                        if (!level.hasChunkAt(cropPos)
-                                || !(level.getBlockEntity(cropPos)
-                                        instanceof CropPlantBlockEntity crop)) {
-                            continue;
-                        }
-
-                        if (SUPPORTED_CROPS.contains(
-                                crop.getPlantData().getDefinition().getId())
-                                && level.getBrightness(LightLayer.SKY, cropPos)
-                                        < NATURAL_LIGHT_THRESHOLD) {
-                            lightNeeded = true;
-                            break;
-                        }
+        int radiusSquared = RADIUS * RADIUS;
+        for (int dx = -RADIUS; dx <= RADIUS; dx++) {
+            for (int dy = -RADIUS; dy <= RADIUS; dy++) {
+                for (int dz = -RADIUS; dz <= RADIUS; dz++) {
+                    if (dx * dx + dy * dy + dz * dz > radiusSquared) {
+                        continue;
                     }
-                }
-            }
-        }
 
-        for (int dx = -west + 1; dx < east; dx++) {
-            for (int dy = -2; dy <= 2; dy++) {
-                for (int dz = -north + 1; dz < south; dz++) {
                     BlockPos lightPos = plantPos.offset(dx, dy, dz);
                     if (!level.hasChunkAt(lightPos)) {
                         continue;
@@ -94,17 +57,48 @@ public final class PurpleGrowLightEnvironment {
                         continue;
                     }
 
-                    boolean active = state.getValue(PurpleGrowLightBlock.ACTIVE);
-                    if (active != lightNeeded) {
+                    boolean shouldBeActive = shouldLampBeActive(level, lightPos);
+                    if (state.getValue(PurpleGrowLightBlock.ACTIVE) != shouldBeActive) {
                         level.setBlock(
                                 lightPos,
-                                state.setValue(PurpleGrowLightBlock.ACTIVE, lightNeeded),
+                                state.setValue(PurpleGrowLightBlock.ACTIVE, shouldBeActive),
                                 3
                         );
                     }
                 }
             }
         }
+    }
+
+    private static boolean shouldLampBeActive(Level level, BlockPos lightPos) {
+        if (level.getSkyDarken() >= 4) {
+            return true;
+        }
+
+        int radiusSquared = RADIUS * RADIUS;
+        for (int dx = -RADIUS; dx <= RADIUS; dx++) {
+            for (int dy = -RADIUS; dy <= RADIUS; dy++) {
+                for (int dz = -RADIUS; dz <= RADIUS; dz++) {
+                    if (dx * dx + dy * dy + dz * dz > radiusSquared) {
+                        continue;
+                    }
+
+                    BlockPos cropPos = lightPos.offset(dx, dy, dz);
+                    if (!level.hasChunkAt(cropPos)
+                            || !(level.getBlockEntity(cropPos)
+                                    instanceof CropPlantBlockEntity crop)) {
+                        continue;
+                    }
+
+                    if (SUPPORTED_CROPS.contains(crop.getPlantData().getDefinition().getId())
+                            && level.getBrightness(LightLayer.SKY, cropPos)
+                                    < NATURAL_LIGHT_THRESHOLD) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public static double getGrowthMultiplier(
@@ -114,16 +108,13 @@ public final class PurpleGrowLightEnvironment {
             boolean inGreenhouse
     ) {
         if (level == null || plantPos == null || definition == null
-                || !inGreenhouse
                 || !SUPPORTED_CROPS.contains(definition.getId())) {
             return 1.0;
         }
 
-        if (hasNearbyActivePurpleGrowLight(level, plantPos)) {
-            return GROWTH_MULTIPLIER;
-        }
-
-        return 1.0;
+        return hasNearbyActivePurpleGrowLight(level, plantPos)
+                ? GROWTH_MULTIPLIER
+                : 1.0;
     }
 
     private static boolean hasNearbyActivePurpleGrowLight(

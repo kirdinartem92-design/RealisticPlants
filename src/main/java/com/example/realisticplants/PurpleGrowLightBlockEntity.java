@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,14 +13,13 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Independently updates a grow light, so night lighting does not depend on
- * whether a nearby crop happens to run its growth simulation.
+ * Independently updates a grow light every second. The lamp works around
+ * supported crops in open fields as well as inside greenhouses.
  */
 public class PurpleGrowLightBlockEntity extends BlockEntity {
 
     private static final long UPDATE_INTERVAL = 20L;
     private static final int RADIUS = 4;
-    private static final int NATURAL_LIGHT_THRESHOLD = 12;
     private static final Set<String> SUPPORTED_CROPS = Set.of(
             "tomato", "cucumber", "zucchini", "eggplant",
             "bell_pepper", "chili_pepper", "broccoli"
@@ -54,15 +52,12 @@ public class PurpleGrowLightBlockEntity extends BlockEntity {
             return;
         }
 
-        // Use the same greenhouse-wide controller as crop updates. This
-        // prevents individual lamps from disagreeing about whether the
-        // greenhouse needs artificial light.
-        boolean foundGreenhouseCrop = false;
-
-        for (int dx = -RADIUS; dx <= RADIUS && !foundGreenhouseCrop; dx++) {
-            for (int dy = -RADIUS; dy <= RADIUS && !foundGreenhouseCrop; dy++) {
+        boolean foundCrop = false;
+        int radiusSquared = RADIUS * RADIUS;
+        for (int dx = -RADIUS; dx <= RADIUS && !foundCrop; dx++) {
+            for (int dy = -RADIUS; dy <= RADIUS && !foundCrop; dy++) {
                 for (int dz = -RADIUS; dz <= RADIUS; dz++) {
-                    if (dx * dx + dy * dy + dz * dz > RADIUS * RADIUS) {
+                    if (dx * dx + dy * dy + dz * dz > radiusSquared) {
                         continue;
                     }
 
@@ -73,26 +68,21 @@ public class PurpleGrowLightBlockEntity extends BlockEntity {
                         continue;
                     }
 
-                    PlantDefinition definition = crop.getPlantData().getDefinition();
-                    if (!SUPPORTED_CROPS.contains(definition.getId())
-                            || !GreenhouseEnvironment.isInGreenhouse(
-                                    level, cropPos, definition)) {
+                    if (!SUPPORTED_CROPS.contains(
+                            crop.getPlantData().getDefinition().getId())) {
                         continue;
                     }
 
-                    foundGreenhouseCrop = true;
+                    foundCrop = true;
                     PurpleGrowLightEnvironment.updateGrowLights(
-                            level, cropPos, true
+                            level, cropPos, false
                     );
                     break;
                 }
             }
         }
 
-        // If this lamp can no longer find a supported greenhouse crop nearby,
-        // it must not remain lit indefinitely.
-        if (!foundGreenhouseCrop
-                && state.getValue(PurpleGrowLightBlock.ACTIVE)) {
+        if (!foundCrop && state.getValue(PurpleGrowLightBlock.ACTIVE)) {
             level.setBlock(
                     pos,
                     state.setValue(PurpleGrowLightBlock.ACTIVE, false),

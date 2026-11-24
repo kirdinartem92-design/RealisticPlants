@@ -101,27 +101,32 @@ public class DripIrrigationBlockEntity extends BlockEntity {
         CropPlantBlockEntity driestCrop = null;
         int driestMoisture = TARGET_MOISTURE;
 
-        for (int[] direction : HORIZONTAL_DIRECTIONS) {
-            BlockPos cropPos = pos.above().offset(direction[0], 0, direction[1]);
-            if (!level.hasChunkAt(cropPos)) {
-                continue;
-            }
-            BlockEntity candidate = level.getBlockEntity(cropPos);
+        // The emitter can be placed beside a crop at soil level or one
+        // block below its foliage. Support both layouts; the old code only
+        // checked the block above the emitter and missed same-level crops.
+        for (int yOffset = 0; yOffset <= 1; yOffset++) {
+            for (int[] direction : HORIZONTAL_DIRECTIONS) {
+                BlockPos cropPos = pos.offset(direction[0], yOffset, direction[1]);
+                if (!level.hasChunkAt(cropPos)) {
+                    continue;
+                }
+                BlockEntity candidate = level.getBlockEntity(cropPos);
 
-            if (!(candidate instanceof CropPlantBlockEntity crop)) {
-                continue;
-            }
+                if (!(candidate instanceof CropPlantBlockEntity crop)) {
+                    continue;
+                }
 
-            PlantData plant = crop.getPlantData();
-            if (plant.isDead()
-                    || !SUPPORTED_CROPS.contains(plant.getDefinition().getId())
-                    || plant.getMoisture() >= TARGET_MOISTURE) {
-                continue;
-            }
+                PlantData plant = crop.getPlantData();
+                if (plant.isDead()
+                        || !SUPPORTED_CROPS.contains(plant.getDefinition().getId())
+                        || plant.getMoisture() >= TARGET_MOISTURE) {
+                    continue;
+                }
 
-            if (plant.getMoisture() < driestMoisture) {
-                driestMoisture = plant.getMoisture();
-                driestCrop = crop;
+                if (plant.getMoisture() < driestMoisture) {
+                    driestMoisture = plant.getMoisture();
+                    driestCrop = crop;
+                }
             }
         }
 
