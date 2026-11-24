@@ -25,6 +25,12 @@ public class ModCreativeTabs {
                         output.accept(ModItems.POTATO.get());
                         output.accept(ModItems.CARROT.get());
                         output.accept(ModItems.BEETROOT.get());
+                        output.accept(ModItems.POTATO_SEEDS.get());
+                        output.accept(ModItems.POTATO_PLANT_ITEM.get());
+                        output.accept(ModItems.CARROT_SEEDS.get());
+                        output.accept(ModItems.CARROT_PLANT_ITEM.get());
+                        output.accept(ModItems.BEETROOT_SEEDS.get());
+                        output.accept(ModItems.BEETROOT_PLANT_ITEM.get());
                         output.accept(ModItems.ZUCCHINI.get());
                         output.accept(ModItems.EGGPLANT.get());
                         output.accept(ModItems.BELL_PEPPER.get());
