@@ -175,11 +175,13 @@ public final class GreenhouseEnvironment {
                 net.minecraft.world.level.LightLayer.SKY,
                 plantPos
         );
+        // SKY brightness already includes the current sky-darkening and
+        // obstruction effects. Multiplying by a second time-of-day factor
+        // would count night/cloud attenuation twice and make daytime heating
+        // unrealistically weak.
         float daylightFactor = Math.max(0.0f, Math.min(1.0f,
                 skyBrightness / 15.0f));
-        float sunFactor = Math.max(0.0f, Math.min(1.0f,
-                (15.0f - level.getSkyDarken()) / 15.0f));
-        float solarGain = MAX_SOLAR_GAIN * daylightFactor * sunFactor;
+        float solarGain = MAX_SOLAR_GAIN * daylightFactor;
 
         if (level.isRainingAt(plantPos)) {
             solarGain *= 0.25f;
