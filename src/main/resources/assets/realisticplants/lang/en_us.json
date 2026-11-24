@@ -53,6 +53,7 @@
   "message.realisticplants.panel.title": "§a[Greenhouse Control Panel]",
   "message.realisticplants.panel.plants": "Plants: {0} | Need attention: {1}",
   "message.realisticplants.panel.condition": "Average health: {0}/100 | Average moisture: {1}/100",
+  "message.realisticplants.panel.temperature": "Average temperature (game scale, not °C): {0}",
   "message.realisticplants.panel.light": "Average light: sky {0}/15, blocks {1}/15 | Growth multiplier: {2}%",
   "message.realisticplants.panel.equipment": "Sprinklers: {0} | Drip units: {1} | Grow lights: {2} | Fans: {3}",
   "message.realisticplants.panel.water": "Water reserve: {0}/{1} | Fill: {2}%");
