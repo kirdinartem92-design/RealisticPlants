@@ -85,6 +85,21 @@ public final class GreenhouseEnvironment {
             }
         }
 
+        int fanCount = 0;
+        for (int dx = -west + 1; dx < east; dx++) {
+            for (int dy = -2; dy <= 2; dy++) {
+                for (int dz = -north + 1; dz < south; dz++) {
+                    BlockPos candidatePos = plantPos.offset(dx, dy, dz);
+                    if (level.hasChunkAt(candidatePos)
+                            && level.getBlockState(candidatePos)
+                                    .is(ModBlocks.GREENHOUSE_FAN.get())) {
+                        fanCount++;
+                    }
+                }
+            }
+        }
+        float transitionVolume = 0.35f / (float) Math.sqrt(Math.max(1, fanCount));
+
         for (int dx = -west + 1; dx < east; dx++) {
             for (int dy = -2; dy <= 2; dy++) {
                 for (int dz = -north + 1; dz < south; dz++) {
@@ -114,7 +129,7 @@ public final class GreenhouseEnvironment {
                                         ? ModSounds.GREENHOUSE_FAN_START.get()
                                         : ModSounds.GREENHOUSE_FAN_STOP.get(),
                                 SoundSource.BLOCKS,
-                                0.35f,
+                                transitionVolume,
                                 coolingNeeded ? 0.9f : 0.75f
                         );
                     }
