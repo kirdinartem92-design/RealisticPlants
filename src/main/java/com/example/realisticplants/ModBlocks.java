@@ -59,6 +59,16 @@ public class ModBlocks {
                     properties -> new NewCropPlantBlock(properties.mapColor(MapColor.PLANT),
                             "broccoli", ModItems.BROCCOLI, ModItems.BROCCOLI_SEEDS));
 
+    public static final DeferredBlock<NewCropPlantBlock> POTATO_PLANT =
+            BLOCKS.registerBlock("potato_plant", p -> new NewCropPlantBlock(p.mapColor(MapColor.PLANT),
+                    "potato", ModItems.POTATO, ModItems.POTATO_SEEDS));
+    public static final DeferredBlock<NewCropPlantBlock> CARROT_PLANT =
+            BLOCKS.registerBlock("carrot_plant", p -> new NewCropPlantBlock(p.mapColor(MapColor.PLANT),
+                    "carrot", ModItems.CARROT, ModItems.CARROT_SEEDS));
+    public static final DeferredBlock<NewCropPlantBlock> BEETROOT_PLANT =
+            BLOCKS.registerBlock("beetroot_plant", p -> new NewCropPlantBlock(p.mapColor(MapColor.PLANT),
+                    "beetroot", ModItems.BEETROOT, ModItems.BEETROOT_SEEDS));
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
