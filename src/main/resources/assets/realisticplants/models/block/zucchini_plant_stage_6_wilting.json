@@ -1,7 +1,228 @@
 {
-  "parent": "realisticplants:block/zucchini_plant_stage_6",
   "textures": {
     "particle": "realisticplants:block/zucchini_plant_wilting",
     "plant": "realisticplants:block/zucchini_plant_wilting"
-  }
+  },
+  "elements": [
+    {
+      "from": [
+        0.5,
+        0,
+        7.5
+      ],
+      "to": [
+        15.5,
+        12.48,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        0,
+        0.5
+      ],
+      "to": [
+        8.5,
+        12.48,
+        15.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2.5,
+        3.12,
+        2
+      ],
+      "to": [
+        13.5,
+        5.46,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        3.12,
+        2.5
+      ],
+      "to": [
+        14,
+        5.46,
+        13.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        5.46,
+        5
+      ],
+      "to": [
+        14,
+        7.8,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        5.46,
+        2
+      ],
+      "to": [
+        11,
+        7.8,
+        14
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        1.5,
+        7.8,
+        2
+      ],
+      "to": [
+        14.5,
+        10.14,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        7.8,
+        1.5
+      ],
+      "to": [
+        14,
+        10.14,
+        14.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        10.14,
+        5
+      ],
+      "to": [
+        15,
+        12.48,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        10.14,
+        1
+      ],
+      "to": [
+        11,
+        12.48,
+        15
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        4.368,
+        4
+      ],
+      "to": [
+        16,
+        8.112,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    }
+  ]
 }

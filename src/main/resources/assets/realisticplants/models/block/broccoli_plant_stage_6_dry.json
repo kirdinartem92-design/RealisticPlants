@@ -1,7 +1,228 @@
 {
-  "parent": "realisticplants:block/broccoli_plant_stage_6",
   "textures": {
     "particle": "realisticplants:block/broccoli_plant_dry",
     "plant": "realisticplants:block/broccoli_plant_dry"
-  }
+  },
+  "elements": [
+    {
+      "from": [
+        1.5,
+        0,
+        7.5
+      ],
+      "to": [
+        14.5,
+        8.96,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        0,
+        1.5
+      ],
+      "to": [
+        8.5,
+        8.96,
+        14.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        3.5,
+        2.24,
+        2
+      ],
+      "to": [
+        12.5,
+        3.92,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        2.24,
+        3.5
+      ],
+      "to": [
+        14,
+        3.92,
+        12.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        3.92,
+        5
+      ],
+      "to": [
+        13,
+        5.6,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        3.92,
+        3
+      ],
+      "to": [
+        11,
+        5.6,
+        13
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2.5,
+        5.6,
+        2
+      ],
+      "to": [
+        13.5,
+        7.28,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        5.6,
+        2.5
+      ],
+      "to": [
+        14,
+        7.28,
+        13.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        7.28,
+        5
+      ],
+      "to": [
+        14,
+        8.96,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        7.28,
+        2
+      ],
+      "to": [
+        11,
+        8.96,
+        14
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        4.928,
+        2
+      ],
+      "to": [
+        14,
+        8.512,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    }
+  ]
 }
