@@ -40,8 +40,7 @@ public final class RealisticPlantsClient {
         FanHumSound current = FAN_SOUNDS.get(fan);
         if (!active) {
             if (current != null) {
-                current.stopSound();
-                FAN_SOUNDS.remove(fan);
+                current.fadeOut();
             }
             return;
         }
@@ -58,13 +57,17 @@ public final class RealisticPlantsClient {
 
     private static final class FanHumSound extends AbstractTickableSoundInstance {
         private final BlockPos fanPos;
+        private static final int FADE_TICKS = 10;
+        private int fadeInTicks;
+        private int fadeOutTicks = -1;
+        private boolean fadeOutRequested;
 
         private FanHumSound(SoundEvent event, BlockPos pos) {
             super(event, SoundSource.BLOCKS, RandomSource.create());
             this.fanPos = pos.immutable();
             this.looping = true;
             this.delay = 0;
-            this.volume = 0.22f;
+            this.volume = 0.0f;
             this.pitch = 1.0f;
             this.x = pos.getX() + 0.5;
             this.y = pos.getY() + 0.5;
@@ -73,8 +76,11 @@ public final class RealisticPlantsClient {
             this.attenuation = Attenuation.LINEAR;
         }
 
-        public void stopSound() {
-            stop();
+        public void fadeOut() {
+            if (!fadeOutRequested) {
+                fadeOutRequested = true;
+                fadeOutTicks = FADE_TICKS;
+            }
         }
 
         @Override
@@ -89,9 +95,22 @@ public final class RealisticPlantsClient {
             BlockState state = level.getBlockState(fanPos);
             if (!state.is(ModBlocks.GREENHOUSE_FAN.get())
                     || !state.getValue(GreenhouseFanBlock.ACTIVE)) {
-                stop();
+                fadeOut();
+            }
+
+            if (fadeOutRequested) {
+                volume = Math.max(0.0f, volume * (fadeOutTicks - 1) / Math.max(1, fadeOutTicks));
+                fadeOutTicks--;
+                if (fadeOutTicks <= 0) {
+                    stop();
+                }
                 return;
             }
+
+            if (fadeInTicks < FADE_TICKS) {
+                fadeInTicks++;
+            }
+            float fadeIn = fadeInTicks / (float) FADE_TICKS;
 
             // Several nearby fans should create a fuller ambience, not a
             // volume spike. Normalize each source by the square root of the
@@ -111,7 +130,7 @@ public final class RealisticPlantsClient {
                     nearbyFans++;
                 }
             }
-            this.volume = 0.22f / (float) Math.sqrt(nearbyFans);
+            this.volume = (0.22f / (float) Math.sqrt(nearbyFans)) * fadeIn;
         }
     }
 
