@@ -224,6 +224,32 @@ public class PlantDefinition {
             );
         }
 
+        if (moistureConsumption < 0) {
+            throw new IllegalArgumentException(
+                    "Moisture consumption cannot be negative"
+            );
+        }
+
+        if (minimumMoisture < 0 || minimumMoisture > 100) {
+            throw new IllegalArgumentException(
+                    "Minimum moisture must be between 0 and 100"
+            );
+        }
+
+        if (droughtResistance < 0 || droughtResistance > 100) {
+            throw new IllegalArgumentException(
+                    "Drought resistance must be between 0 and 100"
+            );
+        }
+
+        if (!Float.isFinite(minTemperature)
+                || !Float.isFinite(maxTemperature)
+                || minTemperature > maxTemperature) {
+            throw new IllegalArgumentException(
+                    "Invalid plant temperature range"
+            );
+        }
+
         if (minHarvestAmount < 1
                 || maxHarvestAmount < minHarvestAmount) {
             throw new IllegalArgumentException(
@@ -231,9 +257,10 @@ public class PlantDefinition {
             );
         }
 
-        if (nutrition < 0 || saturationModifier < 0) {
+        if (nutrition < 0 || !Float.isFinite(saturationModifier)
+                || saturationModifier < 0) {
             throw new IllegalArgumentException(
-                    "Food properties cannot be negative"
+                    "Food properties must be finite and cannot be negative"
             );
         }
 
