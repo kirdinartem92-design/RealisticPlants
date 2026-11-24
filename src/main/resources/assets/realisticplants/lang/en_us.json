@@ -44,5 +44,7 @@
   "block.realisticplants.purple_grow_light": "Purple Grow Light",
   "item.realisticplants.purple_grow_light": "Purple Grow Light",
   "block.realisticplants.drip_irrigation": "Drip Irrigation Emitter",
-  "item.realisticplants.drip_irrigation": "Drip Irrigation Emitter"
+  "item.realisticplants.drip_irrigation": "Drip Irrigation Emitter",
+  "block.realisticplants.greenhouse_fan": "Automatic Greenhouse Fan",
+  "item.realisticplants.greenhouse_fan": "Automatic Greenhouse Fan"
 }
