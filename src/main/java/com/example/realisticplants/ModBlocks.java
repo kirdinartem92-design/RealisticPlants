@@ -77,6 +77,14 @@ public class ModBlocks {
                     )
             );
 
+    public static final DeferredBlock<PurpleGrowLightBlock> PURPLE_GROW_LIGHT =
+            BLOCKS.registerBlock(
+                    "purple_grow_light",
+                    properties -> new PurpleGrowLightBlock(
+                            PurpleGrowLightBlock.createProperties()
+                    )
+            );
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
