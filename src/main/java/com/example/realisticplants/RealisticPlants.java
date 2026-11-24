@@ -21,6 +21,7 @@ public class RealisticPlants {
                 Config.SPEC
         );
 
+        ModSounds.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModMenus.register(modEventBus);
         ModItems.register(modEventBus);
