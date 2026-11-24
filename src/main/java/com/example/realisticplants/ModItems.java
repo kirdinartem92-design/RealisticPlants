@@ -52,6 +52,7 @@ public class ModItems {
     public static final DeferredItem<BlockItem> IRRIGATION_SPRINKLER_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.IRRIGATION_SPRINKLER);
     public static final DeferredItem<BlockItem> PURPLE_GROW_LIGHT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.PURPLE_GROW_LIGHT);
     public static final DeferredItem<BlockItem> DRIP_IRRIGATION_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.DRIP_IRRIGATION);
+    public static final DeferredItem<BlockItem> GREENHOUSE_FAN_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.GREENHOUSE_FAN);
 
     public static final DeferredItem<BlockItem> TOMATO_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.TOMATO_PLANT);
     public static final DeferredItem<BlockItem> CUCUMBER_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.CUCUMBER_PLANT);
