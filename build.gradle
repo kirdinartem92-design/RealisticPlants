@@ -202,6 +202,8 @@ tasks.register("validateCropResources") {
     doLast {
         def jsonParser = new groovy.json.JsonSlurper()
         def crops = [
+                "tomato",
+                "cucumber",
                 "zucchini",
                 "eggplant",
                 "bell_pepper",
