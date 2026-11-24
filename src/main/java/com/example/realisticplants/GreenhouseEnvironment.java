@@ -74,41 +74,8 @@ public final class GreenhouseEnvironment {
     }
 
     private static boolean isGreenhouseGlass(BlockState state) {
-        // Explicit vanilla glass variants keep this compatible with the
-        // current Minecraft mappings. Tinted glass is intentionally excluded.
-        return state.is(Blocks.GLASS)
-                || state.is(Blocks.WHITE_STAINED_GLASS)
-                || state.is(Blocks.ORANGE_STAINED_GLASS)
-                || state.is(Blocks.MAGENTA_STAINED_GLASS)
-                || state.is(Blocks.LIGHT_BLUE_STAINED_GLASS)
-                || state.is(Blocks.YELLOW_STAINED_GLASS)
-                || state.is(Blocks.LIME_STAINED_GLASS)
-                || state.is(Blocks.PINK_STAINED_GLASS)
-                || state.is(Blocks.GRAY_STAINED_GLASS)
-                || state.is(Blocks.LIGHT_GRAY_STAINED_GLASS)
-                || state.is(Blocks.CYAN_STAINED_GLASS)
-                || state.is(Blocks.PURPLE_STAINED_GLASS)
-                || state.is(Blocks.BLUE_STAINED_GLASS)
-                || state.is(Blocks.BROWN_STAINED_GLASS)
-                || state.is(Blocks.GREEN_STAINED_GLASS)
-                || state.is(Blocks.RED_STAINED_GLASS)
-                || state.is(Blocks.BLACK_STAINED_GLASS)
-                || state.is(Blocks.GLASS_PANE)
-                || state.is(Blocks.WHITE_STAINED_GLASS_PANE)
-                || state.is(Blocks.ORANGE_STAINED_GLASS_PANE)
-                || state.is(Blocks.MAGENTA_STAINED_GLASS_PANE)
-                || state.is(Blocks.LIGHT_BLUE_STAINED_GLASS_PANE)
-                || state.is(Blocks.YELLOW_STAINED_GLASS_PANE)
-                || state.is(Blocks.LIME_STAINED_GLASS_PANE)
-                || state.is(Blocks.PINK_STAINED_GLASS_PANE)
-                || state.is(Blocks.GRAY_STAINED_GLASS_PANE)
-                || state.is(Blocks.LIGHT_GRAY_STAINED_GLASS_PANE)
-                || state.is(Blocks.CYAN_STAINED_GLASS_PANE)
-                || state.is(Blocks.PURPLE_STAINED_GLASS_PANE)
-                || state.is(Blocks.BLUE_STAINED_GLASS_PANE)
-                || state.is(Blocks.BROWN_STAINED_GLASS_PANE)
-                || state.is(Blocks.GREEN_STAINED_GLASS_PANE)
-                || state.is(Blocks.RED_STAINED_GLASS_PANE)
-                || state.is(Blocks.BLACK_STAINED_GLASS_PANE);
+        // Clear vanilla glass and panes are accepted. Tinted glass and
+        // opaque blocks are excluded automatically.
+        return state.is(Blocks.GLASS) || state.is(Blocks.GLASS_PANE);
     }
 }
