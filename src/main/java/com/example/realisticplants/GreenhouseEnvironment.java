@@ -48,23 +48,7 @@ public final class GreenhouseEnvironment {
             return ambientTemperature;
         }
 
-        int fans = 0;
-        int radius = 6;
-        for (int dx = -radius; dx <= radius && fans < 3; dx++) {
-            for (int dy = -2; dy <= 2 && fans < 3; dy++) {
-                for (int dz = -radius; dz <= radius && fans < 3; dz++) {
-                    BlockPos fanPos = plantPos.offset(dx, dy, dz);
-                    // Never load neighboring chunks just to locate a fan.
-                    // Only already-loaded greenhouse sections can contribute
-                    // to cooling during this crop update.
-                    if (level.hasChunkAt(fanPos)
-                            && level.getBlockState(fanPos)
-                                    .is(ModBlocks.GREENHOUSE_FAN.get())) {
-                        fans++;
-                    }
-                }
-            }
-        }
+        int fans = countGreenhouseFans(level, plantPos);
 
         float greenhouseTemperature =
                 ambientTemperature + TEMPERATURE_BONUS;
@@ -80,6 +64,39 @@ public final class GreenhouseEnvironment {
                 ambientTemperature,
                 greenhouseTemperature - cooling
         );
+    }
+
+    /**
+     * Counts only fans placed inside this crop's detected greenhouse footprint.
+     * A fan outside the glass walls must not cool a greenhouse crop merely
+     * because it happens to be within a six-block radius.
+     */
+    private static int countGreenhouseFans(Level level, BlockPos plantPos) {
+        int northDistance = findWallDistance(level, plantPos, 0, -1);
+        int southDistance = findWallDistance(level, plantPos, 0, 1);
+        int westDistance = findWallDistance(level, plantPos, -1, 0);
+        int eastDistance = findWallDistance(level, plantPos, 1, 0);
+
+        if (northDistance < 0 || southDistance < 0
+                || westDistance < 0 || eastDistance < 0) {
+            return 0;
+        }
+
+        int fans = 0;
+        for (int dx = -westDistance + 1; dx < eastDistance && fans < 3; dx++) {
+            for (int dy = -2; dy <= 2 && fans < 3; dy++) {
+                for (int dz = -northDistance + 1;
+                        dz < southDistance && fans < 3; dz++) {
+                    BlockPos fanPos = plantPos.offset(dx, dy, dz);
+                    if (level.hasChunkAt(fanPos)
+                            && level.getBlockState(fanPos)
+                                    .is(ModBlocks.GREENHOUSE_FAN.get())) {
+                        fans++;
+                    }
+                }
+            }
+        }
+        return fans;
     }
 
     public static boolean isInGreenhouse(
