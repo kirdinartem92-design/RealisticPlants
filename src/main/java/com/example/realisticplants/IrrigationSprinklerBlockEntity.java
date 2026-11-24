@@ -13,6 +13,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.bus.api.IEventBus;
@@ -180,6 +182,14 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
 
         if (waterUsed > 0) {
             sprinkler.setChanged();
+            level.playSound(
+                    null,
+                    pos,
+                    SoundEvents.WEATHER_RAIN,
+                    SoundSource.BLOCKS,
+                    0.22f,
+                    1.35f
+            );
         }
     }
 
