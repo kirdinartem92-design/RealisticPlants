@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import net.minecraft.core.BlockPos;
@@ -116,17 +115,14 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
         PlantData data = plant.getPlantData();
         PlantDefinition definition = data.getDefinition();
 
-        // Костная мука ускоряет рост.
+        // Костная мука ускоряет рост, но не обходит требования к здоровью и влаге.
         if (itemStack.is(Items.BONE_MEAL)) {
 
             int age = state.getValue(AGE);
             int maxGrowthStage = definition.getMaxGrowthStage();
-            int floweringStage = definition.getFloweringStage();
 
             if (age >= maxGrowthStage
-                    || data.isDead()
-                    || data.getHealth() <= 30
-                    || data.getMoisture() <= 0) {
+                    || !PlantLifecycleRules.canContinueLifecycle(data)) {
                 return InteractionResult.PASS;
             }
 
@@ -142,7 +138,7 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
                         3
                 );
 
-                if (nextAge == floweringStage
+                if (nextAge == definition.getFloweringStage()
                         && !data.isFlowering()) {
                     PlantHarvest.startFlowering(data);
                 }

@@ -48,31 +48,30 @@ public class PlantHarvest {
     }
 
     /**
-     * Starts the flowering stage.
+     * Starts the flowering stage only when the plant can sustain it.
      */
     public static void startFlowering(PlantData plant) {
-        if (plant == null) {
+        if (!PlantLifecycleRules.canContinueLifecycle(plant)) {
             return;
         }
 
-        if (!plant.isDead()) {
-            plant.setFlowering(true);
-            plant.setHarvestReady(false);
-        }
+        plant.setFlowering(true);
+        plant.setHarvestReady(false);
     }
 
     /**
-     * Makes the harvest ready after flowering.
+     * Makes the harvest ready after flowering, provided that the plant
+     * still meets its species-specific health and moisture requirements.
      */
     public static void produceHarvest(PlantData plant) {
-        if (plant == null) {
+        if (plant == null || !plant.isFlowering()) {
             return;
         }
 
-        if (plant.isFlowering()
-                && !plant.isDead()
-                && plant.getMoisture() > 0) {
+        if (PlantLifecycleRules.canContinueLifecycle(plant)) {
             plant.setHarvestReady(true);
+        } else {
+            plant.setHarvestReady(false);
         }
     }
 
@@ -80,9 +79,7 @@ public class PlantHarvest {
      * Checks whether the plant currently has a valid harvest.
      */
     private static boolean canHarvest(PlantData plant) {
-        return plant != null
-                && !plant.isDead()
-                && plant.getMoisture() > 0
+        return PlantLifecycleRules.canContinueLifecycle(plant)
                 && plant.isFlowering()
                 && plant.isHarvestReady();
     }
