@@ -118,13 +118,13 @@ public final class GreenhouseEnvironment {
         // opposite walls. This rejects isolated panes that merely happen to
         // exist in all four directions from the crop.
         return isMostlyGlassWall(
-                    level, plantPos, 0, -1, westDistance, eastDistance)
+                    level, plantPos, 0, -1, northDistance, westDistance, eastDistance)
                 && isMostlyGlassWall(
-                    level, plantPos, 0, 1, westDistance, eastDistance)
+                    level, plantPos, 0, 1, southDistance, westDistance, eastDistance)
                 && isMostlyGlassWall(
-                    level, plantPos, -1, 0, northDistance, southDistance)
+                    level, plantPos, -1, 0, westDistance, northDistance, southDistance)
                 && isMostlyGlassWall(
-                    level, plantPos, 1, 0, northDistance, southDistance);
+                    level, plantPos, 1, 0, eastDistance, northDistance, southDistance);
     }
 
     /**
@@ -186,6 +186,7 @@ public final class GreenhouseEnvironment {
             BlockPos plantPos,
             int dx,
             int dz,
+            int wallDistance,
             int negativeExtent,
             int positiveExtent
     ) {
@@ -195,8 +196,8 @@ public final class GreenhouseEnvironment {
         for (int offset = -negativeExtent; offset <= positiveExtent; offset++) {
             // For north/south walls, vary X; for west/east walls, vary Z.
             BlockPos base = dx != 0
-                    ? plantPos.offset(dx, 0, offset)
-                    : plantPos.offset(offset, 0, dz);
+                    ? plantPos.offset(dx * wallDistance, 0, offset)
+                    : plantPos.offset(offset, 0, dz * wallDistance);
 
             boolean glassAtPosition = false;
             for (int y = 1; y <= 2; y++) {
