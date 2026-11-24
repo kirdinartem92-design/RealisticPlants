@@ -1,5 +1,8 @@
 package com.realisticplants;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -97,10 +100,14 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
         }
 
         int waterUsed = 0;
+        List<IrrigationTarget> targets = new ArrayList<>();
 
+        // Collect every eligible crop first. Sorting by moisture means the
+        // driest plants receive water before already healthier plants.
         for (int dx = -RADIUS; dx <= RADIUS; dx++) {
             for (int dz = -RADIUS; dz <= RADIUS; dz++) {
-                if (dx * dx + dz * dz > RADIUS * RADIUS) {
+                int distanceSquared = dx * dx + dz * dz;
+                if (distanceSquared > RADIUS * RADIUS) {
                     continue;
                 }
 
@@ -117,33 +124,55 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
 
                 PlantData plant = crop.getPlantData();
                 if (plant.isDead()
-                        || !SUPPORTED_CROPS.contains(
-                                plant.getDefinition().getId())) {
+                        || !SUPPORTED_CROPS.contains(plant.getDefinition().getId())
+                        || plant.getMoisture() >= TARGET_MOISTURE) {
                     continue;
                 }
 
-                // Avoid continuously filling already moist soil. All sprinkler
-                // devices share this target, so overlapping coverage is bounded.
-                int moistureNeeded = Math.min(
-                        MOISTURE_PER_CYCLE,
-                        TARGET_MOISTURE - plant.getMoisture()
-                );
-                int cost = moistureNeeded * WATER_PER_MOISTURE_POINT;
-
-                if (moistureNeeded <= 0 || sprinkler.storedWater < cost) {
-                    continue;
-                }
-
-                PlantGrowthManager.water(plant, moistureNeeded);
-                sprinkler.storedWater -= cost;
-                waterUsed += cost;
-                crop.setChanged();
+                targets.add(new IrrigationTarget(
+                        cropPos, crop, distanceSquared, plant.getMoisture()
+                ));
             }
+        }
+
+        targets.sort(
+                Comparator.comparingInt(IrrigationTarget::moisture)
+                        .thenComparingInt(IrrigationTarget::distanceSquared)
+        );
+
+        for (IrrigationTarget target : targets) {
+            if (sprinkler.storedWater < WATER_PER_MOISTURE_POINT) {
+                break;
+            }
+
+            PlantData plant = target.crop().getPlantData();
+            int moistureNeeded = Math.min(
+                    MOISTURE_PER_CYCLE,
+                    TARGET_MOISTURE - plant.getMoisture()
+            );
+            int cost = moistureNeeded * WATER_PER_MOISTURE_POINT;
+
+            if (moistureNeeded <= 0 || sprinkler.storedWater < cost) {
+                continue;
+            }
+
+            PlantGrowthManager.water(plant, moistureNeeded);
+            sprinkler.storedWater -= cost;
+            waterUsed += cost;
+            target.crop().setChanged();
         }
 
         if (waterUsed > 0) {
             sprinkler.setChanged();
         }
+    }
+
+    private record IrrigationTarget(
+            BlockPos pos,
+            CropPlantBlockEntity crop,
+            int distanceSquared,
+            int moisture
+    ) {
     }
 
     @Override
