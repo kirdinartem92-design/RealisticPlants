@@ -21,7 +21,7 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
     }
 
     @Override
-    protected void extractBackground(
+    public void extractBackground(
             GuiGraphicsExtractor graphics,
             int mouseX,
             int mouseY,
