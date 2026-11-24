@@ -1,0 +1,88 @@
+{
+  "variants": {
+    "age=0,condition=healthy": {
+      "model": "minecraft:block/carrots_stage0"
+    },
+    "age=0,condition=wilting": {
+      "model": "minecraft:block/carrots_stage0"
+    },
+    "age=0,condition=dry": {
+      "model": "minecraft:block/carrots_stage0"
+    },
+    "age=0,condition=dead": {
+      "model": "minecraft:block/carrots_stage0"
+    },
+    "age=1,condition=healthy": {
+      "model": "minecraft:block/carrots_stage1"
+    },
+    "age=1,condition=wilting": {
+      "model": "minecraft:block/carrots_stage1"
+    },
+    "age=1,condition=dry": {
+      "model": "minecraft:block/carrots_stage1"
+    },
+    "age=1,condition=dead": {
+      "model": "minecraft:block/carrots_stage1"
+    },
+    "age=2,condition=healthy": {
+      "model": "minecraft:block/carrots_stage2"
+    },
+    "age=2,condition=wilting": {
+      "model": "minecraft:block/carrots_stage2"
+    },
+    "age=2,condition=dry": {
+      "model": "minecraft:block/carrots_stage2"
+    },
+    "age=2,condition=dead": {
+      "model": "minecraft:block/carrots_stage2"
+    },
+    "age=3,condition=healthy": {
+      "model": "minecraft:block/carrots_stage3"
+    },
+    "age=3,condition=wilting": {
+      "model": "minecraft:block/carrots_stage3"
+    },
+    "age=3,condition=dry": {
+      "model": "minecraft:block/carrots_stage3"
+    },
+    "age=3,condition=dead": {
+      "model": "minecraft:block/carrots_stage3"
+    },
+    "age=4,condition=healthy": {
+      "model": "minecraft:block/carrots_stage4"
+    },
+    "age=4,condition=wilting": {
+      "model": "minecraft:block/carrots_stage4"
+    },
+    "age=4,condition=dry": {
+      "model": "minecraft:block/carrots_stage4"
+    },
+    "age=4,condition=dead": {
+      "model": "minecraft:block/carrots_stage4"
+    },
+    "age=5,condition=healthy": {
+      "model": "minecraft:block/carrots_stage5"
+    },
+    "age=5,condition=wilting": {
+      "model": "minecraft:block/carrots_stage5"
+    },
+    "age=5,condition=dry": {
+      "model": "minecraft:block/carrots_stage5"
+    },
+    "age=5,condition=dead": {
+      "model": "minecraft:block/carrots_stage5"
+    },
+    "age=6,condition=healthy": {
+      "model": "minecraft:block/carrots_stage6"
+    },
+    "age=6,condition=wilting": {
+      "model": "minecraft:block/carrots_stage6"
+    },
+    "age=6,condition=dry": {
+      "model": "minecraft:block/carrots_stage6"
+    },
+    "age=6,condition=dead": {
+      "model": "minecraft:block/carrots_stage6"
+    }
+  }
+}
