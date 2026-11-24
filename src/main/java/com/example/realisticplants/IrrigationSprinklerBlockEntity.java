@@ -103,8 +103,12 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
                     continue;
                 }
 
-                BlockPos cropPos = pos.offset(dx, 1, dz);
+                BlockPos cropPos = pos.offset(dx, 0, dz);
                 BlockEntity candidate = level.getBlockEntity(cropPos);
+                if (!(candidate instanceof CropPlantBlockEntity)) {
+                    cropPos = pos.offset(dx, 1, dz);
+                    candidate = level.getBlockEntity(cropPos);
+                }
 
                 if (!(candidate instanceof CropPlantBlockEntity crop)) {
                     continue;
