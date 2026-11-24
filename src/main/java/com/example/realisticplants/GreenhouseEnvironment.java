@@ -53,8 +53,13 @@ public final class GreenhouseEnvironment {
         for (int dx = -radius; dx <= radius && fans < 3; dx++) {
             for (int dy = -2; dy <= 2 && fans < 3; dy++) {
                 for (int dz = -radius; dz <= radius && fans < 3; dz++) {
-                    if (level.getBlockState(plantPos.offset(dx, dy, dz))
-                            .is(ModBlocks.GREENHOUSE_FAN.get())) {
+                    BlockPos fanPos = plantPos.offset(dx, dy, dz);
+                    // Never load neighboring chunks just to locate a fan.
+                    // Only already-loaded greenhouse sections can contribute
+                    // to cooling during this crop update.
+                    if (level.hasChunkAt(fanPos)
+                            && level.getBlockState(fanPos)
+                                    .is(ModBlocks.GREENHOUSE_FAN.get())) {
                         fans++;
                     }
                 }
