@@ -38,5 +38,7 @@
   "item.realisticplants.beetroot_plant": "Beetroot Plant",
   "block.realisticplants.potato_plant": "Potato Plant",
   "block.realisticplants.carrot_plant": "Carrot Plant",
-  "block.realisticplants.beetroot_plant": "Beetroot Plant"
+  "block.realisticplants.beetroot_plant": "Beetroot Plant",
+  "block.realisticplants.irrigation_sprinkler": "Automatic Sprinkler",
+  "item.realisticplants.irrigation_sprinkler": "Automatic Sprinkler"
 }
