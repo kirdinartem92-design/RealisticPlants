@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class GreenhouseControlPanelScreen extends AbstractContainerScreen<GreenhouseControlPanelMenu> {
     private static final int PANEL_WIDTH = 340;
-    private static final int PANEL_HEIGHT = 292;
+    private static final int PANEL_HEIGHT = 330;
 
     public GreenhouseControlPanelScreen(
             GreenhouseControlPanelMenu menu,
@@ -36,7 +36,7 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
         graphics.fill(x + 10, y + 36, x + 164, y + PANEL_HEIGHT - 10, 0xFF202B35);
         graphics.fill(x + 172, y + 36, x + PANEL_WIDTH - 10, y + PANEL_HEIGHT - 10, 0xFF202B35);
         graphics.fill(x + 10, y + 32, x + PANEL_WIDTH - 10, y + 34, 0xFFA56BE8);
-        graphics.fill(x + 10, y + 218, x + PANEL_WIDTH - 10, y + 284, 0xFF18242E);
+        graphics.fill(x + 10, y + 218, x + PANEL_WIDTH - 10, y + 322, 0xFF18242E);
     }
 
     @Override
@@ -107,6 +107,10 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
         conditionCount(graphics, x + 146, y + 274, "gui.realisticplants.greenhouse.wilting_short", GreenhouseControlPanelMenu.WILTING);
         conditionCount(graphics, x + 210, y + 274, "gui.realisticplants.greenhouse.dry_short", GreenhouseControlPanelMenu.DRY);
         conditionCount(graphics, x + 274, y + 274, "gui.realisticplants.greenhouse.dead_short", GreenhouseControlPanelMenu.DEAD);
+
+        section(graphics, x + 18, y + 292, "gui.realisticplants.greenhouse.lifecycle_breakdown");
+        conditionCount(graphics, x + 18, y + 307, "gui.realisticplants.greenhouse.flowering_short", GreenhouseControlPanelMenu.FLOWERING);
+        conditionCount(graphics, x + 180, y + 307, "gui.realisticplants.greenhouse.harvest_ready_short", GreenhouseControlPanelMenu.HARVEST_READY);
     }
 
     private int value(int index) {
