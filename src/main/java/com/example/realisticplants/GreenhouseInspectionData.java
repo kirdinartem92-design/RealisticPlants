@@ -33,6 +33,7 @@ public record GreenhouseInspectionData(
         int coldPlants,
         int droughtPlants,
         float averageTemperature,
+        float averageCoolingEffect,
         double averageGrowthMultiplier,
         int tomatoCount,
         int cucumberCount,
@@ -85,6 +86,7 @@ public record GreenhouseInspectionData(
         int drought = 0;
         double growthMultiplierTotal = 0.0;
         double temperatureTotal = 0.0;
+        double coolingEffectTotal = 0.0;
         int tomatoes = 0, cucumbers = 0, zucchinis = 0, eggplants = 0;
         int bellPeppers = 0, chiliPeppers = 0, broccoli = 0, healthy = 0;
         int floweringCount = 0, harvestReadyCount = 0;
@@ -163,6 +165,16 @@ public record GreenhouseInspectionData(
                             inGreenhouse ? targetTemperature : ambientTemperature
                     );
                     temperatureTotal += effectiveTemperature;
+                    if (inGreenhouse) {
+                        float uncooledTemperature =
+                                GreenhouseEnvironment.getUncooledGreenhouseTemperature(
+                                        level, pos, ambientTemperature
+                                );
+                        coolingEffectTotal += Math.max(
+                                0.0f,
+                                uncooledTemperature - effectiveTemperature
+                        );
+                    }
 
                     if (plant.isDead() || plant.getHealth() <= 50
                             || plant.getMoisture() <= 30) {
@@ -203,7 +215,7 @@ public record GreenhouseInspectionData(
         if (plants == 0) {
             return new GreenhouseInspectionData(
                     0, 0, 0, 0, 0, sprinklers, drippers, growLights,
-                    fans, water, capacity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0f, 1.0,
+                    fans, water, capacity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0f, 0.0f, 1.0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0
             );
         }
@@ -230,6 +242,7 @@ public record GreenhouseInspectionData(
                 cold,
                 drought,
                 (float) (temperatureTotal / plants),
+                (float) (coolingEffectTotal / plants),
                 growthMultiplierTotal / plants,
                 tomatoes, cucumbers, zucchinis, eggplants,
                 bellPeppers, chiliPeppers, broccoli, healthy,
