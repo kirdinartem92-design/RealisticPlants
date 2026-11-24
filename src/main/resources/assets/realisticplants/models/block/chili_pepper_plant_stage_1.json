@@ -83,6 +83,66 @@
           "texture": "#plant"
         }
       }
+    },
+    {
+      "from": [
+        7.97,
+        2,
+        3.5
+      ],
+      "to": [
+        8.03,
+        6.5,
+        8
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          4,
+          5.75
+        ],
+        "axis": "x",
+        "angle": 14,
+        "rescale": false
+      },
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7.97,
+        3.2,
+        8
+      ],
+      "to": [
+        8.03,
+        6.2,
+        12.5
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          4.7,
+          10.25
+        ],
+        "axis": "x",
+        "angle": -12,
+        "rescale": false
+      },
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
     }
   ]
 }
