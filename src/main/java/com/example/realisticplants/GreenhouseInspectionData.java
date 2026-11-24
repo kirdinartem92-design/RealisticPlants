@@ -33,7 +33,14 @@ public record GreenhouseInspectionData(
         int coldPlants,
         int droughtPlants,
         float averageTemperature,
-        double averageGrowthMultiplier
+        double averageGrowthMultiplier,
+        int tomatoCount,
+        int cucumberCount,
+        int zucchiniCount,
+        int eggplantCount,
+        int bellPepperCount,
+        int chiliPepperCount,
+        int broccoliCount
 ) {
     private static final int HORIZONTAL_RADIUS = 8;
     private static final int MIN_Y = -2;
@@ -75,6 +82,8 @@ public record GreenhouseInspectionData(
         int drought = 0;
         double growthMultiplierTotal = 0.0;
         double temperatureTotal = 0.0;
+        int tomatoes = 0, cucumbers = 0, zucchinis = 0, eggplants = 0;
+        int bellPeppers = 0, chiliPeppers = 0, broccoli = 0;
 
         for (int dx = -HORIZONTAL_RADIUS; dx <= HORIZONTAL_RADIUS; dx++) {
             for (int dy = MIN_Y; dy <= MAX_Y; dy++) {
@@ -115,6 +124,16 @@ public record GreenhouseInspectionData(
                     }
 
                     plants++;
+                    switch (plant.getDefinition().getId()) {
+                        case "tomato" -> tomatoes++;
+                        case "cucumber" -> cucumbers++;
+                        case "zucchini" -> zucchinis++;
+                        case "eggplant" -> eggplants++;
+                        case "bell_pepper" -> bellPeppers++;
+                        case "chili_pepper" -> chiliPeppers++;
+                        case "broccoli" -> broccoli++;
+                        default -> { }
+                    }
                     moistureTotal += plant.getMoisture();
                     healthTotal += plant.getHealth();
                     skyLightTotal += level.getBrightness(LightLayer.SKY, pos);
@@ -170,7 +189,8 @@ public record GreenhouseInspectionData(
         if (plants == 0) {
             return new GreenhouseInspectionData(
                     0, 0, 0, 0, 0, sprinklers, drippers, growLights,
-                    fans, water, capacity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0f, 1.0
+                    fans, water, capacity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0f, 1.0,
+                    0, 0, 0, 0, 0, 0, 0
             );
         }
 
@@ -196,7 +216,9 @@ public record GreenhouseInspectionData(
                 cold,
                 drought,
                 (float) (temperatureTotal / plants),
-                growthMultiplierTotal / plants
+                growthMultiplierTotal / plants,
+                tomatoes, cucumbers, zucchinis, eggplants,
+                bellPeppers, chiliPeppers, broccoli
         );
     }
 
