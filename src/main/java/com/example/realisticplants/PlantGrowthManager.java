@@ -78,25 +78,6 @@ public class PlantGrowthManager {
         int moisture = plant.getMoisture();
         int health = plant.getHealth();
 
-        boolean modCrop = switch (definition.getId()) {
-            case "tomato", "cucumber", "zucchini", "eggplant",
-                    "bell_pepper", "chili_pepper", "broccoli" -> true;
-            default -> false;
-        };
-
-        if (modCrop && Float.isFinite(temperature)
-                && temperature > definition.getMaxTemperature()) {
-            // Heat stress accumulates gradually on the same environmental
-            // cadence as moisture. A severe excess causes faster damage.
-            float excess = temperature - definition.getMaxTemperature();
-            int heatDamage = excess >= 0.5f ? 2 : 1;
-            plant.setHealth(Math.max(MIN_HEALTH, health - heatDamage));
-            health = plant.getHealth();
-            if (plant.isDead()) {
-                return;
-            }
-        }
-
         int droughtResistance = Math.max(
                 0,
                 Math.min(100, definition.getDroughtResistance())
@@ -133,6 +114,23 @@ public class PlantGrowthManager {
                             health + 1
                     )
             );
+        }
+
+        // Apply heat damage after drought recovery so a well-watered plant
+        // cannot cancel overheating damage in the same update.
+        boolean modCrop = switch (definition.getId()) {
+            case "tomato", "cucumber", "zucchini", "eggplant",
+                    "bell_pepper", "chili_pepper", "broccoli" -> true;
+            default -> false;
+        };
+        if (modCrop && Float.isFinite(temperature)
+                && temperature > definition.getMaxTemperature()) {
+            float excess = temperature - definition.getMaxTemperature();
+            int heatDamage = excess >= 0.5f ? 2 : 1;
+            plant.setHealth(Math.max(
+                    MIN_HEALTH,
+                    plant.getHealth() - heatDamage
+            ));
         }
     }
 }
