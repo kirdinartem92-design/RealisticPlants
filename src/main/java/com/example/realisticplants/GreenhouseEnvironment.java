@@ -104,13 +104,27 @@ public final class GreenhouseEnvironment {
                 {1, 0}, {-1, 0}, {0, 1}, {0, -1}
         };
 
-        for (int[] direction : directions) {
-            if (findWallDistance(level, plantPos, direction[0], direction[1]) < 0) {
-                return false;
-            }
+        int northDistance = findWallDistance(level, plantPos, 0, -1);
+        int southDistance = findWallDistance(level, plantPos, 0, 1);
+        int westDistance = findWallDistance(level, plantPos, -1, 0);
+        int eastDistance = findWallDistance(level, plantPos, 1, 0);
+
+        if (northDistance < 0 || southDistance < 0
+                || westDistance < 0 || eastDistance < 0) {
+            return false;
         }
 
-        return true;
+        // Each side must contain a substantial glass section between the
+        // opposite walls. This rejects isolated panes that merely happen to
+        // exist in all four directions from the crop.
+        return isMostlyGlassWall(
+                    level, plantPos, 0, -1, westDistance, eastDistance)
+                && isMostlyGlassWall(
+                    level, plantPos, 0, 1, westDistance, eastDistance)
+                && isMostlyGlassWall(
+                    level, plantPos, -1, 0, northDistance, southDistance)
+                && isMostlyGlassWall(
+                    level, plantPos, 1, 0, northDistance, southDistance);
     }
 
     /**
@@ -160,6 +174,55 @@ public final class GreenhouseEnvironment {
             }
         }
         return -1;
+    }
+
+    /**
+     * Verifies that a detected side is mostly glass across the greenhouse
+     * width. Both ends must be glass; at least two thirds of positions must
+     * contain glass at either of the two wall heights.
+     */
+    private static boolean isMostlyGlassWall(
+            Level level,
+            BlockPos plantPos,
+            int dx,
+            int dz,
+            int negativeExtent,
+            int positiveExtent
+    ) {
+        int total = negativeExtent + positiveExtent + 1;
+        int glassCount = 0;
+
+        for (int offset = -negativeExtent; offset <= positiveExtent; offset++) {
+            BlockPos base = plantPos.offset(
+                    dx * (dx == 0 ? 0 : 0) + (dx == 0 ? offset : 0),
+                    0,
+                    dz * (dz == 0 ? 0 : 0) + (dz == 0 ? offset : 0)
+            );
+            // For north/south walls, vary X; for west/east walls, vary Z.
+            if (dx != 0) {
+                base = plantPos.offset(dx, 0, offset);
+            } else {
+                base = plantPos.offset(offset, 0, dz);
+            }
+
+            boolean glassAtPosition = false;
+            for (int y = 1; y <= 2; y++) {
+                BlockPos wallPos = base.above(y);
+                if (level.hasChunkAt(wallPos)
+                        && isGreenhouseGlass(level.getBlockState(wallPos))) {
+                    glassAtPosition = true;
+                    break;
+                }
+            }
+
+            if (glassAtPosition) {
+                glassCount++;
+            } else if (offset == -negativeExtent || offset == positiveExtent) {
+                return false;
+            }
+        }
+
+        return glassCount * 3 >= total * 2;
     }
 
     private static boolean isGreenhouseGlass(BlockState state) {
