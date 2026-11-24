@@ -117,5 +117,13 @@
   "gui.realisticplants.greenhouse.dead": "Dead",
   "gui.realisticplants.greenhouse.drought": "Drought",
   "gui.realisticplants.greenhouse.thermal": "Heat / cold",
-  "gui.realisticplants.greenhouse.light_alert": "Low light / weak"
+  "gui.realisticplants.greenhouse.light_alert": "Low light / weak",
+  "gui.realisticplants.greenhouse.crop_breakdown": "OUR CROPS",
+  "gui.realisticplants.greenhouse.tomato_short": "Tom",
+  "gui.realisticplants.greenhouse.cucumber_short": "Cuc",
+  "gui.realisticplants.greenhouse.zucchini_short": "Zuc",
+  "gui.realisticplants.greenhouse.eggplant_short": "Egg",
+  "gui.realisticplants.greenhouse.bell_pepper_short": "Pep",
+  "gui.realisticplants.greenhouse.chili_short": "Chili",
+  "gui.realisticplants.greenhouse.broccoli_short": "Bro"
 }
