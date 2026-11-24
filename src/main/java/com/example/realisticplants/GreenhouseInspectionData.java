@@ -193,6 +193,32 @@ public record GreenhouseInspectionData(
         );
     }
 
+    /**
+     * Returns the highest-priority greenhouse issue for the player.
+     * Dead crops are reported first, followed by water and temperature stress.
+     */
+    public String getPriorityAlertKey() {
+        if (deadPlants > 0) return "dead";
+        if (droughtPlants > 0) return "drought";
+        if (overheatedPlants > 0) return "overheated";
+        if (coldPlants > 0) return "cold";
+        if (lowLightPlants > 0) return "low_light";
+        if (wiltingPlants > 0 || dryPlants > 0) return "general_care";
+        return "good";
+    }
+
+    public int getPriorityAlertCount() {
+        return switch (getPriorityAlertKey()) {
+            case "dead" -> deadPlants;
+            case "drought" -> droughtPlants;
+            case "overheated" -> overheatedPlants;
+            case "cold" -> coldPlants;
+            case "low_light" -> lowLightPlants;
+            case "general_care" -> wiltingPlants + dryPlants;
+            default -> 0;
+        };
+    }
+
     public int getWaterPercent() {
         return totalWaterCapacity <= 0
                 ? 0
