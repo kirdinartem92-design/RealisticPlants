@@ -136,7 +136,7 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
             }
 
             PlantEnvironment.applyNearbyWater(level, pos, plantData);
-            PlantGrowthManager.updateHealth(plantData);
+            PlantGrowthManager.updateHealth(plantData, temperature);
             updateCondition();
         }
 
