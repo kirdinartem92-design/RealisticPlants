@@ -9,6 +9,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.bus.api.IEventBus;
@@ -139,6 +141,14 @@ public class DripIrrigationBlockEntity extends BlockEntity {
                 emitter.storedWater -= cost;
                 emitter.setChanged();
                 driestCrop.setChanged();
+                level.playSound(
+                        null,
+                        pos,
+                        SoundEvents.WEATHER_RAIN,
+                        SoundSource.BLOCKS,
+                        0.08f,
+                        1.8f
+                );
             }
         }
     }
