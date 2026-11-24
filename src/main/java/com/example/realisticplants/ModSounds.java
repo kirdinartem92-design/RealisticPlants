@@ -22,6 +22,10 @@ public final class ModSounds {
 
     public static final Supplier<SoundEvent> GREENHOUSE_FAN_HUM =
             register("greenhouse_fan_hum");
+    public static final Supplier<SoundEvent> GREENHOUSE_FAN_START =
+            register("greenhouse_fan_start");
+    public static final Supplier<SoundEvent> GREENHOUSE_FAN_STOP =
+            register("greenhouse_fan_stop");
     public static final Supplier<SoundEvent> SPRINKLER_SPRAY =
             register("sprinkler_spray");
     public static final Supplier<SoundEvent> DRIP_IRRIGATION =
