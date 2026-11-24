@@ -1,6 +1,7 @@
 package com.realisticplants;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -87,7 +88,7 @@ public class IrrigationSprinklerBlock extends BaseEntityBlock {
                     player.setItemInHand(hand, bucket);
                 } else {
                     if (!player.getInventory().add(bucket)) {
-                        player.drop(bucket, false);
+                        player.drop(bucket, false, Prediction.SERVER_ONLY);
                     }
                 }
             }
