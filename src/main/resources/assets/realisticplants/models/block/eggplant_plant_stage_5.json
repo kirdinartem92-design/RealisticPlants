@@ -1,7 +1,8 @@
 {
   "textures": {
     "particle": "realisticplants:block/eggplant_plant",
-    "plant": "realisticplants:block/eggplant_plant"
+    "plant": "realisticplants:block/eggplant_plant",
+    "fruit": "realisticplants:block/eggplant_fruit"
   },
   "elements": [
     {
@@ -181,6 +182,70 @@
         },
         "south": {
           "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5.96,
+        3.24,
+        7.8
+      ],
+      "to": [
+        10.04,
+        12.76,
+        8.2
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
+        }
+      }
+    },
+    {
+      "from": [
+        7.8,
+        3.24,
+        5.96
+      ],
+      "to": [
+        8.2,
+        12.76,
+        10.04
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#fruit"
         }
       }
     }
