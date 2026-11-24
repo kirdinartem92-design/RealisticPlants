@@ -182,3 +182,89 @@ idea {
         downloadJavadoc = true
     }
 }
+
+
+// Validate the configurable vegetable crop resource matrix before building.
+tasks.register("validateCropResources") {
+    group = "verification"
+    description = "Checks crop blockstates, model JSON files and referenced textures."
+
+    doLast {
+        def jsonParser = new groovy.json.JsonSlurper()
+        def crops = [
+                "zucchini",
+                "eggplant",
+                "bell_pepper",
+                "chili_pepper",
+                "broccoli"
+        ]
+        def conditions = ["healthy", "wilting", "dry", "dead"]
+        def errors = []
+
+        crops.each { crop ->
+            def blockstatePath = file("src/main/resources/assets/realisticplants/blockstates/${crop}_plant.json")
+            if (!blockstatePath.isFile()) {
+                errors << "Missing blockstate: ${blockstatePath}"
+            } else {
+                def blockstate
+                try {
+                    blockstate = jsonParser.parse(blockstatePath)
+                } catch (Exception exception) {
+                    errors << "Invalid blockstate JSON: ${blockstatePath} (${exception.message})"
+                    blockstate = null
+                }
+
+                if (blockstate != null) {
+                    (0..6).each { age ->
+                        conditions.each { condition ->
+                            def variantKey = "age=${age},condition=${condition}"
+                            def modelId = blockstate.variants[variantKey]?.model
+
+                            if (!modelId) {
+                                errors << "Missing variant ${variantKey} in ${blockstatePath}"
+                            } else {
+                                def modelParts = modelId.split(":", 2)
+                                def namespace = modelParts.length == 2 ? modelParts[0] : "minecraft"
+                                def modelLocation = modelParts.length == 2 ? modelParts[1] : modelParts[0]
+                                def modelPath = file("src/main/resources/assets/${namespace}/models/${modelLocation}.json")
+
+                                if (!modelPath.isFile()) {
+                                    errors << "Missing model for ${crop} ${variantKey}: ${modelPath}"
+                                } else {
+                                    try {
+                                        def model = jsonParser.parse(modelPath)
+                                        (model.textures ?: [:]).each { textureKey, textureId ->
+                                            if (textureId instanceof String && !textureId.startsWith("#")) {
+                                                def textureParts = textureId.split(":", 2)
+                                                def textureNamespace = textureParts.length == 2 ? textureParts[0] : "minecraft"
+                                                def textureLocation = textureParts.length == 2 ? textureParts[1] : textureParts[0]
+                                                def texturePath = file("src/main/resources/assets/${textureNamespace}/textures/${textureLocation}.png")
+                                                if (!texturePath.isFile()) {
+                                                    errors << "Missing texture '${textureId}' in ${modelPath}"
+                                                }
+                                            }
+                                        }
+                                    } catch (Exception exception) {
+                                        errors << "Invalid model JSON: ${modelPath} (${exception.message})"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!errors.isEmpty()) {
+            throw new GradleException(
+                    "Crop resource validation failed:\\n - " + errors.join("\\n - ")
+            )
+        }
+
+        logger.lifecycle("Crop resource validation passed: ${crops.size()} crops, 7 growth stages and 4 conditions.")
+    }
+}
+
+tasks.named("build").configure {
+    dependsOn(tasks.named("validateCropResources"))
+}
