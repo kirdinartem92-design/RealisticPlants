@@ -23,6 +23,7 @@ public class DripIrrigationBlockEntity extends BlockEntity {
     private static final int CAPACITY = 2000;
     private static final int WATER_PER_MOISTURE_POINT = 10;
     private static final int MOISTURE_PER_CYCLE = 1;
+    private static final int TARGET_MOISTURE = 80;
     private static final long CYCLE_TICKS = 100L;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
@@ -108,12 +109,16 @@ public class DripIrrigationBlockEntity extends BlockEntity {
             if (plant.isDead()
                     || !SUPPORTED_CROPS.contains(
                             plant.getDefinition().getId())
-                    || plant.getMoisture() >= 100) {
+                    || plant.getMoisture() >= TARGET_MOISTURE) {
                 continue;
             }
 
-            PlantGrowthManager.water(plant, MOISTURE_PER_CYCLE);
-            emitter.storedWater -= WATER_PER_MOISTURE_POINT;
+            int moistureNeeded = Math.min(
+                    MOISTURE_PER_CYCLE,
+                    TARGET_MOISTURE - plant.getMoisture()
+            );
+            PlantGrowthManager.water(plant, moistureNeeded);
+            emitter.storedWater -= moistureNeeded * WATER_PER_MOISTURE_POINT;
             emitter.setChanged();
             crop.setChanged();
             break;
