@@ -208,7 +208,8 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         growthAmount *= PurpleGrowLightEnvironment.getGrowthMultiplier(
                 level,
                 pos,
-                definition
+                definition,
+                GreenhouseEnvironment.isInGreenhouse(level, pos, definition)
         );
 
         if (growthAmount <= 0.0) {
