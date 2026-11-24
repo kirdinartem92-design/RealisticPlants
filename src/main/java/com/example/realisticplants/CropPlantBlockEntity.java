@@ -100,15 +100,17 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
 
         float ambientTemperature =
                 level.getBiome(pos).value().getBaseTemperature();
-        float temperature = ambientTemperature;
 
-        // Greenhouse benefits are restricted to the seven crops added by
-        // this mod; vanilla Minecraft crops retain their original behavior.
+        // Greenhouse benefits and fan cooling are restricted to the seven
+        // crops added by this mod; vanilla Minecraft crops remain untouched.
         boolean inGreenhouse =
                 GreenhouseEnvironment.isInGreenhouse(level, pos, definition);
-        if (inGreenhouse) {
-            temperature += GreenhouseEnvironment.TEMPERATURE_BONUS;
-        }
+        float temperature = GreenhouseEnvironment.getTemperature(
+                level,
+                pos,
+                ambientTemperature,
+                inGreenhouse
+        );
 
         // Environmental simulation runs on its own cadence. Keeping its
         // interval equal to the old growth interval preserves current balance.
