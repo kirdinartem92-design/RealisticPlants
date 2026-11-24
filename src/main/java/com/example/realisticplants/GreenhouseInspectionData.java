@@ -84,7 +84,7 @@ public record GreenhouseInspectionData(
         double growthMultiplierTotal = 0.0;
         double temperatureTotal = 0.0;
         int tomatoes = 0, cucumbers = 0, zucchinis = 0, eggplants = 0;
-        int bellPeppers = 0, chiliPeppers = 0, broccoli = 0;
+        int bellPeppers = 0, chiliPeppers = 0, broccoli = 0, healthy = 0;
 
         for (int dx = -HORIZONTAL_RADIUS; dx <= HORIZONTAL_RADIUS; dx++) {
             for (int dy = MIN_Y; dy <= MAX_Y; dy++) {
