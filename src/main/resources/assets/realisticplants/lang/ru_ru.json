@@ -131,5 +131,8 @@
   "gui.realisticplants.greenhouse.weak_short": "Слаб",
   "gui.realisticplants.greenhouse.wilting_short": "Вян",
   "gui.realisticplants.greenhouse.dry_short": "Сух",
-  "gui.realisticplants.greenhouse.dead_short": "Мёртв"
+  "gui.realisticplants.greenhouse.dead_short": "Мёртв",
+  "gui.realisticplants.greenhouse.lifecycle_breakdown": "ЦВЕТЕНИЕ И УРОЖАЙ",
+  "gui.realisticplants.greenhouse.flowering_short": "Цветут",
+  "gui.realisticplants.greenhouse.harvest_ready_short": "Урожай"
 }
