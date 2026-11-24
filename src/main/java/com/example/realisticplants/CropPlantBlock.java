@@ -99,27 +99,12 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected void neighborChanged(
-            BlockState state,
-            Level level,
-            BlockPos pos,
-            Block neighborBlock,
-            BlockPos neighborPos,
-            boolean movedByPiston) {
-        if (!level.isClientSide() && !canSurvive(state, level, pos)) {
-            level.destroyBlock(pos, false);
-            return;
-        }
-        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
-    }
-
-    @Override
     public void fallOn(
             Level level,
             BlockState state,
             BlockPos pos,
             Entity entity,
-            float fallDistance) {
+            double fallDistance) {
         if (!level.isClientSide() && fallDistance > 0.5F) {
             // The crop is crushed by a real fall; the farmland beneath remains intact.
             level.destroyBlock(pos, false);
