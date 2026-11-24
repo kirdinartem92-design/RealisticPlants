@@ -247,7 +247,7 @@ public final class GreenhouseEnvironment {
      * Finds a glass wall along one cardinal direction. A wall may be between
      * 2 and 8 blocks from the crop, allowing more than one greenhouse size.
      */
-    private static int findWallDistance(
+    static int findWallDistance(
             Level level,
             BlockPos plantPos,
             int dx,
