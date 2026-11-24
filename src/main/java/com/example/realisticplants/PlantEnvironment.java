@@ -58,7 +58,10 @@ public class PlantEnvironment {
 
                 for (int dy = 0; dy <= 1; dy++) {
                     BlockPos waterPos = farmlandPos.offset(dx, dy, dz);
-                    if (level.getFluidState(waterPos).is(FluidTags.WATER)) {
+                    // Do not load neighboring chunks just to search for
+                    // natural water sources around a crop.
+                    if (level.hasChunkAt(waterPos)
+                            && level.getFluidState(waterPos).is(FluidTags.WATER)) {
                         moistureAmount = Math.max(
                                 moistureAmount,
                                 candidateMoisture
