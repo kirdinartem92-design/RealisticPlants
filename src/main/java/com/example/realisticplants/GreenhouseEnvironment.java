@@ -15,7 +15,8 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public final class GreenhouseEnvironment {
 
-    public static final float TEMPERATURE_BONUS = 0.15f;
+    private static final float MAX_SOLAR_GAIN = 0.25f;
+    private static final float MAX_FAN_COOLING = 0.20f;
     public static final int MOISTURE_SAVING = 1;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
@@ -70,7 +71,7 @@ public final class GreenhouseEnvironment {
                     PlantDefinition cropDefinition =
                             crop.getPlantData().getDefinition();
                     if (SUPPORTED_CROPS.contains(cropDefinition.getId())
-                            && ambientTemperature + TEMPERATURE_BONUS
+                            && getUncooledGreenhouseTemperature(level, cropPos, ambientTemperature)
                                     > cropDefinition.getMaxTemperature()) {
                         coolingNeeded = true;
                         break;
@@ -108,8 +109,12 @@ public final class GreenhouseEnvironment {
     }
 
     /**
-     * Calculates the effective greenhouse temperature using only active fans.
-     * Cooling never pushes a crop below the biome's ambient temperature.
+     * Calculates greenhouse temperature from ambient biome temperature,
+     * available daylight, weather and active ventilation.
+     *
+     * This is a gameplay-oriented microclimate model, not a fluid simulation.
+     * Solar gain is reduced by clouds/rain and fans remove accumulated heat
+     * without cooling below the outdoor ambient temperature.
      */
     public static float getTemperature(
             Level level,
@@ -123,16 +128,49 @@ public final class GreenhouseEnvironment {
             return ambientTemperature;
         }
 
-        int fans = countActiveGreenhouseFans(level, plantPos);
-        float greenhouseTemperature =
-                ambientTemperature + TEMPERATURE_BONUS;
-
-        if (fans == 0 || greenhouseTemperature <= definition.getMaxTemperature()) {
-            return greenhouseTemperature;
+        float uncooledTemperature = getUncooledGreenhouseTemperature(
+                level, plantPos, ambientTemperature
+        );
+        if (uncooledTemperature <= ambientTemperature) {
+            return ambientTemperature;
         }
 
-        float cooling = Math.min(TEMPERATURE_BONUS, fans * 0.05f);
-        return Math.max(ambientTemperature, greenhouseTemperature - cooling);
+        int fans = countActiveGreenhouseFans(level, plantPos);
+        float cooling = Math.min(MAX_FAN_COOLING, fans * 0.07f);
+        return Math.max(
+                ambientTemperature,
+                uncooledTemperature - cooling
+        );
+    }
+
+    /**
+     * Estimates greenhouse solar heating from the actual sky brightness at
+     * crop height. Rain and a dark sky reduce incoming solar energy.
+     */
+    private static float getUncooledGreenhouseTemperature(
+            Level level,
+            BlockPos plantPos,
+            float ambientTemperature
+    ) {
+        if (level == null || plantPos == null) {
+            return ambientTemperature;
+        }
+
+        int skyBrightness = level.getBrightness(
+                net.minecraft.world.level.LightLayer.SKY,
+                plantPos
+        );
+        float daylightFactor = Math.max(0.0f, Math.min(1.0f,
+                skyBrightness / 15.0f));
+        float sunFactor = Math.max(0.0f, Math.min(1.0f,
+                (15.0f - level.getSkyDarken()) / 15.0f));
+        float solarGain = MAX_SOLAR_GAIN * daylightFactor * sunFactor;
+
+        if (level.isRainingAt(plantPos)) {
+            solarGain *= 0.25f;
+        }
+
+        return ambientTemperature + solarGain;
     }
 
     private static int countActiveGreenhouseFans(Level level, BlockPos plantPos) {
