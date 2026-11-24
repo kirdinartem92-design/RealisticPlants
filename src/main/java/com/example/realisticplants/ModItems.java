@@ -49,6 +49,8 @@ public class ModItems {
     public static final DeferredItem<CropSeedsItem> CARROT_SEEDS = ITEMS.registerItem("carrot_seeds", p -> new CropSeedsItem(p, ModBlocks.CARROT_PLANT));
     public static final DeferredItem<CropSeedsItem> BEETROOT_SEEDS = ITEMS.registerItem("beetroot_seeds", p -> new CropSeedsItem(p, ModBlocks.BEETROOT_PLANT));
 
+    public static final DeferredItem<BlockItem> IRRIGATION_SPRINKLER_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.IRRIGATION_SPRINKLER);
+
     public static final DeferredItem<BlockItem> TOMATO_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.TOMATO_PLANT);
     public static final DeferredItem<BlockItem> CUCUMBER_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.CUCUMBER_PLANT);
     public static final DeferredItem<BlockItem> ZUCCHINI_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.ZUCCHINI_PLANT);
