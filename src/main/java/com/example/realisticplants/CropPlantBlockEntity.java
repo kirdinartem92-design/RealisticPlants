@@ -109,7 +109,8 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
                 level,
                 pos,
                 ambientTemperature,
-                inGreenhouse
+                inGreenhouse,
+                definition
         );
 
         // Environmental simulation runs on its own cadence. Keeping its
