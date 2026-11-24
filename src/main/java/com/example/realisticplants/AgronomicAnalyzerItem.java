@@ -68,6 +68,12 @@ public class AgronomicAnalyzerItem extends Item {
                 );
                 context.getPlayer().sendSystemMessage(
                         Component.translatable(
+                                "message.realisticplants.panel.temperature",
+                                String.format(java.util.Locale.ROOT, "%.3f", data.averageTemperature())
+                        )
+                );
+                context.getPlayer().sendSystemMessage(
+                        Component.translatable(
                                 "message.realisticplants.panel.equipment",
                                 data.sprinklerCount(),
                                 data.dripIrrigationCount(),
