@@ -121,7 +121,9 @@ public class GreenhouseControlPanelMenu extends AbstractContainerMenu {
         };
 
         for (int i = 0; i < values.length; i++) {
-            data.set(i, values[i]);
+            // Vanilla menu data is synchronized as signed 16-bit values.
+            // Saturate large greenhouse totals instead of allowing them to wrap negative.
+            data.set(i, Math.max(Short.MIN_VALUE, Math.min(Short.MAX_VALUE, values[i])));
         }
     }
 
