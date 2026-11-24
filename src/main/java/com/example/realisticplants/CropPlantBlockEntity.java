@@ -1,6 +1,7 @@
 package com.realisticplants;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -112,6 +113,14 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
             BlockState state
     ) {
         if (level.isClientSide()) {
+            return;
+        }
+
+        // A crop cannot survive being submerged or having flowing/source water
+        // occupying the plant block or the block directly above it.
+        if (level.getFluidState(pos).is(FluidTags.WATER)
+                || level.getFluidState(pos.above()).is(FluidTags.WATER)) {
+            level.destroyBlock(pos, false);
             return;
         }
 
