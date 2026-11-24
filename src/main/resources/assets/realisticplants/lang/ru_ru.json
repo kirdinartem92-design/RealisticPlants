@@ -117,5 +117,13 @@
   "gui.realisticplants.greenhouse.dead": "Погибшие",
   "gui.realisticplants.greenhouse.drought": "Засуха",
   "gui.realisticplants.greenhouse.thermal": "Жара / холод",
-  "gui.realisticplants.greenhouse.light_alert": "Мало света / слабые"
+  "gui.realisticplants.greenhouse.light_alert": "Мало света / слабые",
+  "gui.realisticplants.greenhouse.crop_breakdown": "НАШИ КУЛЬТУРЫ",
+  "gui.realisticplants.greenhouse.tomato_short": "Том",
+  "gui.realisticplants.greenhouse.cucumber_short": "Огур",
+  "gui.realisticplants.greenhouse.zucchini_short": "Каб",
+  "gui.realisticplants.greenhouse.eggplant_short": "Бак",
+  "gui.realisticplants.greenhouse.bell_pepper_short": "Пер",
+  "gui.realisticplants.greenhouse.chili_short": "Чили",
+  "gui.realisticplants.greenhouse.broccoli_short": "Брок"
 }
