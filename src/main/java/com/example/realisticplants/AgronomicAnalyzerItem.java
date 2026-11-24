@@ -36,6 +36,57 @@ public class AgronomicAnalyzerItem extends Item {
         BlockPos pos = context.getClickedPos();
         BlockEntity blockEntity = level.getBlockEntity(pos);
 
+        if (blockEntity instanceof GreenhouseControlPanelBlockEntity panel) {
+            if (!level.isClientSide() && context.getPlayer() != null) {
+                GreenhouseInspectionData data =
+                        GreenhouseInspectionData.capture(level, pos);
+
+                context.getPlayer().sendSystemMessage(
+                        Component.translatable("message.realisticplants.panel.title")
+                );
+                context.getPlayer().sendSystemMessage(
+                        Component.translatable(
+                                "message.realisticplants.panel.plants",
+                                data.plantCount(),
+                                data.plantsNeedingCare()
+                        )
+                );
+                context.getPlayer().sendSystemMessage(
+                        Component.translatable(
+                                "message.realisticplants.panel.condition",
+                                data.averageHealth(),
+                                data.averageMoisture()
+                        )
+                );
+                context.getPlayer().sendSystemMessage(
+                        Component.translatable(
+                                "message.realisticplants.panel.light",
+                                data.averageSkyLight(),
+                                data.averageBlockLight(),
+                                Math.round(data.averageGrowthMultiplier() * 100.0)
+                        )
+                );
+                context.getPlayer().sendSystemMessage(
+                        Component.translatable(
+                                "message.realisticplants.panel.equipment",
+                                data.sprinklerCount(),
+                                data.dripIrrigationCount(),
+                                data.purpleGrowLightCount(),
+                                data.fanCount()
+                        )
+                );
+                context.getPlayer().sendSystemMessage(
+                        Component.translatable(
+                                "message.realisticplants.panel.water",
+                                data.storedWater(),
+                                data.totalWaterCapacity(),
+                                data.getWaterPercent()
+                        )
+                );
+            }
+            return InteractionResult.SUCCESS;
+        }
+
         if (!(blockEntity instanceof CropPlantBlockEntity crop)) {
             return InteractionResult.PASS;
         }
