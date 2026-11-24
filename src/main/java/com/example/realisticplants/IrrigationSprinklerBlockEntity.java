@@ -187,7 +187,7 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
                     ModSounds.SPRINKLER_SPRAY.get(),
                     SoundSource.BLOCKS,
                     0.22f,
-                    1.35f
+                    1.20f + level.getRandom().nextFloat() * 0.30f
             );
         }
     }
