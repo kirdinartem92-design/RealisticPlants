@@ -144,12 +144,14 @@ public record GreenhouseInspectionData(
                     healthTotal += plant.getHealth();
                     skyLightTotal += level.getBrightness(LightLayer.SKY, pos);
                     blockLightTotal += level.getBrightness(LightLayer.BLOCK, pos);
-                    growthMultiplierTotal += PurpleGrowLightEnvironment
-                            .getGrowthMultiplier(level, pos, plant.getDefinition());
-                    float ambientTemperature =
-                            level.getBiome(pos).value().getBaseTemperature();
                     boolean inGreenhouse = GreenhouseEnvironment.isInGreenhouse(
                             level, pos, plant.getDefinition());
+                    growthMultiplierTotal += PurpleGrowLightEnvironment
+                            .getGrowthMultiplier(
+                                    level, pos, plant.getDefinition(), inGreenhouse
+                            );
+                    float ambientTemperature =
+                            level.getBiome(pos).value().getBaseTemperature();
                     // Calculate the effective temperature once per plant.
                     // This also performs the nearby-fan scan, so reusing the
                     // result avoids repeating an expensive world scan.
