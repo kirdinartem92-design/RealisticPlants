@@ -4,7 +4,6 @@ import java.util.function.Supplier;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -86,7 +85,7 @@ public class GreenhouseFanBlockEntity extends BlockEntity {
         level.playSound(
                 null,
                 pos,
-                SoundEvents.WEATHER_RAIN,
+                ModSounds.GREENHOUSE_FAN_HUM.get(),
                 SoundSource.BLOCKS,
                 0.08f,
                 0.55f
