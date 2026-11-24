@@ -28,6 +28,7 @@ public record GreenhouseInspectionData(
         int wiltingPlants,
         int dryPlants,
         int lowLightPlants,
+        int weakPlants,
         int overheatedPlants,
         int coldPlants,
         int droughtPlants,
@@ -68,6 +69,7 @@ public record GreenhouseInspectionData(
         int wilting = 0;
         int dry = 0;
         int lowLight = 0;
+        int weak = 0;
         int overheated = 0;
         int cold = 0;
         int drought = 0;
@@ -146,6 +148,10 @@ public record GreenhouseInspectionData(
                     } else if (effectiveTemperature < plant.getDefinition().getMinTemperature()) {
                         cold++;
                     }
+                    if (!plant.isDead() && plant.getHealth() > 0
+                            && plant.getHealth() <= 50) {
+                        weak++;
+                    }
                     if (plant.getCondition() == PlantCondition.DEAD) {
                         dead++;
                     } else if (plant.getCondition() == PlantCondition.WILTING) {
@@ -164,7 +170,7 @@ public record GreenhouseInspectionData(
         if (plants == 0) {
             return new GreenhouseInspectionData(
                     0, 0, 0, 0, 0, sprinklers, drippers, growLights,
-                    fans, water, capacity, 0, 0, 0, 0, 0, 0, 0, 0, 0.0f, 1.0
+                    fans, water, capacity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0f, 1.0
             );
         }
 
@@ -185,6 +191,7 @@ public record GreenhouseInspectionData(
                 wilting,
                 dry,
                 lowLight,
+                weak,
                 overheated,
                 cold,
                 drought,
@@ -203,6 +210,7 @@ public record GreenhouseInspectionData(
         if (overheatedPlants > 0) return "overheated";
         if (coldPlants > 0) return "cold";
         if (lowLightPlants > 0) return "low_light";
+        if (weakPlants > 0) return "weak_plants";
         if (wiltingPlants > 0 || dryPlants > 0) return "general_care";
         return "good";
     }
@@ -214,6 +222,7 @@ public record GreenhouseInspectionData(
             case "overheated" -> overheatedPlants;
             case "cold" -> coldPlants;
             case "low_light" -> lowLightPlants;
+            case "weak_plants" -> weakPlants;
             case "general_care" -> wiltingPlants + dryPlants;
             default -> 0;
         };
