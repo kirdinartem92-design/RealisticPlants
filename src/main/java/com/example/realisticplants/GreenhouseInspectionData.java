@@ -41,7 +41,9 @@ public record GreenhouseInspectionData(
         int bellPepperCount,
         int chiliPepperCount,
         int broccoliCount,
-        int healthyPlants
+        int healthyPlants,
+        int floweringPlants,
+        int harvestReadyPlants
 ) {
     private static final int HORIZONTAL_RADIUS = 8;
     private static final int MIN_Y = -2;
@@ -85,6 +87,7 @@ public record GreenhouseInspectionData(
         double temperatureTotal = 0.0;
         int tomatoes = 0, cucumbers = 0, zucchinis = 0, eggplants = 0;
         int bellPeppers = 0, chiliPeppers = 0, broccoli = 0, healthy = 0;
+        int floweringCount = 0, harvestReadyCount = 0;
 
         for (int dx = -HORIZONTAL_RADIUS; dx <= HORIZONTAL_RADIUS; dx++) {
             for (int dy = MIN_Y; dy <= MAX_Y; dy++) {
@@ -125,6 +128,8 @@ public record GreenhouseInspectionData(
                     }
 
                     plants++;
+                    if (plant.isFlowering()) floweringCount++;
+                    if (plant.isHarvestReady()) harvestReadyCount++;
                     switch (plant.getDefinition().getId()) {
                         case "tomato" -> tomatoes++;
                         case "cucumber" -> cucumbers++;
@@ -194,7 +199,7 @@ public record GreenhouseInspectionData(
             return new GreenhouseInspectionData(
                     0, 0, 0, 0, 0, sprinklers, drippers, growLights,
                     fans, water, capacity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0f, 1.0,
-                    0, 0, 0, 0, 0, 0, 0, 0
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0
             );
         }
 
@@ -222,7 +227,8 @@ public record GreenhouseInspectionData(
                 (float) (temperatureTotal / plants),
                 growthMultiplierTotal / plants,
                 tomatoes, cucumbers, zucchinis, eggplants,
-                bellPeppers, chiliPeppers, broccoli, healthy
+                bellPeppers, chiliPeppers, broccoli, healthy,
+                floweringCount, harvestReadyCount
         );
     }
 
