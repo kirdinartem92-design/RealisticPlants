@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class GreenhouseControlPanelMenu extends AbstractContainerMenu {
-    public static final int DATA_COUNT = 34;
+    public static final int DATA_COUNT = 35;
 
     public static final int PLANTS = 0;
     public static final int MOISTURE = 1;
@@ -48,6 +48,7 @@ public class GreenhouseControlPanelMenu extends AbstractContainerMenu {
     public static final int HEALTHY = 31;
     public static final int FLOWERING = 32;
     public static final int HARVEST_READY = 33;
+    public static final int COOLING_EFFECT_MILLI = 34;
 
     private final ContainerData data;
     private final ContainerLevelAccess access;
@@ -155,6 +156,7 @@ public class GreenhouseControlPanelMenu extends AbstractContainerMenu {
         data.set(HEALTHY, snapshot.healthyPlants());
         data.set(FLOWERING, snapshot.floweringPlants());
         data.set(HARVEST_READY, snapshot.harvestReadyPlants());
+        data.set(COOLING_EFFECT_MILLI, Math.round(snapshot.averageCoolingEffect() * 1000.0f));
     }
 
     private void setInt32(int lowIndex, int highIndex, int value) {
