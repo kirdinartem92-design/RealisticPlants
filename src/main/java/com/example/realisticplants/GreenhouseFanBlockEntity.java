@@ -22,6 +22,25 @@ public class GreenhouseFanBlockEntity extends BlockEntity {
 
     private static final long SOUND_INTERVAL = 40L;
 
+    private float rotationAngle;
+    private float previousRotationAngle;
+    private float rotationSpeed;
+    private float previousRotationSpeed;
+
+    public float getInterpolatedRotation(float partialTick) {
+        return previousRotationAngle
+                + (rotationAngle - previousRotationAngle) * partialTick;
+    }
+
+    private void clientTick(boolean active) {
+        previousRotationAngle = rotationAngle;
+        previousRotationSpeed = rotationSpeed;
+
+        float targetSpeed = active ? 18.0f : 0.0f;
+        rotationSpeed += (targetSpeed - rotationSpeed) * 0.18f;
+        rotationAngle = (rotationAngle + rotationSpeed) % 360.0f;
+    }
+
     private static final DeferredRegister<BlockEntityType<?>> TYPES =
             DeferredRegister.create(
                     Registries.BLOCK_ENTITY_TYPE,
@@ -49,9 +68,17 @@ public class GreenhouseFanBlockEntity extends BlockEntity {
             BlockState state,
             GreenhouseFanBlockEntity fan
     ) {
-        if (level.isClientSide()
-                || fan == null
-                || !state.getValue(GreenhouseFanBlock.ACTIVE)
+        if (fan == null) {
+            return;
+        }
+
+        boolean active = state.getValue(GreenhouseFanBlock.ACTIVE);
+        if (level.isClientSide()) {
+            fan.clientTick(active);
+            return;
+        }
+
+        if (!active
                 || Math.floorMod(level.getGameTime(), SOUND_INTERVAL) != 0) {
             return;
         }
