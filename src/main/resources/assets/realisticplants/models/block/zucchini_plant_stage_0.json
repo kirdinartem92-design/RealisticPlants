@@ -108,12 +108,12 @@
       "from": [
         3,
         1.2,
-        6.8
+        6.55
       ],
       "to": [
         8.2,
         2.1,
-        7
+        7.25
       ],
       "rotation": {
         "origin": [
@@ -131,6 +131,18 @@
         },
         "south": {
           "texture": "#plant"
+        },
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
+          "texture": "#plant"
         }
       }
     },
@@ -138,12 +150,12 @@
       "from": [
         7.8,
         1.2,
-        8.8
+        8.55
       ],
       "to": [
         13,
         2.1,
-        9
+        9.25
       ],
       "rotation": {
         "origin": [
@@ -160,6 +172,18 @@
           "texture": "#plant"
         },
         "south": {
+          "texture": "#plant"
+        },
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
           "texture": "#plant"
         }
       }
