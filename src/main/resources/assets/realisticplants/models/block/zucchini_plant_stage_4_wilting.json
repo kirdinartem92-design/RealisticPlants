@@ -1,7 +1,188 @@
 {
-  "parent": "realisticplants:block/zucchini_plant_stage_4",
   "textures": {
     "particle": "realisticplants:block/zucchini_plant_wilting",
     "plant": "realisticplants:block/zucchini_plant_wilting"
-  }
+  },
+  "elements": [
+    {
+      "from": [
+        2.5,
+        0,
+        7.5
+      ],
+      "to": [
+        13.5,
+        9.02,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        0,
+        2.5
+      ],
+      "to": [
+        8.5,
+        9.02,
+        13.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        2.46,
+        2
+      ],
+      "to": [
+        12,
+        4.1,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        2.46,
+        4
+      ],
+      "to": [
+        14,
+        4.1,
+        12
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        3.5,
+        4.1,
+        5
+      ],
+      "to": [
+        12.5,
+        5.74,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        4.1,
+        3.5
+      ],
+      "to": [
+        11,
+        5.74,
+        12.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        3.5,
+        5.74,
+        2
+      ],
+      "to": [
+        12.5,
+        7.38,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        5.74,
+        3.5
+      ],
+      "to": [
+        14,
+        7.38,
+        12.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        3.157,
+        4
+      ],
+      "to": [
+        16,
+        5.863,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        }
+      }
+    }
+  ]
 }
