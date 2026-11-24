@@ -2,8 +2,7 @@
   "greenhouse_fan_hum": {
     "sounds": [
       {
-        "name": "minecraft:block.beacon.ambient",
-        "type": "event",
+        "name": "block/beacon/ambient",
         "volume": 0.35
       }
     ]
@@ -11,8 +10,7 @@
   "sprinkler_spray": {
     "sounds": [
       {
-        "name": "minecraft:block.water.splash",
-        "type": "event",
+        "name": "block/water/splash",
         "volume": 0.55
       }
     ]
@@ -20,8 +18,7 @@
   "drip_irrigation": {
     "sounds": [
       {
-        "name": "minecraft:block.pointed_dripstone.drip_water",
-        "type": "event",
+        "name": "block/pointed_dripstone/drip_water",
         "volume": 0.5
       }
     ]
