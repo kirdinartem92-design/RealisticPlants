@@ -17,7 +17,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
-@EventBusSubscriber(modid = RealisticPlants.MOD_ID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = RealisticPlants.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class RealisticPlantsClient {
 
     private static final Map<GreenhouseFanBlockEntity, FanHumSound> FAN_SOUNDS =
