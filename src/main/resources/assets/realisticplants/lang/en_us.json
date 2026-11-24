@@ -67,5 +67,12 @@
   "message.realisticplants.flowering": "Yes",
   "message.realisticplants.not_flowering": "No",
   "message.realisticplants.harvest_ready": "Ready",
-  "message.realisticplants.not_ready": "Not ready"
+  "message.realisticplants.not_ready": "Not ready",
+  "message.realisticplants.analyzer.advice": "Recommendation: {0}",
+  "message.realisticplants.advice.dead": "The plant has died. Plant a new one.",
+  "message.realisticplants.advice.water": "The plant needs watering.",
+  "message.realisticplants.advice.protect_from_cold": "Protect the plant from cold or improve greenhouse conditions.",
+  "message.realisticplants.advice.cool_down": "Lower the temperature and check greenhouse ventilation.",
+  "message.realisticplants.advice.check_health": "Check moisture, lighting and overall plant condition.",
+  "message.realisticplants.advice.good": "No critical problems detected."
 }
