@@ -98,8 +98,9 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
             return;
         }
 
-        float temperature =
+        float ambientTemperature =
                 level.getBiome(pos).value().getBaseTemperature();
+        float temperature = ambientTemperature;
 
         // Greenhouse benefits are restricted to the seven crops added by
         // this mod; vanilla Minecraft crops retain their original behavior.
@@ -129,7 +130,7 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
 
                 PlantEnvironment.applyHeat(
                         plantData,
-                        temperature,
+                        ambientTemperature,
                         moistureConsumption
                 );
             }
