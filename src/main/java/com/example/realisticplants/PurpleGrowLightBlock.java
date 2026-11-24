@@ -1,7 +1,6 @@
 package com.realisticplants;
 
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.material.MapColor;
 
 /**
  * Purple-spectrum grow light. Minecraft still uses vanilla white lighting,
@@ -11,12 +10,5 @@ public class PurpleGrowLightBlock extends Block {
 
     public PurpleGrowLightBlock(Properties properties) {
         super(properties);
-    }
-
-    public static Properties createProperties() {
-        return Properties.of()
-                .mapColor(MapColor.COLOR_PURPLE)
-                .strength(1.5f)
-                .lightLevel(state -> 12);
     }
 }
