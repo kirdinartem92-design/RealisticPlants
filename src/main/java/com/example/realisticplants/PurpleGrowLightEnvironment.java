@@ -7,15 +7,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 
 /**
- * Finds nearby purple grow lights without changing vanilla crop behavior.
- * The bounded spherical scan runs only when a plant performs a growth update.
+ * Automatically prioritizes artificial grow lights when natural sky light
+ * is insufficient. The system affects only the seven crops added by this mod.
+ *
+ * The block's vanilla light emission remains static; this class controls the
+ * crop-growth benefit according to the natural light available at the plant.
  */
 public final class PurpleGrowLightEnvironment {
 
     private static final int RADIUS = 4;
+    private static final int NATURAL_LIGHT_THRESHOLD = 12;
     private static final double GROWTH_MULTIPLIER = 1.25;
     private static final double DAYLIGHT_MULTIPLIER = 1.05;
-    private static final double COMBINED_MULTIPLIER = 1.35;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
             "tomato",
@@ -40,41 +43,46 @@ public final class PurpleGrowLightEnvironment {
             return 1.0;
         }
 
+        int skyLight = level.getBrightness(LightLayer.SKY, plantPos);
+        boolean hasStrongNaturalLight = skyLight >= NATURAL_LIGHT_THRESHOLD;
+
+        // Natural daylight is preferred. Artificial grow lights provide
+        // their stronger bonus only when the plant lacks sufficient sky light.
+        if (hasStrongNaturalLight) {
+            return DAYLIGHT_MULTIPLIER;
+        }
+
+        if (hasNearbyPurpleGrowLight(level, plantPos)) {
+            return GROWTH_MULTIPLIER;
+        }
+
+        return 1.0;
+    }
+
+    /**
+     * Checks a bounded spherical area without loading neighboring chunks.
+     */
+    private static boolean hasNearbyPurpleGrowLight(
+            Level level,
+            BlockPos plantPos
+    ) {
         int radiusSquared = RADIUS * RADIUS;
-        boolean hasPurpleGrowLight = false;
-        for (int dx = -RADIUS; dx <= RADIUS && !hasPurpleGrowLight; dx++) {
-            for (int dy = -RADIUS; dy <= RADIUS && !hasPurpleGrowLight; dy++) {
+        for (int dx = -RADIUS; dx <= RADIUS; dx++) {
+            for (int dy = -RADIUS; dy <= RADIUS; dy++) {
                 for (int dz = -RADIUS; dz <= RADIUS; dz++) {
                     if (dx * dx + dy * dy + dz * dz > radiusSquared) {
                         continue;
                     }
 
                     BlockPos lightPos = plantPos.offset(dx, dy, dz);
-                    // Grow-light detection must not force-load nearby chunks.
                     if (level.hasChunkAt(lightPos)
                             && level.getBlockState(lightPos)
                                     .is(ModBlocks.PURPLE_GROW_LIGHT.get())) {
-                        hasPurpleGrowLight = true;
-                        break;
+                        return true;
                     }
                 }
             }
         }
-
-        // Natural sky light gives a small bonus. Purple grow lights work
-        // independently at night, and combine with daylight up to a safe cap.
-        int skyLight = level.getBrightness(LightLayer.SKY, plantPos);
-        boolean hasStrongDaylight = skyLight >= 12;
-
-        if (hasPurpleGrowLight && hasStrongDaylight) {
-            return COMBINED_MULTIPLIER;
-        }
-        if (hasPurpleGrowLight) {
-            return GROWTH_MULTIPLIER;
-        }
-        if (hasStrongDaylight) {
-            return DAYLIGHT_MULTIPLIER;
-        }
-        return 1.0;
+        return false;
     }
 }
