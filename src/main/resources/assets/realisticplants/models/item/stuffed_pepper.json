@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "realisticplants:item/bell_pepper"
+    "layer0": "realisticplants:item/stuffed_pepper"
   }
 }

@@ -1,1 +1,6 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"realisticplants:item/zucchini_seeds"}}
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "realisticplants:item/zucchini_seeds"
+  }
+}
