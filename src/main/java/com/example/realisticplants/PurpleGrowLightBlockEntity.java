@@ -54,46 +54,50 @@ public class PurpleGrowLightBlockEntity extends BlockEntity {
             return;
         }
 
-        boolean night = level.getSkyDarken() >= 4;
-        boolean hasGreenhouseCrop = false;
-        boolean insufficientDaylight = false;
+        // Use the same greenhouse-wide controller as crop updates. This
+        // prevents individual lamps from disagreeing about whether the
+        // greenhouse needs artificial light.
+        boolean foundGreenhouseCrop = false;
 
-        {
-            for (int dx = -RADIUS; dx <= RADIUS && !insufficientDaylight; dx++) {
-                for (int dy = -RADIUS; dy <= RADIUS && !insufficientDaylight; dy++) {
-                    for (int dz = -RADIUS; dz <= RADIUS; dz++) {
-                        if (dx * dx + dy * dy + dz * dz > RADIUS * RADIUS) {
-                            continue;
-                        }
-                        BlockPos cropPos = pos.offset(dx, dy, dz);
-                        if (!level.hasChunkAt(cropPos)
-                                || !(level.getBlockEntity(cropPos)
-                                        instanceof CropPlantBlockEntity crop)) {
-                            continue;
-                        }
-                        PlantDefinition definition =
-                                crop.getPlantData().getDefinition();
-                        if (!SUPPORTED_CROPS.contains(definition.getId())
-                                || !GreenhouseEnvironment.isInGreenhouse(
-                                        level, cropPos, definition)) {
-                            continue;
-                        }
-
-                        hasGreenhouseCrop = true;
-                        if (level.getBrightness(LightLayer.SKY, cropPos)
-                                < NATURAL_LIGHT_THRESHOLD) {
-                            insufficientDaylight = true;
-                        }
+        for (int dx = -RADIUS; dx <= RADIUS && !foundGreenhouseCrop; dx++) {
+            for (int dy = -RADIUS; dy <= RADIUS && !foundGreenhouseCrop; dy++) {
+                for (int dz = -RADIUS; dz <= RADIUS; dz++) {
+                    if (dx * dx + dy * dy + dz * dz > RADIUS * RADIUS) {
+                        continue;
                     }
+
+                    BlockPos cropPos = pos.offset(dx, dy, dz);
+                    if (!level.hasChunkAt(cropPos)
+                            || !(level.getBlockEntity(cropPos)
+                                    instanceof CropPlantBlockEntity crop)) {
+                        continue;
+                    }
+
+                    PlantDefinition definition = crop.getPlantData().getDefinition();
+                    if (!SUPPORTED_CROPS.contains(definition.getId())
+                            || !GreenhouseEnvironment.isInGreenhouse(
+                                    level, cropPos, definition)) {
+                        continue;
+                    }
+
+                    foundGreenhouseCrop = true;
+                    PurpleGrowLightEnvironment.updateGrowLights(
+                            level, cropPos, true
+                    );
+                    break;
                 }
             }
         }
 
-        boolean shouldBeActive = hasGreenhouseCrop
-                && (night || insufficientDaylight);
-        if (state.getValue(PurpleGrowLightBlock.ACTIVE) != shouldBeActive) {
-            level.setBlock(pos,
-                    state.setValue(PurpleGrowLightBlock.ACTIVE, shouldBeActive), 3);
+        // If this lamp can no longer find a supported greenhouse crop nearby,
+        // it must not remain lit indefinitely.
+        if (!foundGreenhouseCrop
+                && state.getValue(PurpleGrowLightBlock.ACTIVE)) {
+            level.setBlock(
+                    pos,
+                    state.setValue(PurpleGrowLightBlock.ACTIVE, false),
+                    3
+            );
         }
     }
 }
