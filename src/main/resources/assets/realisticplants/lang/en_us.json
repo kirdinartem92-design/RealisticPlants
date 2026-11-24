@@ -104,7 +104,7 @@
   "gui.realisticplants.greenhouse.health": "Health",
   "gui.realisticplants.greenhouse.sky": "Sky light",
   "gui.realisticplants.greenhouse.block": "Block light",
-  "gui.realisticplants.greenhouse.temperature": "Temperature",
+  "gui.realisticplants.greenhouse.temperature": "Temperature (game scale)",
   "gui.realisticplants.greenhouse.growth": "Growth bonus",
   "gui.realisticplants.greenhouse.equipment": "EQUIPMENT",
   "gui.realisticplants.greenhouse.sprinklers": "Sprinklers",
