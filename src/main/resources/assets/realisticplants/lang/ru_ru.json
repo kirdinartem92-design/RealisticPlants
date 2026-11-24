@@ -44,5 +44,7 @@
   "block.realisticplants.purple_grow_light": "Фиолетовая фитолампа",
   "item.realisticplants.purple_grow_light": "Фиолетовая фитолампа",
   "block.realisticplants.drip_irrigation": "Капельный полив",
-  "item.realisticplants.drip_irrigation": "Капельный полив"
+  "item.realisticplants.drip_irrigation": "Капельный полив",
+  "block.realisticplants.greenhouse_fan": "Автоматический вентилятор теплицы",
+  "item.realisticplants.greenhouse_fan": "Автоматический вентилятор теплицы"
 }
