@@ -50,6 +50,27 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         return plantData;
     }
 
+    /**
+     * Current visual growth stage, exposed for inspection tools.
+     */
+    public int getGrowthStage() {
+        BlockState state = getBlockState();
+        IntegerProperty ageProperty = getAgeProperty();
+        return state.hasProperty(ageProperty)
+                ? state.getValue(ageProperty)
+                : 0;
+    }
+
+    /**
+     * Progress toward the next growth stage, expressed as 0-100 percent.
+     */
+    public int getGrowthProgressPercent() {
+        return (int) Math.max(
+                0,
+                Math.min(100, Math.round(plantData.getGrowthProgress() * 10.0))
+        );
+    }
+
     public void updateCondition() {
         if (level == null || level.isClientSide()) {
             return;
