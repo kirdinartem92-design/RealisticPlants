@@ -4,6 +4,7 @@ import java.util.Set;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 
 /**
  * Finds nearby purple grow lights without changing vanilla crop behavior.
@@ -13,6 +14,8 @@ public final class PurpleGrowLightEnvironment {
 
     private static final int RADIUS = 4;
     private static final double GROWTH_MULTIPLIER = 1.25;
+    private static final double DAYLIGHT_MULTIPLIER = 1.05;
+    private static final double COMBINED_MULTIPLIER = 1.35;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
             "tomato",
@@ -38,8 +41,9 @@ public final class PurpleGrowLightEnvironment {
         }
 
         int radiusSquared = RADIUS * RADIUS;
-        for (int dx = -RADIUS; dx <= RADIUS; dx++) {
-            for (int dy = -RADIUS; dy <= RADIUS; dy++) {
+        boolean hasPurpleGrowLight = false;
+        for (int dx = -RADIUS; dx <= RADIUS && !hasPurpleGrowLight; dx++) {
+            for (int dy = -RADIUS; dy <= RADIUS && !hasPurpleGrowLight; dy++) {
                 for (int dz = -RADIUS; dz <= RADIUS; dz++) {
                     if (dx * dx + dy * dy + dz * dz > radiusSquared) {
                         continue;
@@ -48,12 +52,27 @@ public final class PurpleGrowLightEnvironment {
                     BlockPos lightPos = plantPos.offset(dx, dy, dz);
                     if (level.getBlockState(lightPos)
                             .is(ModBlocks.PURPLE_GROW_LIGHT.get())) {
-                        return GROWTH_MULTIPLIER;
+                        hasPurpleGrowLight = true;
+                        break;
                     }
                 }
             }
         }
 
+        // Natural sky light gives a small bonus. Purple grow lights work
+        // independently at night, and combine with daylight up to a safe cap.
+        int skyLight = level.getBrightness(LightLayer.SKY, plantPos);
+        boolean hasStrongDaylight = skyLight >= 12;
+
+        if (hasPurpleGrowLight && hasStrongDaylight) {
+            return COMBINED_MULTIPLIER;
+        }
+        if (hasPurpleGrowLight) {
+            return GROWTH_MULTIPLIER;
+        }
+        if (hasStrongDaylight) {
+            return DAYLIGHT_MULTIPLIER;
+        }
         return 1.0;
     }
 }
