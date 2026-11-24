@@ -1,7 +1,8 @@
 {
   "textures": {
     "particle": "realisticplants:block/zucchini_plant",
-    "plant": "realisticplants:block/zucchini_plant"
+    "plant": "realisticplants:block/zucchini_plant",
+    "fruit": "realisticplants:block/zucchini_fruit"
   },
   "elements": [
     {
@@ -226,69 +227,33 @@
     },
     {
       "from": [
-        5,
-        1,
-        6.5
+        2,
+        2,
+        7.7
       ],
       "to": [
-        10.5,
-        6,
-        9.5
+        14,
+        14,
+        8.3
       ],
       "faces": {
         "north": {
           "uv": [
-            5,
-            10,
-            10.5,
-            15
+            0,
+            0,
+            16,
+            16
           ],
-          "texture": "#plant"
+          "texture": "#fruit"
         },
         "south": {
           "uv": [
-            5,
-            10,
-            10.5,
-            15
+            0,
+            0,
+            16,
+            16
           ],
-          "texture": "#plant"
-        },
-        "east": {
-          "uv": [
-            5,
-            10,
-            5.5,
-            15
-          ],
-          "texture": "#plant"
-        },
-        "west": {
-          "uv": [
-            5,
-            10,
-            5.5,
-            15
-          ],
-          "texture": "#plant"
-        },
-        "up": {
-          "uv": [
-            5,
-            10,
-            10.5,
-            10.5
-          ],
-          "texture": "#plant"
-        },
-        "down": {
-          "uv": [
-            5,
-            10,
-            10.5,
-            10.5
-          ],
-          "texture": "#plant"
+          "texture": "#fruit"
         }
       }
     }
