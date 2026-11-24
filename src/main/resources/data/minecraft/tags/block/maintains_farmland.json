@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "realisticplants:tomato_plant",
+    "realisticplants:cucumber_plant",
+    "realisticplants:zucchini_plant",
+    "realisticplants:eggplant_plant",
+    "realisticplants:bell_pepper_plant",
+    "realisticplants:chili_pepper_plant",
+    "realisticplants:broccoli_plant"
+  ]
+}
