@@ -28,16 +28,16 @@
   "sprinkler_spray": {
     "sounds": [
       {
-        "name": "block/water/splash",
-        "volume": 0.55
+        "name": "sprinkler_spray",
+        "volume": 0.8
       }
     ]
   },
   "drip_irrigation": {
     "sounds": [
       {
-        "name": "block/pointed_dripstone/drip_water",
-        "volume": 0.5
+        "name": "drip_irrigation",
+        "volume": 0.65
       }
     ]
   }
