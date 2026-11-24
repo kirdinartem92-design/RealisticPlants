@@ -1,0 +1,49 @@
+package com.realisticplants;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+
+/**
+ * Prevents multiple irrigation devices from watering the same crop
+ * during one world tick. State is scoped to each Level and discarded
+ * automatically when the level is no longer referenced.
+ */
+public final class IrrigationCoordination {
+
+    private static final Map<Level, TickClaims> CLAIMS = new WeakHashMap<>();
+
+    private IrrigationCoordination() {
+    }
+
+    public static synchronized boolean tryClaim(
+            Level level,
+            long gameTime,
+            BlockPos cropPos
+    ) {
+        if (level == null || cropPos == null) {
+            return false;
+        }
+
+        TickClaims claims = CLAIMS.get(level);
+        if (claims == null || claims.gameTime != gameTime) {
+            claims = new TickClaims(gameTime);
+            CLAIMS.put(level, claims);
+        }
+
+        return claims.positions.add(cropPos.asLong());
+    }
+
+    private static final class TickClaims {
+        private final long gameTime;
+        private final Set<Long> positions = new HashSet<>();
+
+        private TickClaims(long gameTime) {
+            this.gameTime = gameTime;
+        }
+    }
+}
