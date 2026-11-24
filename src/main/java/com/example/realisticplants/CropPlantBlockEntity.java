@@ -129,6 +129,9 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         GreenhouseEnvironment.updateFans(
                 level, pos, inGreenhouse, ambientTemperature
         );
+        PurpleGrowLightEnvironment.updateGrowLights(
+                level, pos, inGreenhouse
+        );
         float temperature = GreenhouseEnvironment.getTemperature(
                 level,
                 pos,
