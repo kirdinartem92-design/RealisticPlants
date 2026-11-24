@@ -4,13 +4,13 @@
       "model": "realisticplants:block/bell_pepper_plant_stage_0"
     },
     "age=0,condition=wilting": {
-      "model": "realisticplants:block/bell_pepper_plant_stage_0"
+      "model": "realisticplants:block/bell_pepper_plant_stage_0_wilting"
     },
     "age=0,condition=dry": {
-      "model": "realisticplants:block/bell_pepper_plant_stage_0"
+      "model": "realisticplants:block/bell_pepper_plant_stage_0_dry"
     },
     "age=0,condition=dead": {
-      "model": "realisticplants:block/bell_pepper_plant_stage_0"
+      "model": "realisticplants:block/bell_pepper_plant_stage_0_dead"
     },
     "age=1,condition=healthy": {
       "model": "realisticplants:block/bell_pepper_plant_stage_1"
