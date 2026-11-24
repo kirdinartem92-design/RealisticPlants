@@ -93,9 +93,8 @@ public final class GreenhouseEnvironment {
         }
 
         // A roof three blocks above the plant leaves room for mature crops.
-        BlockPos roofPos = plantPos.above(3);
-        if (!level.hasChunkAt(roofPos)
-                || !isGreenhouseGlass(level.getBlockState(roofPos))) {
+        // Require a small connected-looking roof patch, not a lone glass block.
+        if (!hasGlassRoof(level, plantPos)) {
             return false;
         }
 
@@ -112,6 +111,31 @@ public final class GreenhouseEnvironment {
         }
 
         return true;
+    }
+
+    /**
+     * Checks a 3x3 roof patch above the crop. At least five of its nine
+     * positions must be glass, including the position directly above it.
+     * Unloaded chunks are ignored rather than force-loaded.
+     */
+    private static boolean hasGlassRoof(Level level, BlockPos plantPos) {
+        BlockPos center = plantPos.above(3);
+        if (!level.hasChunkAt(center)
+                || !isGreenhouseGlass(level.getBlockState(center))) {
+            return false;
+        }
+
+        int glassCount = 0;
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                BlockPos roofPos = center.offset(dx, 0, dz);
+                if (level.hasChunkAt(roofPos)
+                        && isGreenhouseGlass(level.getBlockState(roofPos))) {
+                    glassCount++;
+                }
+            }
+        }
+        return glassCount >= 5;
     }
 
     /**
