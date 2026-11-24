@@ -123,10 +123,14 @@ public record GreenhouseInspectionData(
                             level.getBiome(pos).value().getBaseTemperature();
                     boolean inGreenhouse = GreenhouseEnvironment.isInGreenhouse(
                             level, pos, plant.getDefinition());
-                    temperatureTotal += GreenhouseEnvironment.getTemperature(
+                    // Calculate the effective temperature once per plant.
+                    // This also performs the nearby-fan scan, so reusing the
+                    // result avoids repeating an expensive world scan.
+                    float effectiveTemperature = GreenhouseEnvironment.getTemperature(
                             level, pos, ambientTemperature, inGreenhouse,
                             plant.getDefinition()
                     );
+                    temperatureTotal += effectiveTemperature;
 
                     if (plant.isDead() || plant.getHealth() <= 50
                             || plant.getMoisture() <= 30) {
@@ -137,10 +141,6 @@ public record GreenhouseInspectionData(
                     }
                     // Count thermal stress using the same effective temperature
                     // and crop-specific limits as the growth simulation.
-                    float effectiveTemperature = GreenhouseEnvironment.getTemperature(
-                            level, pos, ambientTemperature, inGreenhouse,
-                            plant.getDefinition()
-                    );
                     if (effectiveTemperature > plant.getDefinition().getMaxTemperature()) {
                         overheated++;
                     } else if (effectiveTemperature < plant.getDefinition().getMinTemperature()) {
