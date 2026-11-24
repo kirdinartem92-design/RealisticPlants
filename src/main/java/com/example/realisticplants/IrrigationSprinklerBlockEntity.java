@@ -23,6 +23,7 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
     private static final int CAPACITY = 4000;
     private static final int WATER_PER_MOISTURE_POINT = 10;
     private static final int MOISTURE_PER_CYCLE = 2;
+    private static final int TARGET_MOISTURE = 80;
     private static final int RADIUS = 3;
     private static final long CYCLE_TICKS = 100L;
 
@@ -121,9 +122,11 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
                     continue;
                 }
 
+                // Avoid continuously filling already moist soil. All sprinkler
+                // devices share this target, so overlapping coverage is bounded.
                 int moistureNeeded = Math.min(
                         MOISTURE_PER_CYCLE,
-                        100 - plant.getMoisture()
+                        TARGET_MOISTURE - plant.getMoisture()
                 );
                 int cost = moistureNeeded * WATER_PER_MOISTURE_POINT;
 
