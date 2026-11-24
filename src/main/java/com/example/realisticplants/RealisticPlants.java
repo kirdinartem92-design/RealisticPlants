@@ -22,6 +22,7 @@ public class RealisticPlants {
         );
 
         ModBlocks.register(modEventBus);
+        ModMenus.register(modEventBus);
         ModItems.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
 
