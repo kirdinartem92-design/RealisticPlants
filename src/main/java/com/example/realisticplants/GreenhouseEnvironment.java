@@ -99,31 +99,43 @@ public final class GreenhouseEnvironment {
             return false;
         }
 
-        // Require glass walls on all four sides at the plant's upper body.
-        // The test is intentionally local and bounded; no world flood-fill.
+        // Accept compact and larger greenhouse footprints. The bounded
+        // directional scan avoids an unbounded flood-fill and never loads chunks.
         int[][] directions = {
-                {2, 0}, {-2, 0}, {0, 2}, {0, -2}
+                {1, 0}, {-1, 0}, {0, 1}, {0, -1}
         };
 
         for (int[] direction : directions) {
-            boolean wallFound = false;
-            for (int y = 1; y <= 2; y++) {
-                BlockPos wallPos = plantPos.offset(
-                        direction[0], y, direction[1]
-                );
-                if (level.hasChunkAt(wallPos)
-                        && isGreenhouseGlass(level.getBlockState(wallPos))) {
-                    wallFound = true;
-                    break;
-                }
-            }
-
-            if (!wallFound) {
+            if (findWallDistance(level, plantPos, direction[0], direction[1]) < 0) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * Finds a glass wall along one cardinal direction. A wall may be between
+     * 2 and 8 blocks from the crop, allowing more than one greenhouse size.
+     */
+    private static int findWallDistance(
+            Level level,
+            BlockPos plantPos,
+            int dx,
+            int dz
+    ) {
+        for (int distance = 2; distance <= 8; distance++) {
+            for (int y = 1; y <= 2; y++) {
+                BlockPos wallPos = plantPos.offset(
+                        dx * distance, y, dz * distance
+                );
+                if (level.hasChunkAt(wallPos)
+                        && isGreenhouseGlass(level.getBlockState(wallPos))) {
+                    return distance;
+                }
+            }
+        }
+        return -1;
     }
 
     private static boolean isGreenhouseGlass(BlockState state) {
