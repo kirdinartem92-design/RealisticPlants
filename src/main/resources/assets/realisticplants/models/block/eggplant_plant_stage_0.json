@@ -140,12 +140,12 @@
       "from": [
         4,
         3.2,
-        7.97
+        7.65
       ],
       "to": [
         8,
         4.1,
-        8.03
+        8.35
       ],
       "rotation": {
         "origin": [
@@ -162,6 +162,18 @@
           "texture": "#plant"
         },
         "south": {
+          "texture": "#plant"
+        },
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
           "texture": "#plant"
         }
       }
