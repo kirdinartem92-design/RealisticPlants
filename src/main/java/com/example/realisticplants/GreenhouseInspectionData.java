@@ -24,6 +24,7 @@ public record GreenhouseInspectionData(
         int storedWater,
         int totalWaterCapacity,
         int plantsNeedingCare,
+        float averageTemperature,
         double averageGrowthMultiplier
 ) {
     private static final int HORIZONTAL_RADIUS = 8;
@@ -57,11 +58,16 @@ public record GreenhouseInspectionData(
         int capacity = 0;
         int needsCare = 0;
         double growthMultiplierTotal = 0.0;
+        double temperatureTotal = 0.0;
 
         for (int dx = -HORIZONTAL_RADIUS; dx <= HORIZONTAL_RADIUS; dx++) {
             for (int dy = MIN_Y; dy <= MAX_Y; dy++) {
                 for (int dz = -HORIZONTAL_RADIUS; dz <= HORIZONTAL_RADIUS; dz++) {
                     BlockPos pos = center.offset(dx, dy, dz);
+                    // Do not force-load chunks just to inspect a greenhouse.
+                    if (!level.hasChunkAt(pos)) {
+                        continue;
+                    }
                     var state = level.getBlockState(pos);
 
                     if (state.is(ModBlocks.IRRIGATION_SPRINKLER.get())) {
@@ -99,6 +105,14 @@ public record GreenhouseInspectionData(
                     blockLightTotal += level.getBrightness(LightLayer.BLOCK, pos);
                     growthMultiplierTotal += PurpleGrowLightEnvironment
                             .getGrowthMultiplier(level, pos, plant.getDefinition());
+                    float ambientTemperature =
+                            level.getBiome(pos).value().getBaseTemperature();
+                    boolean inGreenhouse = GreenhouseEnvironment.isInGreenhouse(
+                            level, pos, plant.getDefinition());
+                    temperatureTotal += GreenhouseEnvironment.getTemperature(
+                            level, pos, ambientTemperature, inGreenhouse,
+                            plant.getDefinition()
+                    );
 
                     if (plant.isDead() || plant.getHealth() <= 50
                             || plant.getMoisture() <= 30) {
@@ -111,7 +125,7 @@ public record GreenhouseInspectionData(
         if (plants == 0) {
             return new GreenhouseInspectionData(
                     0, 0, 0, 0, 0, sprinklers, drippers, growLights,
-                    fans, water, capacity, 0, 1.0
+                    fans, water, capacity, 0, 0.0f, 1.0
             );
         }
 
@@ -128,6 +142,7 @@ public record GreenhouseInspectionData(
                 water,
                 capacity,
                 needsCare,
+                (float) (temperatureTotal / plants),
                 growthMultiplierTotal / plants
         );
     }
