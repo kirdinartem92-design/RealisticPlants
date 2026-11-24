@@ -45,6 +45,9 @@ public class ModItems {
     public static final DeferredItem<CropSeedsItem> BELL_PEPPER_SEEDS = ITEMS.registerItem("bell_pepper_seeds", p -> new CropSeedsItem(p, ModBlocks.BELL_PEPPER_PLANT));
     public static final DeferredItem<CropSeedsItem> CHILI_PEPPER_SEEDS = ITEMS.registerItem("chili_pepper_seeds", p -> new CropSeedsItem(p, ModBlocks.CHILI_PEPPER_PLANT));
     public static final DeferredItem<CropSeedsItem> BROCCOLI_SEEDS = ITEMS.registerItem("broccoli_seeds", p -> new CropSeedsItem(p, ModBlocks.BROCCOLI_PLANT));
+    public static final DeferredItem<CropSeedsItem> POTATO_SEEDS = ITEMS.registerItem("potato_seeds", p -> new CropSeedsItem(p, ModBlocks.POTATO_PLANT));
+    public static final DeferredItem<CropSeedsItem> CARROT_SEEDS = ITEMS.registerItem("carrot_seeds", p -> new CropSeedsItem(p, ModBlocks.CARROT_PLANT));
+    public static final DeferredItem<CropSeedsItem> BEETROOT_SEEDS = ITEMS.registerItem("beetroot_seeds", p -> new CropSeedsItem(p, ModBlocks.BEETROOT_PLANT));
 
     public static final DeferredItem<BlockItem> TOMATO_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.TOMATO_PLANT);
     public static final DeferredItem<BlockItem> CUCUMBER_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.CUCUMBER_PLANT);
@@ -53,6 +56,9 @@ public class ModItems {
     public static final DeferredItem<BlockItem> BELL_PEPPER_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.BELL_PEPPER_PLANT);
     public static final DeferredItem<BlockItem> CHILI_PEPPER_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.CHILI_PEPPER_PLANT);
     public static final DeferredItem<BlockItem> BROCCOLI_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.BROCCOLI_PLANT);
+    public static final DeferredItem<BlockItem> POTATO_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.POTATO_PLANT);
+    public static final DeferredItem<BlockItem> CARROT_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.CARROT_PLANT);
+    public static final DeferredItem<BlockItem> BEETROOT_PLANT_ITEM = ITEMS.registerSimpleBlockItem(ModBlocks.BEETROOT_PLANT);
 
     private ModItems() {}
     private static FoodProperties createFoodProperties(String plantId) {
