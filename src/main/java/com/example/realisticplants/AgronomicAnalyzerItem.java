@@ -120,6 +120,15 @@ public class AgronomicAnalyzerItem extends Item {
                             )
                     )
             );
+            context.getPlayer().sendSystemMessage(
+                    Component.translatable(
+                            "message.realisticplants.analyzer.advice",
+                            Component.translatable(
+                                    "message.realisticplants.advice."
+                                            + data.getRecommendationKey()
+                            )
+                    )
+            );
         }
 
         return InteractionResult.SUCCESS;
