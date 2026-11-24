@@ -4,7 +4,6 @@ import java.util.function.Supplier;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -18,8 +17,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
  * Minecraft's normal block-volume and distance attenuation.
  */
 public class GreenhouseFanBlockEntity extends BlockEntity {
-
-    private static final long SOUND_INTERVAL = 40L;
 
     private float rotationAngle;
     private float previousRotationAngle;
@@ -74,21 +71,6 @@ public class GreenhouseFanBlockEntity extends BlockEntity {
         boolean active = state.getValue(GreenhouseFanBlock.ACTIVE);
         if (level.isClientSide()) {
             fan.clientTick(active);
-            return;
         }
-
-        if (!active
-                || Math.floorMod(level.getGameTime(), SOUND_INTERVAL) != 0) {
-            return;
-        }
-
-        level.playSound(
-                null,
-                pos,
-                ModSounds.GREENHOUSE_FAN_HUM.get(),
-                SoundSource.BLOCKS,
-                0.08f,
-                0.55f
-        );
     }
 }
