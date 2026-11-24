@@ -32,9 +32,84 @@ public final class GreenhouseEnvironment {
     }
 
     /**
-     * Calculates the crop's greenhouse temperature after nearby fans run.
-     * Each fan removes a small part of the greenhouse heat bonus; cooling
-     * never pushes the crop below the biome's ambient temperature.
+     * Updates every fan inside the detected greenhouse. Fans start when at
+     * least one supported crop would exceed its own maximum temperature
+     * without cooling, and stop when all inspected crops are within range.
+     */
+    public static void updateFans(
+            Level level,
+            BlockPos plantPos,
+            boolean inGreenhouse,
+            float ambientTemperature
+    ) {
+        if (level == null || plantPos == null || !inGreenhouse) {
+            return;
+        }
+
+        int north = findWallDistance(level, plantPos, 0, -1);
+        int south = findWallDistance(level, plantPos, 0, 1);
+        int west = findWallDistance(level, plantPos, -1, 0);
+        int east = findWallDistance(level, plantPos, 1, 0);
+        if (north < 0 || south < 0 || west < 0 || east < 0) {
+            return;
+        }
+
+        boolean coolingNeeded = false;
+        for (int dx = -west + 1; dx < east && !coolingNeeded; dx++) {
+            for (int dy = -2; dy <= 2 && !coolingNeeded; dy++) {
+                for (int dz = -north + 1; dz < south; dz++) {
+                    BlockPos cropPos = plantPos.offset(dx, dy, dz);
+                    if (!level.hasChunkAt(cropPos)) {
+                        continue;
+                    }
+                    if (!(level.getBlockEntity(cropPos)
+                            instanceof CropPlantBlockEntity crop)) {
+                        continue;
+                    }
+
+                    PlantDefinition cropDefinition =
+                            crop.getPlantData().getDefinition();
+                    if (SUPPORTED_CROPS.contains(cropDefinition.getId())
+                            && ambientTemperature + TEMPERATURE_BONUS
+                                    > cropDefinition.getMaxTemperature()) {
+                        coolingNeeded = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (int dx = -west + 1; dx < east; dx++) {
+            for (int dy = -2; dy <= 2; dy++) {
+                for (int dz = -north + 1; dz < south; dz++) {
+                    BlockPos fanPos = plantPos.offset(dx, dy, dz);
+                    if (!level.hasChunkAt(fanPos)) {
+                        continue;
+                    }
+
+                    BlockState fanState = level.getBlockState(fanPos);
+                    if (!fanState.is(ModBlocks.GREENHOUSE_FAN.get())) {
+                        continue;
+                    }
+
+                    boolean active = fanState.getValue(GreenhouseFanBlock.ACTIVE);
+                    if (active != coolingNeeded) {
+                        level.setBlock(
+                                fanPos,
+                                fanState.setValue(
+                                        GreenhouseFanBlock.ACTIVE, coolingNeeded
+                                ),
+                                3
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Calculates the effective greenhouse temperature using only active fans.
+     * Cooling never pushes a crop below the biome's ambient temperature.
      */
     public static float getTemperature(
             Level level,
@@ -48,49 +123,38 @@ public final class GreenhouseEnvironment {
             return ambientTemperature;
         }
 
-        int fans = countGreenhouseFans(level, plantPos);
-
+        int fans = countActiveGreenhouseFans(level, plantPos);
         float greenhouseTemperature =
                 ambientTemperature + TEMPERATURE_BONUS;
 
-        // Fans are automatic: they remain idle unless the greenhouse would
-        // exceed this crop's own maximum temperature.
         if (fans == 0 || greenhouseTemperature <= definition.getMaxTemperature()) {
             return greenhouseTemperature;
         }
 
         float cooling = Math.min(TEMPERATURE_BONUS, fans * 0.05f);
-        return Math.max(
-                ambientTemperature,
-                greenhouseTemperature - cooling
-        );
+        return Math.max(ambientTemperature, greenhouseTemperature - cooling);
     }
 
-    /**
-     * Counts only fans placed inside this crop's detected greenhouse footprint.
-     * A fan outside the glass walls must not cool a greenhouse crop merely
-     * because it happens to be within a six-block radius.
-     */
-    private static int countGreenhouseFans(Level level, BlockPos plantPos) {
-        int northDistance = findWallDistance(level, plantPos, 0, -1);
-        int southDistance = findWallDistance(level, plantPos, 0, 1);
-        int westDistance = findWallDistance(level, plantPos, -1, 0);
-        int eastDistance = findWallDistance(level, plantPos, 1, 0);
-
-        if (northDistance < 0 || southDistance < 0
-                || westDistance < 0 || eastDistance < 0) {
+    private static int countActiveGreenhouseFans(Level level, BlockPos plantPos) {
+        int north = findWallDistance(level, plantPos, 0, -1);
+        int south = findWallDistance(level, plantPos, 0, 1);
+        int west = findWallDistance(level, plantPos, -1, 0);
+        int east = findWallDistance(level, plantPos, 1, 0);
+        if (north < 0 || south < 0 || west < 0 || east < 0) {
             return 0;
         }
 
         int fans = 0;
-        for (int dx = -westDistance + 1; dx < eastDistance && fans < 3; dx++) {
+        for (int dx = -west + 1; dx < east && fans < 3; dx++) {
             for (int dy = -2; dy <= 2 && fans < 3; dy++) {
-                for (int dz = -northDistance + 1;
-                        dz < southDistance && fans < 3; dz++) {
+                for (int dz = -north + 1; dz < south && fans < 3; dz++) {
                     BlockPos fanPos = plantPos.offset(dx, dy, dz);
-                    if (level.hasChunkAt(fanPos)
-                            && level.getBlockState(fanPos)
-                                    .is(ModBlocks.GREENHOUSE_FAN.get())) {
+                    if (!level.hasChunkAt(fanPos)) {
+                        continue;
+                    }
+                    BlockState state = level.getBlockState(fanPos);
+                    if (state.is(ModBlocks.GREENHOUSE_FAN.get())
+                            && state.getValue(GreenhouseFanBlock.ACTIVE)) {
                         fans++;
                     }
                 }
