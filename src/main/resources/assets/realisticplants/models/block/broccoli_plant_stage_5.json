@@ -9,12 +9,12 @@
       "from": [
         2.5,
         0,
-        7.5
+        7.25
       ],
       "to": [
         13.5,
         13,
-        8.5
+        8.75
       ],
       "faces": {
         "north": {
@@ -22,17 +22,29 @@
         },
         "south": {
           "texture": "#plant"
+        },
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
+          "texture": "#plant"
         }
       }
     },
     {
       "from": [
-        7.5,
+        7.25,
         0,
         2.5
       ],
       "to": [
-        8.5,
+        8.75,
         13,
         13.5
       ],
@@ -42,6 +54,18 @@
         },
         "west": {
           "texture": "#plant"
+        },
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
+          "texture": "#plant"
         }
       }
     },
@@ -49,12 +73,12 @@
       "from": [
         3.36,
         3,
-        1.04
+        7.25
       ],
       "to": [
         12.64,
         5,
-        14.96
+        8.75
       ],
       "faces": {
         "north": {
@@ -62,17 +86,29 @@
         },
         "south": {
           "texture": "#plant"
+        },
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
+          "texture": "#plant"
         }
       }
     },
     {
       "from": [
-        1.04,
+        7.25,
         3,
         3.36
       ],
       "to": [
-        14.96,
+        8.75,
         5,
         12.64
       ],
@@ -82,6 +118,18 @@
         },
         "west": {
           "texture": "#plant"
+        },
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
+          "texture": "#plant"
         }
       }
     },
@@ -89,12 +137,12 @@
       "from": [
         2.78,
         6,
-        4.52
+        7.25
       ],
       "to": [
         13.22,
         8,
-        11.48
+        8.75
       ],
       "faces": {
         "north": {
@@ -102,17 +150,29 @@
         },
         "south": {
           "texture": "#plant"
+        },
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
+          "texture": "#plant"
         }
       }
     },
     {
       "from": [
-        4.52,
+        7.25,
         6,
         2.78
       ],
       "to": [
-        11.48,
+        8.75,
         8,
         13.22
       ],
@@ -122,6 +182,18 @@
         },
         "west": {
           "texture": "#plant"
+        },
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
+          "texture": "#plant"
         }
       }
     },
@@ -129,12 +201,12 @@
       "from": [
         2.78,
         8,
-        1.04
+        7.25
       ],
       "to": [
         13.22,
         10,
-        14.96
+        8.75
       ],
       "faces": {
         "north": {
@@ -142,17 +214,29 @@
         },
         "south": {
           "texture": "#plant"
+        },
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
+          "texture": "#plant"
         }
       }
     },
     {
       "from": [
-        1.04,
+        7.25,
         8,
         2.78
       ],
       "to": [
-        14.96,
+        8.75,
         10,
         13.22
       ],
@@ -161,6 +245,18 @@
           "texture": "#plant"
         },
         "west": {
+          "texture": "#plant"
+        },
+        "north": {
+          "texture": "#plant"
+        },
+        "south": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
           "texture": "#plant"
         }
       }
@@ -169,18 +265,30 @@
       "from": [
         1.04,
         7.15,
-        1.04
+        7.25
       ],
       "to": [
         14.96,
         12.35,
-        14.96
+        8.75
       ],
       "faces": {
         "north": {
           "texture": "#plant"
         },
         "south": {
+          "texture": "#plant"
+        },
+        "east": {
+          "texture": "#plant"
+        },
+        "west": {
+          "texture": "#plant"
+        },
+        "up": {
+          "texture": "#plant"
+        },
+        "down": {
           "texture": "#plant"
         }
       }
@@ -189,12 +297,12 @@
       "from": [
         3.68,
         3.68,
-        7.78
+        7.25
       ],
       "to": [
         12.32,
         12.32,
-        8.22
+        8.75
       ],
       "faces": {
         "north": {
@@ -214,17 +322,29 @@
             16
           ],
           "texture": "#fruit"
+        },
+        "east": {
+          "texture": "#fruit"
+        },
+        "west": {
+          "texture": "#fruit"
+        },
+        "up": {
+          "texture": "#fruit"
+        },
+        "down": {
+          "texture": "#fruit"
         }
       }
     },
     {
       "from": [
-        7.78,
+        7.25,
         3.68,
         3.68
       ],
       "to": [
-        8.22,
+        8.75,
         12.32,
         12.32
       ],
@@ -245,6 +365,18 @@
             16,
             16
           ],
+          "texture": "#fruit"
+        },
+        "north": {
+          "texture": "#fruit"
+        },
+        "south": {
+          "texture": "#fruit"
+        },
+        "up": {
+          "texture": "#fruit"
+        },
+        "down": {
           "texture": "#fruit"
         }
       }
