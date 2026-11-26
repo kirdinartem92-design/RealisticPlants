@@ -23,6 +23,7 @@ sourceSets.main.resources {
 
     // Exclude common development only resources from finalized outputs
     exclude("**/*.bbmodel") // BlockBench project files
+    exclude("**/*.b64") // Base64 source used to generate the embedded model atlas
     exclude("src/generated/**/.cache") // datagen cache files
 }
 
@@ -181,4 +182,36 @@ idea {
         downloadSources = true
         downloadJavadoc = true
     }
+}
+
+
+// Decode the tiny embedded atlas used by the Blockbench tomato model.
+// Keeping the source as text allows the model texture to be versioned safely.
+def tomatoPrototypeAtlasBase64 = layout.projectDirectory.file(
+        'src/main/resources/assets/realisticplants/textures/block/tomato_plant_prototype_3_atlas.png.b64'
+)
+def tomatoPrototypeAtlasResources = layout.buildDirectory.dir(
+        'generated/resources/tomatoPrototype3'
+)
+
+tasks.register('decodeTomatoPrototypeAtlas') {
+    inputs.file(tomatoPrototypeAtlasBase64)
+    outputs.file(tomatoPrototypeAtlasResources.map {
+        it.file('assets/realisticplants/textures/block/tomato_plant_prototype_3_atlas.png')
+    })
+
+    doLast {
+        def output = tomatoPrototypeAtlasResources.get().file(
+                'assets/realisticplants/textures/block/tomato_plant_prototype_3_atlas.png'
+        ).asFile
+        output.parentFile.mkdirs()
+        output.bytes = java.util.Base64.decoder.decode(
+                tomatoPrototypeAtlasBase64.asFile.text.trim()
+        )
+    }
+}
+
+sourceSets.main.resources.srcDir(tomatoPrototypeAtlasResources)
+tasks.named('processResources').configure {
+    dependsOn('decodeTomatoPrototypeAtlas')
 }
