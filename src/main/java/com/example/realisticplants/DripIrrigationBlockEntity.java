@@ -29,7 +29,6 @@ public class DripIrrigationBlockEntity extends BlockEntity {
     private static final int CAPACITY = 2000;
     private static final int WATER_PER_MOISTURE_POINT = 10;
     private static final int MOISTURE_PER_CYCLE = 1;
-    private static final int TARGET_MOISTURE = 80;
     private static final long CYCLE_TICKS = 100L;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
@@ -104,7 +103,7 @@ public class DripIrrigationBlockEntity extends BlockEntity {
         // Check all four neighboring crops and select the driest eligible
         // one, rather than always favoring the first direction in the array.
         CropPlantBlockEntity driestCrop = null;
-        int driestMoisture = TARGET_MOISTURE;
+        int driestMoisture = 81;
 
         // The emitter can be placed beside a crop at soil level or one
         // block below its foliage. Support both layouts; the old code only
@@ -124,7 +123,7 @@ public class DripIrrigationBlockEntity extends BlockEntity {
                 PlantData plant = crop.getPlantData();
                 if (plant.isDead()
                         || !SUPPORTED_CROPS.contains(plant.getDefinition().getId())
-                        || plant.getMoisture() >= TARGET_MOISTURE) {
+                        || plant.getMoisture() >= IrrigationCoordination.getTargetMoisture(plant)) {
                     continue;
                 }
 
@@ -139,7 +138,7 @@ public class DripIrrigationBlockEntity extends BlockEntity {
             PlantData plant = driestCrop.getPlantData();
             int moistureNeeded = Math.min(
                     MOISTURE_PER_CYCLE,
-                    TARGET_MOISTURE - plant.getMoisture()
+                    IrrigationCoordination.getTargetMoisture(plant) - plant.getMoisture()
             );
             int cost = moistureNeeded * WATER_PER_MOISTURE_POINT;
 
