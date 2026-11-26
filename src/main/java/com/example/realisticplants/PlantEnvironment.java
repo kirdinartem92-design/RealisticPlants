@@ -24,6 +24,21 @@ public class PlantEnvironment {
     }
 
     /**
+     * Returns the gradual moisture recovery supplied by a natural water
+     * source at the given horizontal distance from the farmland.
+     */
+    static int getNearbyWaterMoisture(int distance) {
+        if (distance < 0 || distance > NATURAL_WATER_RADIUS) {
+            return 0;
+        }
+
+        return Math.max(
+                MIN_WATER_MOISTURE,
+                CLOSE_WATER_MOISTURE - distance
+        );
+    }
+
+    /**
      * Replenishes moisture from nearby water. The farmland block below
      * the plant is used as the center; only the strongest nearby source
      * is applied, so multiple water blocks never stack.
@@ -47,14 +62,10 @@ public class PlantEnvironment {
                     dz <= NATURAL_WATER_RADIUS; dz++) {
 
                 int distance = Math.max(Math.abs(dx), Math.abs(dz));
-                if (distance > NATURAL_WATER_RADIUS) {
+                int candidateMoisture = getNearbyWaterMoisture(distance);
+                if (candidateMoisture == 0) {
                     continue;
                 }
-
-                int candidateMoisture = Math.max(
-                        MIN_WATER_MOISTURE,
-                        CLOSE_WATER_MOISTURE - distance + 1
-                );
 
                 for (int dy = 0; dy <= 1; dy++) {
                     BlockPos waterPos = farmlandPos.offset(dx, dy, dz);
