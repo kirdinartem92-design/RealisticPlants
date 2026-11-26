@@ -3,7 +3,6 @@ package com.realisticplants;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.HashSet;
 import java.util.function.Supplier;
 
@@ -36,16 +35,6 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
     private static final int RADIUS = 3;
     private static final long CYCLE_TICKS = 100L;
     private static final int MAX_CROPS_PER_CYCLE = 12;
-
-    private static final Set<String> SUPPORTED_CROPS = Set.of(
-            "tomato",
-            "cucumber",
-            "zucchini",
-            "eggplant",
-            "bell_pepper",
-            "chili_pepper",
-            "broccoli"
-    );
 
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(
@@ -140,7 +129,7 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
 
                 PlantData plant = crop.getPlantData();
                 if (plant.isDead()
-                        || !SUPPORTED_CROPS.contains(plant.getDefinition().getId())
+                        || !IrrigationCoordination.supportsIrrigation(plant)
                         || plant.getMoisture() >= IrrigationCoordination.getTargetMoisture(plant)) {
                     continue;
                 }

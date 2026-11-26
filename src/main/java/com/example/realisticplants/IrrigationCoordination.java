@@ -17,6 +17,16 @@ public final class IrrigationCoordination {
 
     private static final Map<Level, TickClaims> CLAIMS = new WeakHashMap<>();
 
+    private static final Set<String> SUPPORTED_CROPS = Set.of(
+            "tomato",
+            "cucumber",
+            "zucchini",
+            "eggplant",
+            "bell_pepper",
+            "chili_pepper",
+            "broccoli"
+    );
+
     private IrrigationCoordination() {
     }
 
@@ -26,6 +36,17 @@ public final class IrrigationCoordination {
      * The shared upper limit of 80 prevents overwatering without forcing
      * every crop to use the same target.
      */
+    /**
+     * Keeps the irrigation devices limited to the seven new crop species.
+     * Centralizing this list prevents the drip unit and sprinkler from
+     * drifting apart when support for another crop is added.
+     */
+    public static boolean supportsIrrigation(PlantData plant) {
+        return plant != null
+                && plant.getDefinition() != null
+                && SUPPORTED_CROPS.contains(plant.getDefinition().getId());
+    }
+
     public static int getTargetMoisture(PlantData plant) {
         if (plant == null || plant.getDefinition() == null) {
             return 40;
