@@ -82,12 +82,23 @@ public class PurpleGrowLightBlockEntity extends BlockEntity {
             }
         }
 
-        if (!foundCrop && state.getValue(PurpleGrowLightBlock.ACTIVE)) {
-            level.setBlock(
-                    pos,
-                    state.setValue(PurpleGrowLightBlock.ACTIVE, false),
-                    3
-            );
+        // At night the lamp must stay on even when there are no crops nearby.
+        // During the day, crop-aware logic above controls it; without crops it
+        // is switched off.
+        if (!foundCrop) {
+            boolean shouldBeActive = level.getSkyDarken() >= 4;
+            BlockState currentState = level.getBlockState(pos);
+            if (currentState.is(ModBlocks.PURPLE_GROW_LIGHT.get())
+                    && currentState.getValue(PurpleGrowLightBlock.ACTIVE)
+                            != shouldBeActive) {
+                level.setBlock(
+                        pos,
+                        currentState.setValue(
+                                PurpleGrowLightBlock.ACTIVE, shouldBeActive
+                        ),
+                        3
+                );
+            }
         }
     }
 }
