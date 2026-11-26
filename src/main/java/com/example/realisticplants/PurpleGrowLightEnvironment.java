@@ -4,18 +4,16 @@ import java.util.Set;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Controls grow lights for mod crops both inside and outside greenhouses.
- * A lamp activates at night or when a nearby supported crop receives too
- * little natural sky light. Active lamps grant a growth bonus in either place.
+ * A lamp activates whenever a supported crop is nearby, and also at night
+ * even when no crop is nearby. Active lamps grant a growth bonus in either place.
  */
 public final class PurpleGrowLightEnvironment {
 
     private static final int RADIUS = 4;
-    private static final int NATURAL_LIGHT_THRESHOLD = 12;
     private static final double GROWTH_MULTIPLIER = 1.25;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
@@ -71,10 +69,14 @@ public final class PurpleGrowLightEnvironment {
     }
 
     private static boolean shouldLampBeActive(Level level, BlockPos lightPos) {
+        // Keep the lamp on at night, even if no crop is nearby.
         if (level.getSkyDarken() >= 4) {
             return true;
         }
 
+        // A nearby supported crop is enough to activate the lamp at any time
+        // of day. This avoids relying on sky-light sampling, which can vary
+        // with weather, shade, and the exact position of the crop block.
         int radiusSquared = RADIUS * RADIUS;
         for (int dx = -RADIUS; dx <= RADIUS; dx++) {
             for (int dy = -RADIUS; dy <= RADIUS; dy++) {
@@ -90,9 +92,7 @@ public final class PurpleGrowLightEnvironment {
                         continue;
                     }
 
-                    if (SUPPORTED_CROPS.contains(crop.getPlantData().getDefinition().getId())
-                            && level.getBrightness(LightLayer.SKY, cropPos)
-                                    < NATURAL_LIGHT_THRESHOLD) {
+                    if (SUPPORTED_CROPS.contains(crop.getPlantData().getDefinition().getId())) {
                         return true;
                     }
                 }
