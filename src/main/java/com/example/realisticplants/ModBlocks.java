@@ -11,12 +11,6 @@ public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(RealisticPlants.MOD_ID);
 
-    public static final DeferredBlock<Block> TEST_PLANT =
-            BLOCKS.registerSimpleBlock(
-                    "test_plant",
-                    properties -> properties.mapColor(MapColor.PLANT)
-            );
-
     public static final DeferredBlock<TomatoPlantBlock> TOMATO_PLANT =
             BLOCKS.registerBlock(
                     "tomato_plant",
