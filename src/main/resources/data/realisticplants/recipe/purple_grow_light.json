@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    "CRC",
+    " I "
+  ],
+  "key": {
+    "G": "minecraft:glowstone",
+    "C": "minecraft:copper_ingot",
+    "R": "minecraft:redstone",
+    "I": "minecraft:iron_ingot"
+  },
+  "result": {
+    "id": "realisticplants:purple_grow_light",
+    "count": 1
+  }
+}
