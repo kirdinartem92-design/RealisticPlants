@@ -28,7 +28,7 @@ public final class IrrigationCoordination {
      */
     public static int getTargetMoisture(PlantData plant) {
         if (plant == null || plant.getDefinition() == null) {
-            return 60;
+            return 40;
         }
 
         int minimum = plant.getDefinition().getMinimumMoisture();
