@@ -68,6 +68,7 @@ public class ModBlocks {
                     properties -> new IrrigationSprinklerBlock(
                             properties.mapColor(MapColor.METAL)
                                     .strength(2.0f)
+                                    .noOcclusion()
                     )
             );
 
@@ -77,6 +78,7 @@ public class ModBlocks {
                     properties -> new PurpleGrowLightBlock(
                             properties.mapColor(MapColor.COLOR_PURPLE)
                                     .strength(1.5f)
+                                    .noOcclusion()
                                     .lightLevel(state ->
                                             state.getValue(PurpleGrowLightBlock.ACTIVE) ? 12 : 0)
                     )
@@ -88,6 +90,7 @@ public class ModBlocks {
                     properties -> new DripIrrigationBlock(
                             properties.mapColor(MapColor.METAL)
                                     .strength(1.5f)
+                                    .noOcclusion()
                     )
             );
 
