@@ -46,7 +46,7 @@ public record GreenhouseInspectionData(
         int floweringPlants,
         int harvestReadyPlants
 ) {
-    private static final int HORIZONTAL_RADIUS = 8;
+    private static final int HORIZONTAL_RADIUS = 16;
     private static final int MIN_Y = -2;
     private static final int MAX_Y = 4;
 
@@ -56,7 +56,7 @@ public record GreenhouseInspectionData(
     );
 
     /**
-     * Scans a bounded 17x17x7 area around the selected position.
+     * Scans a bounded 33x33x7 area around the selected position.
      * Only the seven crops introduced by this mod are included.
      */
     public static GreenhouseInspectionData capture(Level level, BlockPos center) {

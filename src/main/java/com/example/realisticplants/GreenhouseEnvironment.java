@@ -20,6 +20,7 @@ public final class GreenhouseEnvironment {
     private static final float MAX_SOLAR_GAIN = 0.25f;
     private static final float MAX_FAN_COOLING = 0.20f;
     private static final float FAN_SWITCH_HYSTERESIS = 0.03f;
+    private static final int MAX_WALL_DISTANCE = 16;
     public static final int MOISTURE_SAVING = 1;
 
     private static final Set<String> SUPPORTED_CROPS = Set.of(
@@ -197,6 +198,33 @@ public final class GreenhouseEnvironment {
     }
 
     /**
+     * Returns the thermal response factor for the detected greenhouse size.
+     * A standard 17x17 greenhouse keeps the original response; larger
+     * greenhouses change temperature more slowly because of their greater
+     * enclosed air volume and thermal mass. The factor is bounded so even the
+     * largest supported greenhouse remains responsive to ventilation.
+     */
+    public static double getThermalInertiaFactor(Level level, BlockPos plantPos) {
+        if (level == null || plantPos == null) {
+            return 1.0;
+        }
+
+        int north = findWallDistance(level, plantPos, 0, -1);
+        int south = findWallDistance(level, plantPos, 0, 1);
+        int west = findWallDistance(level, plantPos, -1, 0);
+        int east = findWallDistance(level, plantPos, 1, 0);
+        if (north < 0 || south < 0 || west < 0 || east < 0) {
+            return 1.0;
+        }
+
+        double width = west + east + 1.0;
+        double depth = north + south + 1.0;
+        double area = width * depth;
+        double standardArea = 17.0 * 17.0;
+        return Math.max(0.5, Math.min(1.0, Math.sqrt(standardArea / area)));
+    }
+
+    /**
      * Estimates greenhouse solar heating from the actual sky brightness at
      * crop height. Rain and a dark sky reduce incoming solar energy.
      */
@@ -330,7 +358,7 @@ public final class GreenhouseEnvironment {
     /**
      * Checks the full detected roof footprint three blocks above the crop.
      * The center and all four corners must be glass, and at least two thirds
-     * of the roof area must be glass. The maximum scan is bounded to 17x17.
+     * of the roof area must be glass. The maximum scan is bounded to 33x33.
      * Unloaded chunks are treated as missing roof blocks, never force-loaded.
      */
     private static boolean hasGlassRoof(
@@ -380,7 +408,7 @@ public final class GreenhouseEnvironment {
             int dx,
             int dz
     ) {
-        for (int distance = 2; distance <= 8; distance++) {
+        for (int distance = 2; distance <= MAX_WALL_DISTANCE; distance++) {
             for (int y = 1; y <= 2; y++) {
                 BlockPos wallPos = plantPos.offset(
                         dx * distance, y, dz * distance

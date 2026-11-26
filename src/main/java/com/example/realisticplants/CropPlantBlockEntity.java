@@ -177,9 +177,12 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
             // and lose stored heat more slowly when the sun goes away. Active
             // ventilation increases the cooling response through the target
             // temperature calculated by GreenhouseEnvironment.
-            double response = targetTemperature > greenhouseTemperature
+            double thermalInertia = GreenhouseEnvironment.getThermalInertiaFactor(
+                    level, pos
+            );
+            double response = (targetTemperature > greenhouseTemperature
                     ? 0.16
-                    : 0.10;
+                    : 0.10) * thermalInertia;
             greenhouseTemperature +=
                     (targetTemperature - greenhouseTemperature) * response;
         }
