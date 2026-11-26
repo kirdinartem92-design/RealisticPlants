@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "realisticplants:item/irrigation_sprinkler"
-  }
+  "parent": "realisticplants:block/irrigation_sprinkler"
 }
