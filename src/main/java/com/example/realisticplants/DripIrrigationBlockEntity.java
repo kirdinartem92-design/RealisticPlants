@@ -3,6 +3,11 @@ package com.realisticplants;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.Level;
@@ -174,5 +179,29 @@ public class DripIrrigationBlockEntity extends BlockEntity {
                 0,
                 Math.min(CAPACITY, input.getIntOr("stored_water", 0))
         );
+    }
+
+    private static final String ITEM_WATER_KEY = "realisticplants:stored_water";
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        super.collectImplicitComponents(components);
+
+        CompoundTag tag = new CompoundTag();
+        tag.putInt(ITEM_WATER_KEY, storedWater);
+        components.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
+
+        CustomData customData = components.get(DataComponents.CUSTOM_DATA);
+        if (customData != null && customData.contains(ITEM_WATER_KEY)) {
+            storedWater = Math.max(
+                    0,
+                    Math.min(CAPACITY, customData.copyTag().getIntOr(ITEM_WATER_KEY, 0))
+            );
+        }
     }
 }
