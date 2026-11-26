@@ -195,28 +195,29 @@ public abstract class CropPlantBlockEntity extends BlockEntity {
         if (moistureUpdate) {
             moistureTickCounter = 0;
 
+            int moistureConsumption =
+                    definition.getMoistureConsumption();
+            if (inGreenhouse) {
+                moistureConsumption = Math.max(
+                        0,
+                        moistureConsumption
+                                - GreenhouseEnvironment.MOISTURE_SAVING
+                );
+            }
+
+            // Heat and the crop's normal moisture consumption continue during
+            // rain. Rain replenishes the soil afterward, so hot weather can
+            // still cause evaporation without making rainfall ineffective.
+            // Use the effective greenhouse temperature: fan cooling therefore
+            // reduces evaporation, while greenhouse warmth can increase it.
+            PlantEnvironment.applyHeat(
+                    plantData,
+                    temperature,
+                    moistureConsumption
+            );
+
             if (level.isRainingAt(pos)) {
                 PlantEnvironment.applyRain(plantData, 5);
-            } else {
-                int moistureConsumption =
-                        definition.getMoistureConsumption();
-                if (inGreenhouse) {
-                    moistureConsumption = Math.max(
-                            0,
-                            moistureConsumption
-                                    - GreenhouseEnvironment.MOISTURE_SAVING
-                    );
-                }
-
-                // Use the effective greenhouse temperature here as well:
-                // greenhouse warmth can increase evaporation, while active
-                // fan cooling reduces it. Using ambient temperature would
-                // make fan cooling affect growth but not soil drying.
-                PlantEnvironment.applyHeat(
-                        plantData,
-                        temperature,
-                        moistureConsumption
-                );
             }
 
             PlantEnvironment.applyNearbyWater(level, pos, plantData);
