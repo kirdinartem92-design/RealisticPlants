@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "realisticplants:item/purple_grow_light"
-  }
+  "parent": "realisticplants:block/purple_grow_light"
 }
