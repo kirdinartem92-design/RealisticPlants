@@ -33,7 +33,6 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
     private static final int CAPACITY = 4000;
     private static final int WATER_PER_MOISTURE_POINT = 10;
     private static final int MOISTURE_PER_CYCLE = 2;
-    private static final int TARGET_MOISTURE = 80;
     private static final int RADIUS = 3;
     private static final long CYCLE_TICKS = 100L;
     private static final int MAX_CROPS_PER_CYCLE = 12;
@@ -142,7 +141,7 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
                 PlantData plant = crop.getPlantData();
                 if (plant.isDead()
                         || !SUPPORTED_CROPS.contains(plant.getDefinition().getId())
-                        || plant.getMoisture() >= TARGET_MOISTURE) {
+                        || plant.getMoisture() >= IrrigationCoordination.getTargetMoisture(plant)) {
                     continue;
                 }
 
@@ -167,7 +166,7 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
             PlantData plant = target.crop().getPlantData();
             int moistureNeeded = Math.min(
                     MOISTURE_PER_CYCLE,
-                    TARGET_MOISTURE - plant.getMoisture()
+                    IrrigationCoordination.getTargetMoisture(plant) - plant.getMoisture()
             );
             int cost = moistureNeeded * WATER_PER_MOISTURE_POINT;
 
