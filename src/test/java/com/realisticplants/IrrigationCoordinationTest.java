@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class IrrigationCoordinationTest {
 
     @Test
-    void targetKeepsAReasonableMinimumForLowMoistureCrops() {
+    void targetAddsASafetyMarginToTheConfiguredMinimum() {
         PlantData plant = plantWithMinimumMoisture(20);
 
-        assertEquals(60, IrrigationCoordination.getTargetMoisture(plant));
+        assertEquals(40, IrrigationCoordination.getTargetMoisture(plant));
     }
 
     @Test
@@ -31,8 +31,30 @@ class IrrigationCoordinationTest {
     }
 
     @Test
+    void registeredCropsReceiveDifferentIrrigationTargets() {
+        assertEquals(
+                40,
+                IrrigationCoordination.getTargetMoisture(
+                        new PlantData(PlantRegistry.get("tomato"))
+                )
+        );
+        assertEquals(
+                45,
+                IrrigationCoordination.getTargetMoisture(
+                        new PlantData(PlantRegistry.get("zucchini"))
+                )
+        );
+        assertEquals(
+                50,
+                IrrigationCoordination.getTargetMoisture(
+                        new PlantData(PlantRegistry.get("broccoli"))
+                )
+        );
+    }
+
+    @Test
     void nullPlantUsesTheSafeDefaultTarget() {
-        assertEquals(60, IrrigationCoordination.getTargetMoisture(null));
+        assertEquals(40, IrrigationCoordination.getTargetMoisture(null));
     }
 
     private static PlantData plantWithMinimumMoisture(int minimumMoisture) {
