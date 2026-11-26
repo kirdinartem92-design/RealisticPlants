@@ -327,32 +327,20 @@
     },
     {
       "from": [
-        2,
-        2,
-        7.25
+        4.5,
+        8,
+        4.5
       ],
       "to": [
-        14,
-        14,
-        8.75
+        11.5,
+        14.5,
+        11.5
       ],
       "faces": {
         "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
           "texture": "#fruit"
         },
         "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
           "texture": "#fruit"
         },
         "east": {
@@ -371,38 +359,218 @@
     },
     {
       "from": [
-        7.25,
-        2,
-        2
+        2.5,
+        9,
+        5.5
       ],
       "to": [
-        8.75,
+        7.5,
         14,
-        14
+        10.5
       ],
       "faces": {
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#fruit"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#fruit"
-        },
         "north": {
           "texture": "#fruit"
         },
         "south": {
+          "texture": "#fruit"
+        },
+        "east": {
+          "texture": "#fruit"
+        },
+        "west": {
+          "texture": "#fruit"
+        },
+        "up": {
+          "texture": "#fruit"
+        },
+        "down": {
+          "texture": "#fruit"
+        }
+      }
+    },
+    {
+      "from": [
+        8.5,
+        9,
+        5.5
+      ],
+      "to": [
+        13.5,
+        14,
+        10.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#fruit"
+        },
+        "south": {
+          "texture": "#fruit"
+        },
+        "east": {
+          "texture": "#fruit"
+        },
+        "west": {
+          "texture": "#fruit"
+        },
+        "up": {
+          "texture": "#fruit"
+        },
+        "down": {
+          "texture": "#fruit"
+        }
+      }
+    },
+    {
+      "from": [
+        5.5,
+        9,
+        2.5
+      ],
+      "to": [
+        10.5,
+        14,
+        7.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#fruit"
+        },
+        "south": {
+          "texture": "#fruit"
+        },
+        "east": {
+          "texture": "#fruit"
+        },
+        "west": {
+          "texture": "#fruit"
+        },
+        "up": {
+          "texture": "#fruit"
+        },
+        "down": {
+          "texture": "#fruit"
+        }
+      }
+    },
+    {
+      "from": [
+        5.5,
+        9,
+        8.5
+      ],
+      "to": [
+        10.5,
+        14,
+        13.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#fruit"
+        },
+        "south": {
+          "texture": "#fruit"
+        },
+        "east": {
+          "texture": "#fruit"
+        },
+        "west": {
+          "texture": "#fruit"
+        },
+        "up": {
+          "texture": "#fruit"
+        },
+        "down": {
+          "texture": "#fruit"
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        12,
+        6
+      ],
+      "to": [
+        10,
+        16,
+        10
+      ],
+      "faces": {
+        "north": {
+          "texture": "#fruit"
+        },
+        "south": {
+          "texture": "#fruit"
+        },
+        "east": {
+          "texture": "#fruit"
+        },
+        "west": {
+          "texture": "#fruit"
+        },
+        "up": {
+          "texture": "#fruit"
+        },
+        "down": {
+          "texture": "#fruit"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        10,
+        4
+      ],
+      "to": [
+        7.5,
+        14.5,
+        7.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#fruit"
+        },
+        "south": {
+          "texture": "#fruit"
+        },
+        "east": {
+          "texture": "#fruit"
+        },
+        "west": {
+          "texture": "#fruit"
+        },
+        "up": {
+          "texture": "#fruit"
+        },
+        "down": {
+          "texture": "#fruit"
+        }
+      }
+    },
+    {
+      "from": [
+        8.5,
+        10,
+        8.5
+      ],
+      "to": [
+        12,
+        14.5,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#fruit"
+        },
+        "south": {
+          "texture": "#fruit"
+        },
+        "east": {
+          "texture": "#fruit"
+        },
+        "west": {
           "texture": "#fruit"
         },
         "up": {
