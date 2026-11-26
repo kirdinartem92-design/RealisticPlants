@@ -20,6 +20,20 @@ public final class IrrigationCoordination {
     private IrrigationCoordination() {
     }
 
+    /**
+     * Returns a crop-specific irrigation target. Each crop receives a small
+     * safety margin above its configured minimum moisture, while the shared
+     * 60-80 range prevents overwatering and preserves the existing balance.
+     */
+    public static int getTargetMoisture(PlantData plant) {
+        if (plant == null || plant.getDefinition() == null) {
+            return 60;
+        }
+
+        int minimum = plant.getDefinition().getMinimumMoisture();
+        return Math.max(60, Math.min(80, minimum + 20));
+    }
+
     public static synchronized boolean tryClaim(
             Level level,
             long gameTime,
