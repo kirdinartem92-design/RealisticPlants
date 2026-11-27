@@ -27,3 +27,10 @@ type="required"
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="structure_pool_api"
+type="required"
+versionRange="[1.3.0,1.4.0)"
+ordering="AFTER"
+side="BOTH"
