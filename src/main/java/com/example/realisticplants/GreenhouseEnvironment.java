@@ -342,7 +342,7 @@ public final class GreenhouseEnvironment {
 
         // Every side must contain a substantial glass section between the
         // opposite walls, and the roof must cover the detected footprint.
-        return isMostlyGlassWall(
+        boolean enclosed = isMostlyGlassWall(
                     level, plantPos, 0, -1, northDistance, westDistance, eastDistance)
                 && isMostlyGlassWall(
                     level, plantPos, 0, 1, southDistance, westDistance, eastDistance)
@@ -353,6 +353,48 @@ public final class GreenhouseEnvironment {
                 && hasGlassRoof(
                     level, plantPos, northDistance, southDistance,
                     westDistance, eastDistance);
+
+        // Older greenhouse templates can have the two upper glass courses
+        // while missing the lowest course. Repair only positions directly
+        // below an existing glass wall, leaving doors and entrances untouched.
+        if (enclosed && !level.isClientSide()) {
+            repairLowerGlassCourse(
+                    level, plantPos, northDistance, southDistance,
+                    westDistance, eastDistance
+            );
+        }
+        return enclosed;
+    }
+
+    private static void repairLowerGlassCourse(
+            Level level,
+            BlockPos plantPos,
+            int northDistance,
+            int southDistance,
+            int westDistance,
+            int eastDistance
+    ) {
+        BlockState glass = Blocks.GLASS.defaultBlockState();
+
+        for (int x = -westDistance; x <= eastDistance; x++) {
+            repairGlassAt(level, plantPos.offset(x, 0, -northDistance), glass);
+            repairGlassAt(level, plantPos.offset(x, 0, southDistance), glass);
+        }
+        for (int z = -northDistance + 1; z < southDistance; z++) {
+            repairGlassAt(level, plantPos.offset(-westDistance, 0, z), glass);
+            repairGlassAt(level, plantPos.offset(eastDistance, 0, z), glass);
+        }
+    }
+
+    private static void repairGlassAt(Level level, BlockPos lowerPos, BlockState glass) {
+        if (!level.hasChunkAt(lowerPos) || !level.isEmptyBlock(lowerPos)) {
+            return;
+        }
+        BlockState firstUpper = level.getBlockState(lowerPos.above());
+        BlockState secondUpper = level.getBlockState(lowerPos.above(2));
+        if (isGreenhouseGlass(firstUpper) || isGreenhouseGlass(secondUpper)) {
+            level.setBlock(lowerPos, glass, 3);
+        }
     }
 
     /**
