@@ -1,4 +1,4 @@
-package com.example.realisticplants;
+package com.realisticplants;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
