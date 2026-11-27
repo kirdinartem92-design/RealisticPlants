@@ -63,6 +63,15 @@ public class RealisticPlants {
                         1
                 ));
             }
+            // One greenhouse maximum per village placement. Weight 1 keeps
+            // it rare among the vanilla house choices (roughly one in ten
+            // villages, depending on how many house pieces are selected).
+            config.entries.add(new StructurePoolConfig.Entry(
+                    pool,
+                    "realisticplants:village/super_greenhouse",
+                    1,
+                    1
+            ));
         }
 
         StructurePoolAPI.injectAll(config);
