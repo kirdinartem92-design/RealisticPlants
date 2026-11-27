@@ -140,8 +140,11 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
             sprinkler.setSpraying(false);
             return;
         }
-        if (state.getValue(IrrigationSprinklerBlock.ACTIVE)
-                && level.getGameTime() >= sprinkler.sprayUntil) sprinkler.setSpraying(false);
+
+        // The rotor and spray effect run whenever the tank contains water.
+        // Crop watering remains on its slower cycle below, so the visual
+        // sprinkler does not stop merely because nearby crops are already moist.
+        sprinkler.setSpraying(true);
         if (level.getGameTime() % CYCLE_TICKS != 0) return;
 
         int waterUsed = 0;
