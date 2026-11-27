@@ -80,10 +80,10 @@ public final class GreenhouseFanRenderer
         // A compact square hub covers the rotor axle.
         emitQuad(
                 pose, buffer,
-                -0.055f, -0.055f, 0.0f,
-                 0.055f, -0.055f, 0.0f,
-                 0.055f,  0.055f, 0.0f,
-                -0.055f,  0.055f, 0.0f,
+                -0.040f, -0.040f, 0.0f,
+                 0.040f, -0.040f, 0.0f,
+                 0.040f,  0.040f, 0.0f,
+                -0.040f,  0.040f, 0.0f,
                 0.62f, 0.66f, 0.70f
         );
     }
@@ -97,11 +97,11 @@ public final class GreenhouseFanRenderer
         float sin = (float) Math.sin(angle);
 
         // Inner and outer radii, with a swept outer edge.
-        float inner = 0.045f;
-        float outer = 0.39f;
-        float innerWidth = 0.055f;
-        float outerWidth = 0.105f;
-        float sweep = 0.075f;
+        float inner = 0.035f;
+        float outer = 0.27f;
+        float innerWidth = 0.035f;
+        float outerWidth = 0.060f;
+        float sweep = 0.035f;
 
         float x1 = cos * inner - sin * innerWidth;
         float y1 = sin * inner + cos * innerWidth;
