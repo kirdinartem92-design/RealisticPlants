@@ -20,16 +20,40 @@
       ],
       "faces": {
         "north": {
-          "texture": "#stem"
+          "texture": "#stem",
+          "uv": [
+            6.88,
+            0,
+            9.12,
+            16
+          ]
         },
         "south": {
-          "texture": "#stem"
+          "texture": "#stem",
+          "uv": [
+            6.88,
+            0,
+            9.12,
+            16
+          ]
         },
         "east": {
-          "texture": "#stem"
+          "texture": "#stem",
+          "uv": [
+            6.7,
+            0,
+            9.3,
+            16
+          ]
         },
         "west": {
-          "texture": "#stem"
+          "texture": "#stem",
+          "uv": [
+            6.7,
+            0,
+            9.3,
+            16
+          ]
         },
         "up": {
           "texture": "#stem"
@@ -156,10 +180,22 @@
       ],
       "faces": {
         "north": {
-          "texture": "#leaf"
+          "texture": "#leaf",
+          "uv": [
+            8.16,
+            0,
+            16,
+            12
+          ]
         },
         "south": {
-          "texture": "#leaf"
+          "texture": "#leaf",
+          "uv": [
+            8.16,
+            0,
+            16,
+            12
+          ]
         }
       }
     },
@@ -176,10 +212,22 @@
       ],
       "faces": {
         "east": {
-          "texture": "#leaf"
+          "texture": "#leaf",
+          "uv": [
+            3.45,
+            0,
+            12.55,
+            12
+          ]
         },
         "west": {
-          "texture": "#leaf"
+          "texture": "#leaf",
+          "uv": [
+            3.45,
+            0,
+            12.55,
+            12
+          ]
         }
       }
     },
@@ -196,10 +244,22 @@
       ],
       "faces": {
         "north": {
-          "texture": "#leaf"
+          "texture": "#leaf",
+          "uv": [
+            4.64,
+            0,
+            11.36,
+            8
+          ]
         },
         "south": {
-          "texture": "#leaf"
+          "texture": "#leaf",
+          "uv": [
+            4.64,
+            0,
+            11.36,
+            8
+          ]
         }
       }
     },
@@ -216,10 +276,22 @@
       ],
       "faces": {
         "east": {
-          "texture": "#leaf"
+          "texture": "#leaf",
+          "uv": [
+            4.1,
+            0,
+            11.9,
+            8
+          ]
         },
         "west": {
-          "texture": "#leaf"
+          "texture": "#leaf",
+          "uv": [
+            4.1,
+            0,
+            11.9,
+            8
+          ]
         }
       }
     }
