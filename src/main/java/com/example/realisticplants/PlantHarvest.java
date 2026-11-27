@@ -76,10 +76,12 @@ public class PlantHarvest {
     }
 
     /**
-     * Checks whether the plant currently has a valid harvest.
+     * A harvest that has already ripened remains collectible even if
+     * the plant's health or moisture later drops below growth thresholds.
      */
     private static boolean canHarvest(PlantData plant) {
-        return PlantLifecycleRules.canContinueLifecycle(plant)
+        return plant != null
+                && !plant.isDead()
                 && plant.isFlowering()
                 && plant.isHarvestReady();
     }
