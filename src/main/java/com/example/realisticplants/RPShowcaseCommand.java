@@ -122,9 +122,8 @@ public final class RPShowcaseCommand {
                 if (wall) {
                     boolean entrance = dz == HALF_SIZE && Math.abs(dx) <= 1;
                     if (!entrance) {
-                        level.setBlock(floorPos.above(1), glass, 3);
-                        level.setBlock(floorPos.above(2), glass, 3);
                         level.setBlock(floorPos.above(3), glass, 3);
+                        level.setBlock(floorPos.above(5), glass, 3);
                     }
                 }
 

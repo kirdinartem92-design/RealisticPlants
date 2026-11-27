@@ -377,12 +377,12 @@ public final class GreenhouseEnvironment {
         BlockState glass = Blocks.GLASS.defaultBlockState();
 
         for (int x = -westDistance; x <= eastDistance; x++) {
-            repairGlassAt(level, plantPos.offset(x, 0, -northDistance), glass);
-            repairGlassAt(level, plantPos.offset(x, 0, southDistance), glass);
+            repairGlassAt(level, plantPos.offset(x, 1, -northDistance), glass);
+            repairGlassAt(level, plantPos.offset(x, 1, southDistance), glass);
         }
         for (int z = -northDistance + 1; z < southDistance; z++) {
-            repairGlassAt(level, plantPos.offset(-westDistance, 0, z), glass);
-            repairGlassAt(level, plantPos.offset(eastDistance, 0, z), glass);
+            repairGlassAt(level, plantPos.offset(-westDistance, 1, z), glass);
+            repairGlassAt(level, plantPos.offset(eastDistance, 1, z), glass);
         }
     }
 
@@ -390,9 +390,8 @@ public final class GreenhouseEnvironment {
         if (!level.hasChunkAt(lowerPos) || !level.isEmptyBlock(lowerPos)) {
             return;
         }
-        BlockState firstUpper = level.getBlockState(lowerPos.above());
-        BlockState secondUpper = level.getBlockState(lowerPos.above(2));
-        if (isGreenhouseGlass(firstUpper) || isGreenhouseGlass(secondUpper)) {
+        BlockState upperWall = level.getBlockState(lowerPos.above());
+        if (isGreenhouseGlass(upperWall)) {
             level.setBlock(lowerPos, glass, 3);
         }
     }
