@@ -136,13 +136,13 @@ public final class RPShowcaseCommand {
         }
 
         // All seven new crops are planted at their mature visual stage.
-        placeCrop(level, center.offset(-2, 1, 2), ModBlocks.TOMATO_PLANT.get());
-        placeCrop(level, center.offset(-1, 1, 2), ModBlocks.CUCUMBER_PLANT.get());
-        placeCrop(level, center.offset(0, 1, 2), ModBlocks.ZUCCHINI_PLANT.get());
-        placeCrop(level, center.offset(1, 1, 2), ModBlocks.EGGPLANT_PLANT.get());
-        placeCrop(level, center.offset(2, 1, 2), ModBlocks.BELL_PEPPER_PLANT.get());
-        placeCrop(level, center.offset(-1, 1, 6), ModBlocks.CHILI_PEPPER_PLANT.get());
-        placeCrop(level, center.offset(1, 1, 6), ModBlocks.BROCCOLI_PLANT.get());
+        placeCrop(level, center.offset(-3, 1, 4), ModBlocks.TOMATO_PLANT.get());
+        placeCrop(level, center.offset(-2, 1, 4), ModBlocks.CUCUMBER_PLANT.get());
+        placeCrop(level, center.offset(-1, 1, 4), ModBlocks.ZUCCHINI_PLANT.get());
+        placeCrop(level, center.offset(1, 1, 4), ModBlocks.EGGPLANT_PLANT.get());
+        placeCrop(level, center.offset(2, 1, 4), ModBlocks.BELL_PEPPER_PLANT.get());
+        placeCrop(level, center.offset(3, 1, 4), ModBlocks.CHILI_PEPPER_PLANT.get());
+        placeCrop(level, center.offset(0, 1, 2), ModBlocks.BROCCOLI_PLANT.get());
 
         BlockPos sprinklerPos = center.offset(0, 1, 4);
         level.setBlock(sprinklerPos, ModBlocks.IRRIGATION_SPRINKLER.get().defaultBlockState(), 3);
