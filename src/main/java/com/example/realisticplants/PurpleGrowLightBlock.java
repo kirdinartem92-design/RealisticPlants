@@ -3,7 +3,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.ticks.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -33,13 +35,19 @@ public class PurpleGrowLightBlock extends BaseEntityBlock {
                 .setValue(SOUTH,l.getBlockState(p.south()).is(this))
                 .setValue(WEST,l.getBlockState(p.west()).is(this)).setValue(EAST,l.getBlockState(p.east()).is(this));
     }
-    @Override protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
-            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        BooleanProperty property=switch(direction) {
-            case NORTH -> NORTH; case SOUTH -> SOUTH; case WEST -> WEST; case EAST -> EAST; default -> null;
+    @Override
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess,
+            BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        BooleanProperty property = switch (direction) {
+            case NORTH -> NORTH;
+            case SOUTH -> SOUTH;
+            case WEST -> WEST;
+            case EAST -> EAST;
+            default -> null;
         };
-        return property==null ? super.updateShape(state,direction,neighborState,level,pos,neighborPos)
-                : state.setValue(property,neighborState.is(this));
+        return property == null
+                ? super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random)
+                : state.setValue(property, neighborState.is(this));
     }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new PurpleGrowLightBlockEntity(pos,state); }
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {

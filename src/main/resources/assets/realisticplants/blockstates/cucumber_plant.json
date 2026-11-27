@@ -61,28 +61,28 @@
       "model": "realisticplants:block/cucumber_plant_stage_4_dead"
     },
     "age=5,condition=healthy": {
-      "model": "realisticplants:block/cucumber_plant_stage_4"
+      "model": "realisticplants:block/cucumber_plant_stage_5"
     },
     "age=5,condition=wilting": {
-      "model": "realisticplants:block/cucumber_plant_stage_4_wilting"
+      "model": "realisticplants:block/cucumber_plant_stage_5_wilting"
     },
     "age=5,condition=dry": {
-      "model": "realisticplants:block/cucumber_plant_stage_4_dry"
+      "model": "realisticplants:block/cucumber_plant_stage_5_dry"
     },
     "age=5,condition=dead": {
-      "model": "realisticplants:block/cucumber_plant_stage_4_dead"
+      "model": "realisticplants:block/cucumber_plant_stage_5_dead"
     },
     "age=6,condition=healthy": {
-      "model": "realisticplants:block/cucumber_plant_stage_4"
+      "model": "realisticplants:block/cucumber_plant_stage_6"
     },
     "age=6,condition=wilting": {
-      "model": "realisticplants:block/cucumber_plant_stage_4_wilting"
+      "model": "realisticplants:block/cucumber_plant_stage_6_wilting"
     },
     "age=6,condition=dry": {
-      "model": "realisticplants:block/cucumber_plant_stage_4_dry"
+      "model": "realisticplants:block/cucumber_plant_stage_6_dry"
     },
     "age=6,condition=dead": {
-      "model": "realisticplants:block/cucumber_plant_stage_4_dead"
+      "model": "realisticplants:block/cucumber_plant_stage_6_dead"
     }
   }
 }
