@@ -1,4 +1,3 @@
-
 package com.realisticplants;
 
 import com.mojang.logging.LogUtils;
@@ -17,8 +16,8 @@ public class RealisticPlants {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public RealisticPlants(IEventBus modEventBus, ModContainer modContainer) {
-
         NeoForge.EVENT_BUS.register(PlantPlacementHandler.class);
+        NeoForge.EVENT_BUS.addListener(RPShowcaseCommand::register);
         registerVillageGardens();
 
         ModSounds.register(modEventBus);
@@ -42,8 +41,9 @@ public class RealisticPlants {
     }
 
     /**
-     * Adds balanced two-crop gardens to the existing house pools of all
-     * five vanilla village styles. The pool helper is embedded in this mod.
+     * Adds the seven garden variants and the rare greenhouse to the five
+     * vanilla village house pools. The injected structures remain optional
+     * additions; vanilla village pieces are not replaced.
      */
     private static void registerVillageGardens() {
         StructurePoolConfig config = new StructurePoolConfig();
@@ -63,13 +63,9 @@ public class RealisticPlants {
                         1
                 ));
             }
-            // One greenhouse maximum per village placement. Weight 1 keeps
-            // it rare among the vanilla house choices (roughly one in ten
-            // villages, depending on how many house pieces are selected).
             config.entries.add(new StructurePoolConfig.Entry(
                     pool,
                     "realisticplants:village/super_greenhouse",
-                    1,
                     1
             ));
         }
