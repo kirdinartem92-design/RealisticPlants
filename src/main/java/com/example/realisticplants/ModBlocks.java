@@ -100,6 +100,7 @@ public class ModBlocks {
                     properties -> new GreenhouseFanBlock(
                             properties.mapColor(MapColor.METAL)
                                     .strength(1.5f)
+                                    .noOcclusion()
                     )
             );
 
@@ -107,7 +108,7 @@ public class ModBlocks {
             BLOCKS.registerBlock(
                     "greenhouse_control_panel",
                     properties -> new GreenhouseControlPanelBlock(
-                            properties.mapColor(MapColor.METAL).strength(2.0f)
+                            properties.mapColor(MapColor.METAL).strength(2.0f).noOcclusion()
                     )
             );
 
