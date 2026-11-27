@@ -1,6 +1,71 @@
 {
-  "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "minecraft:block/copper_block"
-  }
+    "hose": "minecraft:block/black_concrete",
+    "metal": "minecraft:block/iron_block",
+    "copper": "minecraft:block/cut_copper",
+    "water": "minecraft:block/light_blue_stained_glass",
+    "particle": "minecraft:block/black_concrete"
+  },
+  "elements": [
+    {
+      "from": [0, 1, 7],
+      "to": [16, 3, 9],
+      "faces": {
+        "down": {"texture": "#hose"},
+        "up": {"texture": "#hose"},
+        "north": {"texture": "#hose"},
+        "south": {"texture": "#hose"},
+        "west": {"texture": "#hose"},
+        "east": {"texture": "#hose"}
+      }
+    },
+    {
+      "from": [5, 1, 6],
+      "to": [11, 4, 10],
+      "faces": {
+        "down": {"texture": "#metal"},
+        "up": {"texture": "#metal"},
+        "north": {"texture": "#metal"},
+        "south": {"texture": "#metal"},
+        "west": {"texture": "#metal"},
+        "east": {"texture": "#metal"}
+      }
+    },
+    {
+      "from": [7, 3, 7],
+      "to": [9, 7, 9],
+      "faces": {
+        "down": {"texture": "#copper"},
+        "up": {"texture": "#copper"},
+        "north": {"texture": "#copper"},
+        "south": {"texture": "#copper"},
+        "west": {"texture": "#copper"},
+        "east": {"texture": "#copper"}
+      }
+    },
+    {
+      "from": [6, 6, 6],
+      "to": [10, 8, 10],
+      "faces": {
+        "down": {"texture": "#copper"},
+        "up": {"texture": "#copper"},
+        "north": {"texture": "#copper"},
+        "south": {"texture": "#copper"},
+        "west": {"texture": "#copper"},
+        "east": {"texture": "#copper"}
+      }
+    },
+    {
+      "from": [7, 0, 7],
+      "to": [9, 1, 9],
+      "faces": {
+        "down": {"texture": "#water"},
+        "up": {"texture": "#water"},
+        "north": {"texture": "#water"},
+        "south": {"texture": "#water"},
+        "west": {"texture": "#water"},
+        "east": {"texture": "#water"}
+      }
+    }
+  ]
 }
