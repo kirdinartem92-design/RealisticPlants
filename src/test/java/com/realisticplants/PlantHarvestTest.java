@@ -6,27 +6,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Regression tests for the shared flowering and harvest lifecycle.
- */
+/** Regression tests for the shared flowering and harvest lifecycle. */
 class PlantHarvestTest {
 
     @Test
     void harvestCannotBeProducedBeforeFlowering() {
         PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
-
         PlantHarvest.produceHarvest(tomato);
-
         assertFalse(tomato.isHarvestReady());
     }
 
     @Test
     void floweringPlantProducesHarvestWhenHealthyAndMoist() {
         PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
-
         PlantHarvest.startFlowering(tomato);
         PlantHarvest.produceHarvest(tomato);
-
         assertTrue(tomato.isFlowering());
         assertTrue(tomato.isHarvestReady());
     }
@@ -37,37 +31,40 @@ class PlantHarvestTest {
         dryTomato.setMoisture(0);
         PlantHarvest.startFlowering(dryTomato);
         PlantHarvest.produceHarvest(dryTomato);
-
         assertFalse(dryTomato.isHarvestReady());
 
         PlantData deadTomato = new PlantData(PlantRegistry.get("tomato"));
         deadTomato.setHealth(0);
         PlantHarvest.startFlowering(deadTomato);
         PlantHarvest.produceHarvest(deadTomato);
-
         assertFalse(deadTomato.isFlowering());
         assertFalse(deadTomato.isHarvestReady());
     }
 
     @Test
     void harvestAmountRespectsEachCropConfiguration() {
-        PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
-        PlantData cucumber = new PlantData(PlantRegistry.get("cucumber"));
-        PlantData broccoli = new PlantData(PlantRegistry.get("broccoli"));
+        PlantData[] plants = {
+                new PlantData(PlantRegistry.get("tomato")),
+                new PlantData(PlantRegistry.get("cucumber")),
+                new PlantData(PlantRegistry.get("potato")),
+                new PlantData(PlantRegistry.get("carrot")),
+                new PlantData(PlantRegistry.get("beetroot")),
+                new PlantData(PlantRegistry.get("zucchini")),
+                new PlantData(PlantRegistry.get("eggplant")),
+                new PlantData(PlantRegistry.get("bell_pepper")),
+                new PlantData(PlantRegistry.get("chili_pepper")),
+                new PlantData(PlantRegistry.get("broccoli"))
+        };
 
-        for (PlantData plant : new PlantData[]{tomato, cucumber, broccoli}) {
+        for (PlantData plant : plants) {
             PlantHarvest.startFlowering(plant);
             PlantHarvest.produceHarvest(plant);
-        }
-
-        for (int i = 0; i < 100; i++) {
-            int tomatoAmount = PlantHarvest.getHarvestAmount(tomato);
-            int cucumberAmount = PlantHarvest.getHarvestAmount(cucumber);
-            int broccoliAmount = PlantHarvest.getHarvestAmount(broccoli);
-
-            assertTrue(tomatoAmount >= 1 && tomatoAmount <= 4);
-            assertTrue(cucumberAmount >= 1 && cucumberAmount <= 5);
-            assertTrue(broccoliAmount >= 1 && broccoliAmount <= 2);
+            int min = plant.getDefinition().getMinHarvestAmount();
+            int max = plant.getDefinition().getMaxHarvestAmount();
+            for (int i = 0; i < 30; i++) {
+                int amount = PlantHarvest.getHarvestAmount(plant);
+                assertTrue(amount >= min && amount <= max);
+            }
         }
     }
 
@@ -76,10 +73,8 @@ class PlantHarvestTest {
         PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
         tomato.setHealth(40);
         tomato.setMoisture(40);
-
         PlantHarvest.startFlowering(tomato);
         PlantHarvest.produceHarvest(tomato);
-
         for (int i = 0; i < 30; i++) {
             assertTrue(PlantHarvest.getHarvestAmount(tomato) >= 1);
             assertTrue(PlantHarvest.getHarvestAmount(tomato) <= 2);
@@ -91,7 +86,6 @@ class PlantHarvestTest {
         PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
         PlantHarvest.startFlowering(tomato);
         PlantHarvest.produceHarvest(tomato);
-
         assertTrue(PlantHarvest.harvest(tomato));
         assertFalse(tomato.isHarvestReady());
         assertFalse(tomato.isFlowering());
@@ -104,38 +98,35 @@ class PlantHarvestTest {
         PlantHarvest.startFlowering(tomato);
         PlantHarvest.produceHarvest(tomato);
         tomato.setHealth(0);
-
         assertEquals(0, PlantHarvest.getHarvestAmount(tomato));
         assertFalse(PlantHarvest.harvest(tomato));
     }
 
     @Test
-    void dryPlantWithStaleHarvestFlagCannotBeHarvested() {
+    void ripeHarvestRemainsCollectibleWhenMoistureFallsToZero() {
         PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
         PlantHarvest.startFlowering(tomato);
         PlantHarvest.produceHarvest(tomato);
         tomato.setMoisture(0);
-
-        assertEquals(0, PlantHarvest.getHarvestAmount(tomato));
-        assertFalse(PlantHarvest.harvest(tomato));
+        assertEquals(1, PlantHarvest.getHarvestAmount(tomato));
+        assertTrue(PlantHarvest.harvest(tomato));
     }
 
     @Test
-    void ripeHarvestRemainsCollectibleWhenMoistureFallsBelowGrowthThreshold() {
-        PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
-        PlantHarvest.startFlowering(tomato);
-        PlantHarvest.produceHarvest(tomato);
-        tomato.setMoisture(1);
-
-        assertEquals(1, PlantHarvest.getHarvestAmount(tomato));
-        assertTrue(PlantHarvest.harvest(tomato));
+    void ripeHarvestRemainsReadyAfterLifecycleNormalizationAtZeroMoisture() {
+        PlantData cucumber = new PlantData(PlantRegistry.get("cucumber"));
+        PlantHarvest.startFlowering(cucumber);
+        PlantHarvest.produceHarvest(cucumber);
+        cucumber.setMoisture(0);
+        cucumber.normalizeLifecycleState();
+        assertTrue(cucumber.isHarvestReady());
+        assertTrue(PlantHarvest.harvest(cucumber));
     }
 
     @Test
     void harvestReadyWithoutFloweringIsRejected() {
         PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
         tomato.setHarvestReady(true);
-
         assertEquals(0, PlantHarvest.getHarvestAmount(tomato));
         assertFalse(PlantHarvest.harvest(tomato));
     }

@@ -8,9 +8,6 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class PlantHarvest {
 
-    /**
-     * Possible rare harvest discoveries.
-     */
     public enum RareHarvest {
         NONE,
         GOLDEN,
@@ -20,54 +17,30 @@ public class PlantHarvest {
     private PlantHarvest() {
     }
 
-    /**
-     * Rolls for a rare vegetable.
-     *
-     * Mega vegetable: 1 in 2000.
-     * Golden vegetable: 1 in 1000.
-     *
-     * Only one rare vegetable can be found
-     * during a single harvest.
-     */
     public static RareHarvest rollRareHarvest() {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
 
-        ThreadLocalRandom random =
-                ThreadLocalRandom.current();
-
-        // Check the rarer mega vegetable first.
         if (random.nextInt(2000) == 0) {
             return RareHarvest.MEGA;
         }
-
-        // Then check the golden vegetable.
         if (random.nextInt(1000) == 0) {
             return RareHarvest.GOLDEN;
         }
-
         return RareHarvest.NONE;
     }
 
-    /**
-     * Starts the flowering stage only when the plant can sustain it.
-     */
     public static void startFlowering(PlantData plant) {
         if (!PlantLifecycleRules.canContinueLifecycle(plant)) {
             return;
         }
-
         plant.setFlowering(true);
         plant.setHarvestReady(false);
     }
 
-    /**
-     * Makes the harvest ready after flowering, provided that the plant
-     * still meets its species-specific health and moisture requirements.
-     */
     public static void produceHarvest(PlantData plant) {
         if (plant == null || !plant.isFlowering()) {
             return;
         }
-
         if (PlantLifecycleRules.canContinueLifecycle(plant)) {
             plant.setHarvestReady(true);
         } else {
@@ -76,52 +49,33 @@ public class PlantHarvest {
     }
 
     /**
-     * A harvest that has already ripened remains collectible when the
-     * plant's health or moisture later drops below growth thresholds.
-     * A completely dry plant (zero moisture) or a dead plant is invalid.
+     * Once ripe, a crop remains collectible even if it later becomes dry.
+     * Only a dead plant or an invalid flowering/ready state blocks harvest.
      */
     private static boolean canHarvest(PlantData plant) {
         return plant != null
                 && !plant.isDead()
-                && plant.getMoisture() > 0
                 && plant.isFlowering()
                 && plant.isHarvestReady();
     }
 
-    /**
-     * Calculates harvest amount using the individual
-     * harvest settings of the plant species.
-     */
     public static int getHarvestAmount(PlantData plant) {
-
         if (!canHarvest(plant)) {
             return 0;
         }
 
-        PlantDefinition definition =
-                plant.getDefinition();
-
+        PlantDefinition definition = plant.getDefinition();
         int minAmount = definition.getMinHarvestAmount();
         int maxAmount = definition.getMaxHarvestAmount();
-
-        int condition = Math.min(
-                plant.getHealth(),
-                plant.getMoisture()
-        );
+        int condition = Math.min(plant.getHealth(), plant.getMoisture());
 
         int effectiveMax;
-
         if (condition >= 75) {
-
             effectiveMax = maxAmount;
-
         } else if (condition >= 45) {
-
             effectiveMax = minAmount
                     + (maxAmount - minAmount + 1) / 2;
-
         } else {
-
             effectiveMax = minAmount;
         }
 
@@ -131,18 +85,12 @@ public class PlantHarvest {
         );
     }
 
-    /**
-     * Harvests the plant without destroying it.
-     */
     public static boolean harvest(PlantData plant) {
-
         if (!canHarvest(plant)) {
             return false;
         }
-
         plant.setHarvestReady(false);
         plant.setFlowering(false);
-
         return true;
     }
 }

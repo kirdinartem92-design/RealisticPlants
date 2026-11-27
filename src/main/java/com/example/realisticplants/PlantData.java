@@ -12,9 +12,7 @@ public class PlantData {
 
     private int moisture;
     private int health;
-
     private double growthProgress;
-
     private boolean flowering;
     private boolean harvestReady;
 
@@ -27,7 +25,6 @@ public class PlantData {
                 definition,
                 "Plant definition cannot be null"
         );
-
         this.moisture = 100;
         this.health = 100;
         this.growthProgress = 0.0;
@@ -64,7 +61,6 @@ public class PlantData {
             this.growthProgress = 0.0;
             return;
         }
-
         this.growthProgress = Math.max(0.0, growthProgress);
     }
 
@@ -85,9 +81,8 @@ public class PlantData {
     }
 
     /**
-     * Repairs impossible lifecycle combinations after loading saved data.
-     * A dead plant cannot remain flowering or harvest-ready. A harvest-ready
-     * plant must still be flowering and have at least some moisture.
+     * A dead plant cannot remain flowering or harvest-ready. A ripe harvest
+     * stays ready while the plant is alive, even if its moisture reaches zero.
      */
     public void normalizeLifecycleState() {
         if (isDead()) {
@@ -95,15 +90,13 @@ public class PlantData {
             harvestReady = false;
             return;
         }
-
-        if (!flowering || moisture <= 0) {
+        if (!flowering) {
             harvestReady = false;
         }
     }
 
     public boolean isWilted() {
-        return !isDead()
-                && (health <= 30 || moisture <= 30);
+        return !isDead() && (health <= 30 || moisture <= 30);
     }
 
     public boolean isDead() {
@@ -111,19 +104,15 @@ public class PlantData {
     }
 
     public PlantCondition getCondition() {
-
         if (health <= 0) {
             return PlantCondition.DEAD;
         }
-
         if (health <= 15 || moisture <= 15) {
             return PlantCondition.DRY;
         }
-
         if (health <= 30 || moisture <= 30) {
             return PlantCondition.WILTING;
         }
-
         return PlantCondition.HEALTHY;
     }
 
