@@ -60,6 +60,7 @@ public class RealisticPlants {
                 config.entries.add(new StructurePoolConfig.Entry(
                         pool,
                         "realisticplants:village/garden_" + variant,
+                        5,
                         1
                 ));
             }
