@@ -30,7 +30,9 @@ public class GreenhouseFanBlockEntity extends BlockEntity {
     private void clientTick() {
         previousRotationAngle = rotationAngle;
 
-        // The rotor remains visibly in motion whenever the greenhouse is powered.\n        // ACTIVE still controls cooling and the positional fan sound.\n        float targetSpeed = 18.0f;
+        // The rotor remains visibly in motion whenever the greenhouse is powered.
+        // ACTIVE still controls cooling and the positional fan sound.
+        float targetSpeed = 18.0f;
         rotationSpeed += (targetSpeed - rotationSpeed) * 0.18f;
         rotationAngle = (rotationAngle + rotationSpeed) % 360.0f;
     }
