@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.bus.api.IEventBus;
@@ -53,6 +54,47 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
             );
 
     private int storedWater;
+    private long sprayUntil;
+    private float rotationAngle;
+    private float previousRotationAngle;
+    private float rotationSpeed;
+
+    public float getInterpolatedRotation(float partialTick) {
+        return previousRotationAngle + (rotationAngle - previousRotationAngle) * partialTick;
+    }
+
+    private void clientTick(Level level, BlockPos pos, boolean active) {
+        previousRotationAngle = rotationAngle;
+        float targetSpeed = active ? 14.0f : 0.0f;
+        rotationSpeed += (targetSpeed - rotationSpeed) * 0.16f;
+        rotationAngle = (rotationAngle + rotationSpeed) % 360.0f;
+        if (active && level.getGameTime() % 2L == 0L) {
+            double angle = Math.toRadians(rotationAngle);
+            for (int nozzle = 0; nozzle < 4; nozzle++) {
+                double a = angle + nozzle * Math.PI / 2.0;
+                double dx = Math.cos(a), dz = Math.sin(a);
+                double x = pos.getX() + 0.5 + dx * 0.30;
+                double y = pos.getY() + 0.68;
+                double z = pos.getZ() + 0.5 + dz * 0.30;
+                level.addParticle(ParticleTypes.SPLASH, x, y, z, dx * 0.075,
+                        0.045 + level.getRandom().nextDouble() * 0.035, dz * 0.075);
+                if (level.getRandom().nextBoolean()) {
+                    level.addParticle(ParticleTypes.FALLING_WATER, x, y, z,
+                            dx * 0.035, -0.015, dz * 0.035);
+                }
+            }
+        }
+    }
+
+    private void setSpraying(boolean spraying) {
+        if (level == null || level.isClientSide()) return;
+        BlockState current = level.getBlockState(worldPosition);
+        if (current.is(ModBlocks.IRRIGATION_SPRINKLER.get())
+                && current.getValue(IrrigationSprinklerBlock.ACTIVE) != spraying) {
+            level.setBlock(worldPosition, current.setValue(IrrigationSprinklerBlock.ACTIVE, spraying), 3);
+        }
+        if (spraying) sprayUntil = level.getGameTime() + 90L;
+    }
 
     public IrrigationSprinklerBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE.get(), pos, state);
@@ -89,12 +131,18 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
             BlockState state,
             IrrigationSprinklerBlockEntity sprinkler
     ) {
-        if (level.isClientSide()
-                || sprinkler == null
-                || sprinkler.storedWater <= 0
-                || level.getGameTime() % CYCLE_TICKS != 0) {
+        if (sprinkler == null) return;
+        if (level.isClientSide()) {
+            sprinkler.clientTick(level, pos, state.getValue(IrrigationSprinklerBlock.ACTIVE));
             return;
         }
+        if (sprinkler.storedWater <= 0) {
+            sprinkler.setSpraying(false);
+            return;
+        }
+        if (state.getValue(IrrigationSprinklerBlock.ACTIVE)
+                && level.getGameTime() >= sprinkler.sprayUntil) sprinkler.setSpraying(false);
+        if (level.getGameTime() % CYCLE_TICKS != 0) return;
 
         int waterUsed = 0;
         List<IrrigationTarget> targets = new ArrayList<>();
@@ -175,6 +223,7 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
 
         if (waterUsed > 0) {
             sprinkler.setChanged();
+            sprinkler.setSpraying(true);
             level.playSound(
                     null,
                     pos,

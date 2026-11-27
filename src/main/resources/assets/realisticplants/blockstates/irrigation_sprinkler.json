@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "active=false": {
+      "model": "realisticplants:block/irrigation_sprinkler"
+    },
+    "active=true": {
       "model": "realisticplants:block/irrigation_sprinkler"
     }
   }

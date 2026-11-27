@@ -140,6 +140,10 @@ public final class RealisticPlantsClient {
                 GreenhouseFanBlockEntity.TYPE.get(),
                 GreenhouseFanRenderer::new
         );
+        event.registerBlockEntityRenderer(
+                IrrigationSprinklerBlockEntity.TYPE.get(),
+                IrrigationSprinklerRenderer::new
+        );
     }
 
     @SubscribeEvent
