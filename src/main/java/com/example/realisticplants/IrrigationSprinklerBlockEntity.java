@@ -73,9 +73,9 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
             for (int nozzle = 0; nozzle < 4; nozzle++) {
                 double a = angle + nozzle * Math.PI / 2.0;
                 double dx = Math.cos(a), dz = Math.sin(a);
-                double x = pos.getX() + 0.5 + dx * 0.30;
+                double x = pos.getX() + 0.5 + dx * 0.36;
                 double y = pos.getY() + 0.68;
-                double z = pos.getZ() + 0.5 + dz * 0.30;
+                double z = pos.getZ() + 0.5 + dz * 0.36;
                 level.addParticle(ParticleTypes.SPLASH, x, y, z, dx * 0.075,
                         0.045 + level.getRandom().nextDouble() * 0.035, dz * 0.075);
                 if (level.getRandom().nextBoolean()) {
