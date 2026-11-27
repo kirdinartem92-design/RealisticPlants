@@ -35,7 +35,7 @@ public class GreenhouseControlPanelScreen extends AbstractContainerScreen<Greenh
         int x = this.leftPos;
         int y = this.topPos;
         centered(graphics, Component.translatable("gui.realisticplants.greenhouse.title"),
-                x + PANEL_WIDTH / 2, y + 14, 0xFFFFFFFF);
+                x + PANEL_WIDTH / 2 - 40, y + 14, 0xFFFFFFFF);
 
         section(graphics, x + 17, y + 41, "gui.realisticplants.greenhouse.crops");
         line(graphics, x + 17, y + 56, "gui.realisticplants.greenhouse.plants", value(GreenhouseControlPanelMenu.PLANTS));
