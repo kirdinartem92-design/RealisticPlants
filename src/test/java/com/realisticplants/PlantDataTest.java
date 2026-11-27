@@ -36,7 +36,7 @@ class PlantDataTest {
     }
 
     @Test
-    void dryFloweringPlantKeepsFloweringButCannotBeHarvestReady() {
+    void dryFloweringPlantKeepsFloweringAndHarvestReady() {
         PlantData plant = new PlantData(PlantRegistry.get("tomato"));
         plant.setMoisture(0);
         plant.setFlowering(true);
@@ -45,7 +45,7 @@ class PlantDataTest {
         plant.normalizeLifecycleState();
 
         assertTrue(plant.isFlowering());
-        assertFalse(plant.isHarvestReady());
+        assertTrue(plant.isHarvestReady());
     }
 
     @Test
