@@ -2,8 +2,8 @@
   "loader": "neoforge:obj",
   "model": "realisticplants:models/block/tomato_plant_prototype_3.obj",
   "textures": {
-    "texture0": "realisticplants:block:tomato_plant_prototype_3_atlas_wilting",
-    "particle": "realisticplants:block:tomato_leaf_wilting"
+    "texture0": "realisticplants:block/tomato_plant_prototype_3_atlas_wilting",
+    "particle": "realisticplants:block/tomato_leaf_wilting"
   },
   "automatic_culling": false,
   "shade_quads": true,
