@@ -65,7 +65,11 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
 
     private void clientTick(Level level, BlockPos pos, boolean active) {
         previousRotationAngle = rotationAngle;
-        float targetSpeed = active ? 14.0f : 0.0f;
+        // Keep the mechanical head visibly rotating on every placed
+        // sprinkler. Water/particle emission remains controlled by ACTIVE.
+        // This avoids a frozen rotor if the initial block-state update arrives
+        // after the client has already created its block-entity render state.
+        float targetSpeed = 14.0f;
         rotationSpeed += (targetSpeed - rotationSpeed) * 0.16f;
         rotationAngle = (rotationAngle + rotationSpeed) % 360.0f;
         if (active && level.getGameTime() % 2L == 0L) {
