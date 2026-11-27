@@ -76,12 +76,14 @@ public class PlantHarvest {
     }
 
     /**
-     * A harvest that has already ripened remains collectible even if
-     * the plant's health or moisture later drops below growth thresholds.
+     * A harvest that has already ripened remains collectible when the
+     * plant's health or moisture later drops below growth thresholds.
+     * A completely dry plant (zero moisture) or a dead plant is invalid.
      */
     private static boolean canHarvest(PlantData plant) {
         return plant != null
                 && !plant.isDead()
+                && plant.getMoisture() > 0
                 && plant.isFlowering()
                 && plant.isHarvestReady();
     }

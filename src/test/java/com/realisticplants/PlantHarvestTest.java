@@ -121,6 +121,17 @@ class PlantHarvestTest {
     }
 
     @Test
+    void ripeHarvestRemainsCollectibleWhenMoistureFallsBelowGrowthThreshold() {
+        PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
+        PlantHarvest.startFlowering(tomato);
+        PlantHarvest.produceHarvest(tomato);
+        tomato.setMoisture(1);
+
+        assertEquals(1, PlantHarvest.getHarvestAmount(tomato));
+        assertTrue(PlantHarvest.harvest(tomato));
+    }
+
+    @Test
     void harvestReadyWithoutFloweringIsRejected() {
         PlantData tomato = new PlantData(PlantRegistry.get("tomato"));
         tomato.setHarvestReady(true);
