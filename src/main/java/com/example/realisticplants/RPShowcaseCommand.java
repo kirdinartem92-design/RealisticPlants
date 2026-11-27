@@ -122,6 +122,8 @@ public final class RPShowcaseCommand {
                 if (wall) {
                     boolean entrance = dz == HALF_SIZE && Math.abs(dx) <= 1;
                     if (!entrance) {
+                        // Start the glass wall directly on top of the floor.
+                        level.setBlock(floorPos.above(1), glass, 3);
                         level.setBlock(floorPos.above(3), glass, 3);
                         level.setBlock(floorPos.above(5), glass, 3);
                     }
