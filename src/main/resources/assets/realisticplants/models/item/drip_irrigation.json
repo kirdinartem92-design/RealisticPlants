@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "realisticplants:item/drip_irrigation"
-  }
+  "parent": "realisticplants:block/drip_irrigation"
 }
