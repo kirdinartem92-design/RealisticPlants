@@ -27,10 +27,10 @@ public class GreenhouseFanBlockEntity extends BlockEntity {
                 + (rotationAngle - previousRotationAngle) * partialTick;
     }
 
-    private void clientTick(boolean active) {
+    private void clientTick() {
         previousRotationAngle = rotationAngle;
 
-        float targetSpeed = active ? 18.0f : 0.0f;
+        // The rotor remains visibly in motion whenever the greenhouse is powered.\n        // ACTIVE still controls cooling and the positional fan sound.\n        float targetSpeed = 18.0f;
         rotationSpeed += (targetSpeed - rotationSpeed) * 0.18f;
         rotationAngle = (rotationAngle + rotationSpeed) % 360.0f;
     }
@@ -68,7 +68,7 @@ public class GreenhouseFanBlockEntity extends BlockEntity {
 
         boolean active = state.getValue(GreenhouseFanBlock.ACTIVE);
         if (level.isClientSide()) {
-            fan.clientTick(active);
+            fan.clientTick();
             if (FMLEnvironment.getDist().isClient()) {
                 RealisticPlantsClient.updateFanAudio(fan, active);
             }
