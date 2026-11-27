@@ -57,7 +57,7 @@ public final class GreenhouseFanRenderer
         float angle = state.angle;
         collector.submitCustomGeometry(
                 poseStack,
-                RenderTypes.lightning(),
+                RenderTypes.debugQuads(),
                 (pose, buffer) -> renderRotor(pose, buffer, angle)
         );
 

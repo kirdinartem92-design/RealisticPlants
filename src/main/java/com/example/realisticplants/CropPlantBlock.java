@@ -43,11 +43,11 @@ public abstract class CropPlantBlock extends Block implements EntityBlock {
         int height = switch (age) {
             case 0 -> 3;
             case 1 -> 5;
-            case 2 -> 9;
-            case 3 -> 13;
-            case 4 -> 17;
-            case 5 -> 21;
-            default -> 24;
+            case 2 -> 8;
+            case 3 -> 11;
+            case 4 -> 14;
+            case 5 -> 17;
+            default -> 21;
         };
 
         return Block.box(1, 0, 1, 15, height, 15);

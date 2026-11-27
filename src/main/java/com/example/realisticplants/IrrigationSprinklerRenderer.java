@@ -25,7 +25,7 @@ public final class IrrigationSprinklerRenderer implements BlockEntityRenderer<Ir
     @Override public void submit(State state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
         poseStack.pushPose();
         poseStack.translate(0.5, 0.69, 0.5);
-        collector.submitCustomGeometry(poseStack, RenderTypes.lightning(),
+        collector.submitCustomGeometry(poseStack, RenderTypes.debugQuads(),
                 (pose, buffer) -> renderRotor(pose, buffer, state.angle, state.active));
         poseStack.popPose();
     }
@@ -33,13 +33,13 @@ public final class IrrigationSprinklerRenderer implements BlockEntityRenderer<Ir
         float rotation=(float)Math.toRadians(angleDegrees), brightness=active?1.0f:0.72f;
         for(int blade=0;blade<4;blade++) {
             float a=rotation+blade*(float)(Math.PI/2.0), c=(float)Math.cos(a), s=(float)Math.sin(a);
-            float inner=0.035f, outer=0.29f, wi=0.025f, wo=0.045f;
+            float inner=0.045f, outer=0.40f, wi=0.040f, wo=0.070f;
             emitQuad(pose,buffer,c*inner-s*wi,0,s*inner+c*wi,c*inner+s*wi,0,s*inner-c*wi,
                     c*outer+s*wo,0,s*outer-c*wo,c*outer-s*wo,0,s*outer+c*wo,
-                    0.66f*brightness,0.70f*brightness,0.75f*brightness);
+                    0.88f*brightness,0.93f*brightness,1.0f*brightness);
         }
         emitQuad(pose,buffer,-0.055f,0.008f,-0.055f,0.055f,0.008f,-0.055f,
-                0.055f,0.008f,0.055f,-0.055f,0.008f,0.055f,0.72f,0.78f,0.84f);
+                0.055f,0.008f,0.055f,-0.055f,0.008f,0.055f,0.90f,0.95f,1.0f);
     }
     private static void emitQuad(PoseStack.Pose pose,VertexConsumer buffer,
             float x1,float y1,float z1,float x2,float y2,float z2,float x3,float y3,float z3,
