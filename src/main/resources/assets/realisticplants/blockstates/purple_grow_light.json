@@ -1,10 +1,52 @@
 {
-  "variants": {
-    "active=false": {
-      "model": "realisticplants:block/purple_grow_light"
+  "multipart": [
+    {
+      "when": {
+        "active": "false"
+      },
+      "apply": {
+        "model": "realisticplants:block/purple_grow_light_connected_base"
+      }
     },
-    "active=true": {
-      "model": "realisticplants:block/purple_grow_light_active"
+    {
+      "when": {
+        "active": "true"
+      },
+      "apply": {
+        "model": "realisticplants:block/purple_grow_light_connected_active"
+      }
+    },
+    {
+      "when": {
+        "west": "false"
+      },
+      "apply": {
+        "model": "realisticplants:block/purple_grow_light_edge_west"
+      }
+    },
+    {
+      "when": {
+        "east": "false"
+      },
+      "apply": {
+        "model": "realisticplants:block/purple_grow_light_edge_east"
+      }
+    },
+    {
+      "when": {
+        "north": "false"
+      },
+      "apply": {
+        "model": "realisticplants:block/purple_grow_light_edge_north"
+      }
+    },
+    {
+      "when": {
+        "south": "false"
+      },
+      "apply": {
+        "model": "realisticplants:block/purple_grow_light_edge_south"
+      }
     }
-  }
+  ]
 }

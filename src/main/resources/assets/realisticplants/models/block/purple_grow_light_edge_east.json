@@ -1,0 +1,80 @@
+{
+  "ambientocclusion": true,
+  "textures": {
+    "particle": "minecraft:block/amethyst_block",
+    "body": "minecraft:block/copper_block",
+    "trim": "minecraft:block/cut_copper",
+    "diffuser": "minecraft:block/amethyst_block",
+    "led": "minecraft:block/amethyst_block"
+  },
+  "elements": [
+    {
+      "from": [
+        14,
+        9,
+        3
+      ],
+      "to": [
+        15,
+        10.5,
+        13
+      ],
+      "faces": {
+        "down": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    }
+  ]
+}
