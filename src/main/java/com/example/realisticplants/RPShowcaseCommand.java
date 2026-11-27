@@ -7,7 +7,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -122,8 +121,8 @@ public final class RPShowcaseCommand {
                 if (wall) {
                     boolean entrance = dz == HALF_SIZE && Math.abs(dx) <= 1;
                     if (!entrance) {
-                        level.setBlock(floorPos.above(1), glass, 3);
                         level.setBlock(floorPos.above(2), glass, 3);
+                        level.setBlock(floorPos.above(3), glass, 3);
                     }
                 }
 
@@ -159,13 +158,16 @@ public final class RPShowcaseCommand {
         level.setBlock(center.offset(0, 2, -5),
                 ModBlocks.GREENHOUSE_FAN.get().defaultBlockState(), 3);
 
-        BlockPos panelPos = center.offset(0, 1, HALF_SIZE + 1);
+        BlockPos panelFloor = center.offset(0, 0, HALF_SIZE + 1);
+        level.setBlock(panelFloor, floor, 3);
+        BlockPos panelPos = panelFloor.above();
         level.setBlock(panelPos,
                 ModBlocks.GREENHOUSE_CONTROL_PANEL.get().defaultBlockState(), 3);
 
         // A small signpost marks the entrance without replacing village terrain.
-        level.setBlock(center.offset(0, 1, HALF_SIZE + 2),
-                Blocks.LANTERN.defaultBlockState(), 3);
+        BlockPos lanternFloor = center.offset(0, 0, HALF_SIZE + 2);
+        level.setBlock(lanternFloor, floor, 3);
+        level.setBlock(lanternFloor.above(), Blocks.LANTERN.defaultBlockState(), 3);
     }
 
     private static void placeCrop(ServerLevel level, BlockPos pos,
