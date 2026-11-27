@@ -67,7 +67,7 @@ public class RealisticPlants {
             config.entries.add(new StructurePoolConfig.Entry(
                     pool,
                     "realisticplants:village/super_greenhouse",
-                    5,
+                    1,
                     1
             ));
         }
