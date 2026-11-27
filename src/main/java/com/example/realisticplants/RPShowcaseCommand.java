@@ -21,15 +21,16 @@ public final class RPShowcaseCommand {
         event.getDispatcher().register(
                 Commands.literal("rp")
                         .then(Commands.literal("village")
-                                .requires(source -> source.hasPermission(2))
-                                .executes(context -> createShowcase(
+                                        .executes(context -> createShowcase(
                                         context.getSource().getPlayerOrException()
                                 )))
         );
     }
 
     private static int createShowcase(ServerPlayer player) {
-        ServerLevel level = player.serverLevel();
+        if (!(player.level() instanceof ServerLevel level)) {
+            return 0;
+        }
         BlockPos center = findClearLocation(level, player.blockPosition());
         if (center == null) {
             player.sendSystemMessage(Component.literal(
