@@ -1,6 +1,20 @@
 {
-  "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "minecraft:block/sea_lantern"
-  }
+    "particle": "minecraft:block/iron_block",
+    "all": "minecraft:block/iron_block"
+  },
+  "elements": [
+    {
+      "from": [2, 2, 14],
+      "to": [14, 14, 16],
+      "faces": {
+        "north": { "texture": "#all" },
+        "south": { "texture": "#all" },
+        "west": { "texture": "#all" },
+        "east": { "texture": "#all" },
+        "up": { "texture": "#all" },
+        "down": { "texture": "#all" }
+      }
+    }
+  ]
 }
