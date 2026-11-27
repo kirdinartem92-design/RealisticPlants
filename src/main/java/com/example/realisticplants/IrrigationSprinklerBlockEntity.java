@@ -121,6 +121,11 @@ public class IrrigationSprinklerBlockEntity extends BlockEntity {
         if (accepted > 0) {
             storedWater += accepted;
             setChanged();
+
+            // Activate immediately when a player fills the tank. The block-state
+            // update is sent to clients so the rotor and spray particles start
+            // without waiting for the next scheduled block-entity tick.
+            setSpraying(true);
         }
         return accepted;
     }
