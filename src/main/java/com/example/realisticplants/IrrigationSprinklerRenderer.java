@@ -11,9 +11,8 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Clearly visible four-arm rotating sprinkler head, rendered above the fixed
- * copper support. The rotor is deliberately raised and brightly coloured so
- * its movement is distinguishable from the static cross-shaped model below.
+ * Renders the sprinkler's wooden four-outlet head as one rotating assembly.
+ * The support column and lower collar remain part of the static block model.
  */
 public final class IrrigationSprinklerRenderer
         implements BlockEntityRenderer<IrrigationSprinklerBlockEntity, IrrigationSprinklerRenderer.State> {
@@ -54,37 +53,36 @@ public final class IrrigationSprinklerRenderer
             CameraRenderState camera
     ) {
         poseStack.pushPose();
-        // Keep the rotor clearly above the fixed nozzle arms in the block model.
-        poseStack.translate(0.5, 0.755, 0.5);
+        // The wooden head sits directly on the fixed central stem/collar.
+        poseStack.translate(0.5, 0.632, 0.5);
         float angle = state.angle;
         boolean active = state.active;
         collector.submitCustomGeometry(
                 poseStack,
                 RenderTypes.debugQuads(),
-                (pose, buffer) -> renderRotor(pose, buffer, angle, active)
+                (pose, buffer) -> renderRotatingHead(pose, buffer, angle, active)
         );
         poseStack.popPose();
     }
 
-    private static void renderRotor(
+    private static void renderRotatingHead(
             PoseStack.Pose pose,
             VertexConsumer buffer,
             float angleDegrees,
             boolean active
     ) {
         float rotation = (float) Math.toRadians(angleDegrees);
-        float brightness = active ? 1.0f : 0.78f;
+        float shade = active ? 1.0f : 0.88f;
 
-        // Four broad, swept blades. The contrasting cyan-metal finish makes
-        // the rotation easy to see against the copper-coloured fixed base.
-        for (int blade = 0; blade < 4; blade++) {
-            float a = rotation + blade * (float) (Math.PI / 2.0);
+        // Four wooden outlet arms rotate together around the stationary stem.
+        for (int arm = 0; arm < 4; arm++) {
+            float a = rotation + arm * (float) (Math.PI / 2.0);
             float c = (float) Math.cos(a);
             float s = (float) Math.sin(a);
-            float inner = 0.045f;
-            float outer = 0.43f;
-            float innerWidth = 0.035f;
-            float outerWidth = 0.075f;
+            float inner = 0.025f;
+            float outer = 0.405f;
+            float innerWidth = 0.050f;
+            float outerWidth = 0.060f;
 
             float x1 = c * inner - s * innerWidth;
             float z1 = s * inner + c * innerWidth;
@@ -95,21 +93,22 @@ public final class IrrigationSprinklerRenderer
             float x4 = c * outer - s * outerWidth;
             float z4 = s * outer + c * outerWidth;
 
+            // Warm timber colour, with a slightly darker outer nozzle end.
             emitQuad(pose, buffer,
                     x1, 0.0f, z1,
                     x2, 0.0f, z2,
                     x3, 0.0f, z3,
                     x4, 0.0f, z4,
-                    0.25f * brightness, 0.82f * brightness, 0.96f * brightness);
+                    0.48f * shade, 0.29f * shade, 0.14f * shade);
         }
 
-        // Raised central hub.
+        // Wooden central hub is part of the rotating head, not the fixed stem.
         emitQuad(pose, buffer,
-                -0.065f, 0.012f, -0.065f,
-                 0.065f, 0.012f, -0.065f,
-                 0.065f, 0.012f,  0.065f,
-                -0.065f, 0.012f,  0.065f,
-                0.88f, 0.94f, 1.0f);
+                -0.070f, 0.008f, -0.070f,
+                 0.070f, 0.008f, -0.070f,
+                 0.070f, 0.008f,  0.070f,
+                -0.070f, 0.008f,  0.070f,
+                0.57f * shade, 0.36f * shade, 0.19f * shade);
     }
 
     private static void emitQuad(
